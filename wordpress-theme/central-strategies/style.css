@@ -1,0 +1,14 @@
+/*
+Theme Name: Central Strategies
+Theme URI: https://centralstrategies.com
+Author: Central Strategies
+Description: Veteran-owned IT / govcon marketing theme. Component layout mirrors template-parts/sections/* and matches the static HTML prototypes in the repo root.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: central-strategies
+
+This theme ships with Tailwind loaded from CDN in template-parts/head/head-inner-home.php for parity with the HTML prototypes. For production, consider compiling Tailwind or enqueueing a built stylesheet from assets/css/.
+*/
