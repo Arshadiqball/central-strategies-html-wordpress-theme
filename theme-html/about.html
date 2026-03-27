@@ -233,28 +233,54 @@
 
 
     <!-- Mission & Vision -->
-    <section class="py-16 lg:py-20 bg-slate-50 border-y border-slate-100">
-      <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-6 lg:gap-8" data-stagger>
-          <div class="bg-white rounded-2xl border border-slate-200 p-8 lg:p-10 shadow-sm card-lift" data-animate="fade-up">
-            <div class="w-12 h-12 rounded-xl bg-cs-50 flex items-center justify-center mb-6">
-              <svg class="w-6 h-6 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+    <section class="relative py-20 lg:py-28 bg-slate-950 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-brand-950" aria-hidden="true"></div>
+      <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 32px 32px;" aria-hidden="true"></div>
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/30 to-transparent" aria-hidden="true"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/30 to-transparent" aria-hidden="true"></div>
+
+      <div class="relative max-w-site mx-auto px-5 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+
+          <div class="relative flex flex-col" data-animate="fade-up">
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 rounded-lg bg-cs-600 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+              </div>
+              <span class="text-xs font-bold text-cs-400 uppercase tracking-[0.2em]">Our Mission</span>
             </div>
-            <h3 class="text-xl font-extrabold text-slate-900 tracking-tight mb-4">Our Mission</h3>
-            <p class="text-slate-600 leading-relaxed">
-              To empower organizations and their people to solve critical challenges.
-            </p>
+            <blockquote class="flex-1">
+              <p class="text-2xl sm:text-3xl lg:text-[2rem] font-extrabold text-white leading-snug tracking-tight">
+                To empower organizations and their people to solve critical challenges.
+              </p>
+            </blockquote>
+            <div class="mt-8 pt-8 border-t border-white/10">
+              <p class="text-sm text-slate-400 leading-relaxed">
+                We build trusted, resilient capabilities with measurable outcomes — enabling teams to move faster with confidence and clarity.
+              </p>
+            </div>
           </div>
 
-          <div class="bg-white rounded-2xl border border-slate-200 p-8 lg:p-10 shadow-sm card-lift" data-animate="fade-up">
-            <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center mb-6">
-              <svg class="w-6 h-6 text-brand-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+          <div class="relative flex flex-col" data-animate="fade-up">
+            <div class="hidden lg:block absolute -left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+              </div>
+              <span class="text-xs font-bold text-brand-400 uppercase tracking-[0.2em]">Our Vision</span>
             </div>
-            <h3 class="text-xl font-extrabold text-slate-900 tracking-tight mb-4">Our Vision</h3>
-            <p class="text-slate-600 leading-relaxed">
-              To foster superior teams and to create cutting-edge products and services that revolutionize industries, protect our nation, and ensure mission success.
-            </p>
+            <blockquote class="flex-1">
+              <p class="text-2xl sm:text-3xl lg:text-[2rem] font-extrabold text-white leading-snug tracking-tight">
+                To foster superior teams and to create cutting-edge products and services that revolutionize industries, protect our nation, and ensure mission success.
+              </p>
+            </blockquote>
+            <div class="mt-8 pt-8 border-t border-white/10">
+              <p class="text-sm text-slate-400 leading-relaxed">
+                Shaping future-ready organizations through innovation, service, and technology that advances mission outcomes at scale.
+              </p>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -365,8 +391,10 @@
           <p class="text-sm text-slate-500 leading-relaxed">
             A Veteran-Owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.
           </p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400 uppercase tracking-wider">SDVOSB</span>
+          <div class="mt-5 flex flex-wrap items-center gap-2">
+            <a href="https://atwebtechnologies.com/demo/central-strategies.html" class="inline-flex shrink-0 items-center rounded border border-white/10 bg-white p-1.5 hover:border-white/25 transition-colors" aria-label="U.S. Small Business Administration — Service-Disabled Veteran-Owned certified">
+              <img src="sba-sdvosb-certified.png" alt="" width="120" height="180" decoding="async" class="h-[5.5rem] w-auto max-w-[5.5rem] object-contain object-left" />
+            </a>
             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400 uppercase tracking-wider">CAGE: 9L4U3</span>
           </div>
           <div class="flex items-center gap-3 mt-6">

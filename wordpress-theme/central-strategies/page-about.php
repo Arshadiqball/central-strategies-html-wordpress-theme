@@ -53,23 +53,54 @@ get_header();
       </div>
     </section>
 
-    <section class="py-20 lg:py-28 bg-slate-50">
-      <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" data-stagger>
-          <div class="bg-white rounded-xl border border-slate-200 p-8" data-animate="fade-up">
-            <div class="w-12 h-12 rounded-xl bg-cs-50 flex items-center justify-center mb-5">
-              <svg class="w-6 h-6 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+    <section class="relative py-20 lg:py-28 bg-slate-950 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-brand-950" aria-hidden="true"></div>
+      <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 32px 32px;" aria-hidden="true"></div>
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/30 to-transparent" aria-hidden="true"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/30 to-transparent" aria-hidden="true"></div>
+
+      <div class="relative max-w-site mx-auto px-5 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+
+          <div class="relative flex flex-col" data-animate="fade-up">
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 rounded-lg bg-cs-600 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+              </div>
+              <span class="text-xs font-bold text-cs-400 uppercase tracking-[0.2em]"><?php esc_html_e('Our Mission', 'central-strategies'); ?></span>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-3"><?php esc_html_e('Our Mission', 'central-strategies'); ?></h3>
-            <p class="text-slate-500 leading-relaxed">To deliver innovative, reliable, and secure technology solutions that empower organizations to fulfill their most critical missions.</p>
-          </div>
-          <div class="bg-white rounded-xl border border-slate-200 p-8" data-animate="fade-up">
-            <div class="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center mb-5">
-              <svg class="w-6 h-6 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+            <blockquote class="flex-1">
+              <p class="text-2xl sm:text-3xl lg:text-[2rem] font-extrabold text-white leading-snug tracking-tight">
+                <?php esc_html_e('To empower organizations and their people to solve critical challenges.', 'central-strategies'); ?>
+              </p>
+            </blockquote>
+            <div class="mt-8 pt-8 border-t border-white/10">
+              <p class="text-sm text-slate-400 leading-relaxed">
+                <?php esc_html_e('We build trusted, resilient capabilities with measurable outcomes — enabling teams to move faster with confidence and clarity.', 'central-strategies'); ?>
+              </p>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-3"><?php esc_html_e('Our Vision', 'central-strategies'); ?></h3>
-            <p class="text-slate-500 leading-relaxed">To be the most trusted partner for organizations seeking to harness technology as a force multiplier for their mission and impact.</p>
           </div>
+
+          <div class="relative flex flex-col" data-animate="fade-up">
+            <div class="hidden lg:block absolute -left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" aria-hidden="true"></div>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+              </div>
+              <span class="text-xs font-bold text-brand-400 uppercase tracking-[0.2em]"><?php esc_html_e('Our Vision', 'central-strategies'); ?></span>
+            </div>
+            <blockquote class="flex-1">
+              <p class="text-2xl sm:text-3xl lg:text-[2rem] font-extrabold text-white leading-snug tracking-tight">
+                <?php esc_html_e('To foster superior teams and to create cutting-edge products and services that revolutionize industries, protect our nation, and ensure mission success.', 'central-strategies'); ?>
+              </p>
+            </blockquote>
+            <div class="mt-8 pt-8 border-t border-white/10">
+              <p class="text-sm text-slate-400 leading-relaxed">
+                <?php esc_html_e('Shaping future-ready organizations through innovation, service, and technology that advances mission outcomes at scale.', 'central-strategies'); ?>
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

@@ -15,8 +15,10 @@
           <p class="text-sm text-slate-500 leading-relaxed">
             <?php echo esc_html(get_bloginfo('description')); ?>
           </p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400 uppercase tracking-wider">SDVOSB</span>
+          <div class="mt-5 flex flex-wrap items-center gap-2">
+            <a href="<?php echo esc_url(cs_logo_home_url()); ?>" class="inline-flex shrink-0 items-center rounded border border-white/10 bg-white p-1.5 hover:border-white/25 transition-colors" aria-label="<?php esc_attr_e('U.S. Small Business Administration — Service-Disabled Veteran-Owned certified', 'central-strategies'); ?>">
+              <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-certified.png'); ?>" alt="" width="120" height="180" decoding="async" class="h-[5.5rem] w-auto max-w-[5.5rem] object-contain object-left" />
+            </a>
             <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400 uppercase tracking-wider">CAGE: 9L4U3</span>
           </div>
           <div class="flex items-center gap-3 mt-6">
