@@ -128,3 +128,492 @@ function cs_contact_url() {
     $page = get_page_by_path('contact');
     return $page ? get_permalink($page) : home_url('/contact/');
 }
+
+/* ──────────────────────────────────────────────────────
+   Theme activation: auto-create & assign page templates
+   ────────────────────────────────────────────────────── */
+function cs_setup_default_pages() {
+    $pages = array(
+        array(
+            'title'    => 'Home',
+            'slug'     => 'home',
+            'template' => '',          // front-page.php handles this
+        ),
+        array(
+            'title'    => 'Contact',
+            'slug'     => 'contact',
+            'template' => 'page-contact.php',
+        ),
+        array(
+            'title'    => 'Services',
+            'slug'     => 'services',
+            'template' => 'page-services.php',
+        ),
+        array(
+            'title'    => 'About',
+            'slug'     => 'about',
+            'template' => 'page-about.php',
+        ),
+        array(
+            'title'    => 'Blog',
+            'slug'     => 'blog',
+            'template' => 'page-blog.php',
+        ),
+        array(
+            'title'    => 'FAQ',
+            'slug'     => 'faq',
+            'template' => 'page-faq.php',
+        ),
+    );
+
+    foreach ($pages as $page_data) {
+        $existing = get_page_by_path($page_data['slug']);
+
+        if ($existing) {
+            // Page exists — ensure the correct template is assigned
+            if ($page_data['template'] && get_post_meta($existing->ID, '_wp_page_template', true) !== $page_data['template']) {
+                update_post_meta($existing->ID, '_wp_page_template', $page_data['template']);
+            }
+        } else {
+            // Create the page
+            $new_id = wp_insert_post(array(
+                'post_title'   => $page_data['title'],
+                'post_name'    => $page_data['slug'],
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_content' => '',
+            ));
+            if ($new_id && !is_wp_error($new_id) && $page_data['template']) {
+                update_post_meta($new_id, '_wp_page_template', $page_data['template']);
+            }
+        }
+    }
+}
+add_action('after_switch_theme', 'cs_setup_default_pages');
+
+// Also run once via admin_init if templates are not yet set (fixes existing installs)
+function cs_maybe_fix_page_templates() {
+    if (get_option('cs_templates_assigned') === '2') {
+        return;
+    }
+    $map = array(
+        'contact'  => 'page-contact.php',
+        'services' => 'page-services.php',
+        'about'    => 'page-about.php',
+        'blog'     => 'page-blog.php',
+        'faq'      => 'page-faq.php',
+    );
+    foreach ($map as $slug => $template) {
+        $page = get_page_by_path($slug);
+        if ($page) {
+            update_post_meta($page->ID, '_wp_page_template', $template);
+        }
+    }
+    update_option('cs_templates_assigned', '2');
+}
+add_action('admin_init', 'cs_maybe_fix_page_templates');
+
+/* ──────────────────────────────────────────────────────
+   Helper: home URL (used in footer badges)
+   ────────────────────────────────────────────────────── */
+function cs_logo_home_url() {
+    return esc_url(home_url('/'));
+}
+
+/* ──────────────────────────────────────────────────────
+   Custom Post Type: Contact Inquiry (form submissions)
+   ────────────────────────────────────────────────────── */
+function cs_register_contact_inquiry_cpt() {
+    register_post_type('cs_inquiry', array(
+        'labels' => array(
+            'name'               => __('Contact Inquiries', 'central-strategies'),
+            'singular_name'      => __('Inquiry', 'central-strategies'),
+            'all_items'          => __('All Inquiries', 'central-strategies'),
+            'view_item'          => __('View Inquiry', 'central-strategies'),
+            'not_found'          => __('No inquiries found.', 'central-strategies'),
+            'not_found_in_trash' => __('No inquiries in trash.', 'central-strategies'),
+        ),
+        'public'        => false,
+        'show_ui'       => true,
+        'show_in_menu'  => true,
+        'supports'      => array('title'),
+        'menu_icon'     => 'dashicons-email-alt',
+        'menu_position' => 25,
+        'rewrite'       => false,
+        'capabilities'  => array(
+            'create_posts' => 'do_not_allow',
+        ),
+        'map_meta_cap'  => true,
+    ));
+}
+add_action('init', 'cs_register_contact_inquiry_cpt');
+
+/* ── Admin columns for Contact Inquiries ── */
+function cs_inquiry_columns($columns) {
+    return array(
+        'cb'           => $columns['cb'],
+        'title'        => __('Name', 'central-strategies'),
+        'cs_email'     => __('Email', 'central-strategies'),
+        'cs_phone'     => __('Phone', 'central-strategies'),
+        'cs_message'   => __('Message', 'central-strategies'),
+        'cs_status'    => __('Status', 'central-strategies'),
+        'date'         => __('Date', 'central-strategies'),
+    );
+}
+add_filter('manage_cs_inquiry_posts_columns', 'cs_inquiry_columns');
+
+function cs_inquiry_column_content($column, $post_id) {
+    switch ($column) {
+        case 'cs_email':
+            $email = get_post_meta($post_id, '_cs_email', true);
+            echo $email ? '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>' : '—';
+            break;
+        case 'cs_phone':
+            echo esc_html(get_post_meta($post_id, '_cs_phone', true) ?: '—');
+            break;
+        case 'cs_message':
+            $msg = get_post_meta($post_id, '_cs_message', true);
+            echo '<span title="' . esc_attr($msg) . '">' . esc_html(wp_trim_words($msg, 12, '…')) . '</span>';
+            break;
+        case 'cs_status':
+            $status = get_post_meta($post_id, '_cs_status', true) ?: 'new';
+            $labels = array('new' => '🟢 New', 'read' => '⚪ Read', 'replied' => '🔵 Replied');
+            echo isset($labels[$status]) ? $labels[$status] : esc_html($status);
+            break;
+    }
+}
+add_action('manage_cs_inquiry_posts_custom_column', 'cs_inquiry_column_content', 10, 2);
+
+/* ── Make columns sortable ── */
+function cs_inquiry_sortable_columns($columns) {
+    $columns['cs_status'] = 'cs_status';
+    return $columns;
+}
+add_filter('manage_edit-cs_inquiry_sortable_columns', 'cs_inquiry_sortable_columns');
+
+/* ── Meta box: full inquiry detail view + status ── */
+function cs_inquiry_detail_meta_box() {
+    add_meta_box('cs_inquiry_detail', __('Inquiry Details', 'central-strategies'), 'cs_inquiry_detail_cb', 'cs_inquiry', 'normal', 'high');
+    add_meta_box('cs_inquiry_status', __('Status', 'central-strategies'), 'cs_inquiry_status_cb', 'cs_inquiry', 'side', 'high');
+}
+add_action('add_meta_boxes', 'cs_inquiry_detail_meta_box');
+
+function cs_inquiry_detail_cb($post) {
+    $fields = array(
+        'Name'    => get_the_title($post->ID),
+        'Email'   => get_post_meta($post->ID, '_cs_email', true),
+        'Phone'   => get_post_meta($post->ID, '_cs_phone', true) ?: '—',
+        'Message' => get_post_meta($post->ID, '_cs_message', true),
+    );
+    echo '<table class="widefat" style="border:0"><tbody>';
+    foreach ($fields as $label => $value) {
+        echo '<tr>';
+        echo '<th style="width:100px;padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html($label) . '</th>';
+        echo '<td style="padding:10px 12px">' . ($label === 'Email'
+            ? '<a href="mailto:' . esc_attr($value) . '">' . esc_html($value) . '</a>'
+            : nl2br(esc_html($value))
+        ) . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody></table>';
+    // Mark as read automatically when opened
+    if (get_post_meta($post->ID, '_cs_status', true) === 'new') {
+        update_post_meta($post->ID, '_cs_status', 'read');
+    }
+}
+
+function cs_inquiry_status_cb($post) {
+    wp_nonce_field('cs_inquiry_status_save', 'cs_inquiry_status_nonce');
+    $status = get_post_meta($post->ID, '_cs_status', true) ?: 'new';
+    $options = array(
+        'new'     => 'New',
+        'read'    => 'Read',
+        'replied' => 'Replied',
+    );
+    echo '<select name="cs_inquiry_status" style="width:100%">';
+    foreach ($options as $key => $label) {
+        echo '<option value="' . esc_attr($key) . '"' . selected($status, $key, false) . '>' . esc_html($label) . '</option>';
+    }
+    echo '</select>';
+}
+
+function cs_save_inquiry_status($post_id) {
+    if (!isset($_POST['cs_inquiry_status_nonce']) || !wp_verify_nonce($_POST['cs_inquiry_status_nonce'], 'cs_inquiry_status_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    if (isset($_POST['cs_inquiry_status'])) {
+        $allowed = array('new', 'read', 'replied');
+        $val = sanitize_key($_POST['cs_inquiry_status']);
+        if (in_array($val, $allowed, true)) {
+            update_post_meta($post_id, '_cs_status', $val);
+        }
+    }
+}
+add_action('save_post_cs_inquiry', 'cs_save_inquiry_status');
+
+/* ── Dashboard badge: count new inquiries ── */
+function cs_inquiry_admin_menu_badge() {
+    $new_count = wp_count_posts('cs_inquiry');
+    $new = isset($new_count->publish) ? (int) $new_count->publish : 0;
+    // Count those with status = 'new'
+    $new_unread = (int) (new WP_Query(array(
+        'post_type'      => 'cs_inquiry',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'meta_query'     => array(array('key' => '_cs_status', 'value' => 'new', 'compare' => '=')),
+        'fields'         => 'ids',
+    )))->found_posts;
+    if ($new_unread > 0) {
+        global $menu;
+        foreach ($menu as &$item) {
+            if (isset($item[5]) && $item[5] === 'menu-posts-cs_inquiry') {
+                $item[0] .= ' <span class="awaiting-mod">' . $new_unread . '</span>';
+                break;
+            }
+        }
+    }
+}
+add_action('admin_menu', 'cs_inquiry_admin_menu_badge');
+
+/* ──────────────────────────────────────────────────────
+   Custom Post Type: Service (Solutions section cards)
+   ────────────────────────────────────────────────────── */
+function cs_register_post_types() {
+    register_post_type('cs_service', array(
+        'labels' => array(
+            'name'          => __('Services', 'central-strategies'),
+            'singular_name' => __('Service', 'central-strategies'),
+            'add_new_item'  => __('Add New Service', 'central-strategies'),
+            'edit_item'     => __('Edit Service', 'central-strategies'),
+            'not_found'     => __('No services found.', 'central-strategies'),
+        ),
+        'public'        => false,
+        'show_ui'       => true,
+        'show_in_menu'  => true,
+        'supports'      => array('title', 'editor', 'excerpt', 'page-attributes'),
+        'menu_icon'     => 'dashicons-desktop',
+        'menu_position' => 20,
+        'rewrite'       => false,
+    ));
+}
+add_action('init', 'cs_register_post_types');
+
+/* ── Service icon meta box ── */
+function cs_service_meta_boxes() {
+    add_meta_box('cs_service_icon', __('Service Icon', 'central-strategies'), 'cs_service_icon_cb', 'cs_service', 'side');
+    add_meta_box('cs_service_link', __('Card Link URL', 'central-strategies'), 'cs_service_link_cb', 'cs_service', 'side');
+}
+add_action('add_meta_boxes', 'cs_service_meta_boxes');
+
+function cs_service_icon_cb($post) {
+    wp_nonce_field('cs_service_meta', 'cs_service_meta_nonce');
+    $icons   = cs_service_icon_options();
+    $current = get_post_meta($post->ID, '_cs_service_icon', true) ?: 'data-engineering';
+    echo '<select name="cs_service_icon" style="width:100%">';
+    foreach ($icons as $key => $label) {
+        echo '<option value="' . esc_attr($key) . '"' . selected($current, $key, false) . '>' . esc_html($label) . '</option>';
+    }
+    echo '</select>';
+}
+
+function cs_service_link_cb($post) {
+    $url = get_post_meta($post->ID, '_cs_service_link', true);
+    echo '<input type="url" name="cs_service_link" value="' . esc_attr($url) . '" placeholder="https://..." style="width:100%" />';
+    echo '<p class="description">Leave blank to hide "Learn More" link.</p>';
+}
+
+function cs_save_service_meta($post_id) {
+    if (!isset($_POST['cs_service_meta_nonce']) || !wp_verify_nonce($_POST['cs_service_meta_nonce'], 'cs_service_meta')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    if (isset($_POST['cs_service_icon'])) {
+        update_post_meta($post_id, '_cs_service_icon', sanitize_key($_POST['cs_service_icon']));
+    }
+    if (isset($_POST['cs_service_link'])) {
+        update_post_meta($post_id, '_cs_service_link', esc_url_raw($_POST['cs_service_link']));
+    }
+}
+add_action('save_post_cs_service', 'cs_save_service_meta');
+
+function cs_service_icon_options() {
+    return array(
+        'data-engineering'   => 'Data Engineering',
+        'cloud-computing'    => 'Cloud Computing',
+        'cybersecurity'      => 'Cybersecurity',
+        'enterprise-it'      => 'Enterprise IT Management',
+        'ai-ml'              => 'AI / ML',
+        'data-analytics'     => 'Data Analytics & BI',
+        'automation'         => 'Technological Automation',
+        'system-engineering' => 'System Engineering',
+        'budget-planning'    => 'Budget Planning & Audit',
+    );
+}
+
+function cs_service_icon_svg($key) {
+    $map = array(
+        'data-engineering'   => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>',
+        'cloud-computing'    => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>',
+        'cybersecurity'      => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>',
+        'enterprise-it'      => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>',
+        'ai-ml'              => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>',
+        'data-analytics'     => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>',
+        'automation'         => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>',
+        'system-engineering' => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>',
+        'budget-planning'    => '<svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>',
+    );
+    return isset($map[$key]) ? $map[$key] : $map['data-engineering'];
+}
+
+/* Default services data (used as fallback when no cs_service posts exist) */
+function cs_default_services() {
+    return array(
+        array('icon' => 'data-engineering',   'title' => 'Data Engineering',                         'desc' => 'Build resilient data pipelines, lakes, and platforms that turn raw data into actionable intelligence at scale.',                                               'link' => '#'),
+        array('icon' => 'cloud-computing',    'title' => 'Cloud Computing',                          'desc' => 'Secure cloud migration, hybrid architecture, and infrastructure optimization for scalable operations.',                                                       'link' => '#'),
+        array('icon' => 'cybersecurity',      'title' => 'Cybersecurity',                            'desc' => 'Threat assessment, zero-trust architecture, and continuous monitoring for critical infrastructure.',                                                          'link' => '#'),
+        array('icon' => 'enterprise-it',      'title' => 'Enterprise IT Management &amp; Innovation','desc' => 'End-to-end IT management, modernization, and strategic technology innovation for enterprises.',                                                               'link' => '#'),
+        array('icon' => 'ai-ml',              'title' => 'AI / ML',                                  'desc' => 'Artificial intelligence and machine learning solutions for predictive analytics and intelligent automation.',                                                  'link' => '#'),
+        array('icon' => 'data-analytics',     'title' => 'Data Analytics &amp; Business Intelligence','desc' => 'Turn raw data into actionable insights with advanced analytics, dashboards, and reporting platforms.',                                                       'link' => '#'),
+        array('icon' => 'automation',         'title' => 'Technological Automation',                 'desc' => 'Streamline workflows, reduce manual effort, and accelerate operations through intelligent automation.',                                                       'link' => '#'),
+        array('icon' => 'system-engineering', 'title' => 'System Engineering',                       'desc' => 'Full-lifecycle system engineering, architecture design, and integration for complex IT ecosystems.',                                                          'link' => '#'),
+        array('icon' => 'budget-planning',    'title' => 'Budget Planning, Accounting &amp; Audit',  'desc' => 'Financial planning, audit readiness, and accounting services aligned with federal standards.',                                                                'link' => '#'),
+    );
+}
+
+/* ──────────────────────────────────────────────────────
+   Customizer: register all homepage section settings
+   ────────────────────────────────────────────────────── */
+function cs_customize_register($wp_customize) {
+
+    // Panels
+    $wp_customize->add_panel('cs_homepage', array(
+        'title'    => __('Homepage Sections', 'central-strategies'),
+        'priority' => 30,
+    ));
+    $wp_customize->add_panel('cs_company', array(
+        'title'    => __('Company Info', 'central-strategies'),
+        'priority' => 31,
+    ));
+
+    // Helper: register a text or textarea setting + control in one call
+    $reg = function($id, $label, $section, $default = '', $type = 'text') use ($wp_customize) {
+        $wp_customize->add_setting($id, array(
+            'default'           => $default,
+            'sanitize_callback' => ($type === 'textarea') ? 'sanitize_textarea_field' : 'sanitize_text_field',
+            'transport'         => 'refresh',
+        ));
+        $wp_customize->add_control($id, array(
+            'label'   => $label,
+            'section' => $section,
+            'type'    => $type,
+        ));
+    };
+
+    // ── Hero ────────────────────────────────────────────
+    $wp_customize->add_section('cs_hero', array(
+        'title' => __('Hero Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 10,
+    ));
+    $reg('cs_hero_badge',       'Badge Text',        'cs_hero', 'Service-Disabled Veteran-Owned Small Business');
+    $reg('cs_hero_heading',     'Main Heading',      'cs_hero', 'We Help Organizations Achieve More.');
+    $reg('cs_hero_subheading',  'Sub-heading',       'cs_hero', 'Our experts deliver tailored solutions to help organizations solve the most difficult challenges. Central Strategies specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.', 'textarea');
+    $reg('cs_hero_cta1_text',   'Primary CTA Text',  'cs_hero', 'Learn More');
+    $reg('cs_hero_stat1_value', 'Stat 1 Value',      'cs_hero', 'SDVOSB');
+    $reg('cs_hero_stat1_label', 'Stat 1 Label',      'cs_hero', 'Certified');
+    $reg('cs_hero_stat2_value', 'Stat 2 Value',      'cs_hero', '100+');
+    $reg('cs_hero_stat2_label', 'Stat 2 Label',      'cs_hero', 'Projects');
+    $reg('cs_hero_stat3_value', 'Stat 3 Value',      'cs_hero', '24/7');
+    $reg('cs_hero_stat3_label', 'Stat 3 Label',      'cs_hero', 'Support');
+
+    // ── Solutions ───────────────────────────────────────
+    $wp_customize->add_section('cs_solutions', array(
+        'title' => __('Solutions Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 20,
+    ));
+    $reg('cs_solutions_heading',    'Section Heading',     'cs_solutions', 'Advanced IT Solutions That Drive Innovation');
+    $reg('cs_solutions_subheading', 'Section Sub-heading', 'cs_solutions', 'We deliver comprehensive technology and consulting solutions tailored to meet the unique demands of government agencies and enterprise organizations.', 'textarea');
+
+    // ── About ───────────────────────────────────────────
+    $wp_customize->add_section('cs_about', array(
+        'title' => __('About Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 30,
+    ));
+    $reg('cs_about_heading',       'Section Heading', 'cs_about', 'A Veteran-Owned Technology Company');
+    $reg('cs_about_para1',         'Paragraph 1',     'cs_about', 'Central Strategies is a Service-Disabled Veteran-Owned Small Business (SDVOSB) that specializes in advanced IT solutions. We drive innovation, enhance efficiency, and solve complex challenges for government agencies and enterprise organizations.', 'textarea');
+    $reg('cs_about_para2',         'Paragraph 2',     'cs_about', 'Our team of cleared professionals brings deep domain expertise in cybersecurity, cloud computing, artificial intelligence, and enterprise IT management. We take a mission-first approach to every engagement, delivering measurable results that make a difference.', 'textarea');
+    $reg('cs_about_pillar1_title', 'Pillar 1 Title',  'cs_about', 'Veteran Leadership');
+    $reg('cs_about_pillar1_desc',  'Pillar 1 Desc',   'cs_about', 'Service-driven culture and values');
+    $reg('cs_about_pillar2_title', 'Pillar 2 Title',  'cs_about', 'Cleared Professionals');
+    $reg('cs_about_pillar2_desc',  'Pillar 2 Desc',   'cs_about', 'TS/SCI and Secret-cleared staff');
+    $reg('cs_about_pillar3_title', 'Pillar 3 Title',  'cs_about', 'Mission First');
+    $reg('cs_about_pillar3_desc',  'Pillar 3 Desc',   'cs_about', 'Results-oriented delivery model');
+    $reg('cs_about_pillar4_title', 'Pillar 4 Title',  'cs_about', 'Innovation Driven');
+    $reg('cs_about_pillar4_desc',  'Pillar 4 Desc',   'cs_about', 'Emerging tech with enterprise reliability');
+
+    // ── Stats ───────────────────────────────────────────
+    $wp_customize->add_section('cs_stats', array(
+        'title' => __('Stats Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 40,
+    ));
+    $reg('cs_stat1_value',  'Stat 1 Number', 'cs_stats', '100');
+    $reg('cs_stat1_suffix', 'Stat 1 Suffix', 'cs_stats', '+');
+    $reg('cs_stat1_label',  'Stat 1 Label',  'cs_stats', 'Projects Delivered');
+    $reg('cs_stat2_value',  'Stat 2 Number', 'cs_stats', '20');
+    $reg('cs_stat2_suffix', 'Stat 2 Suffix', 'cs_stats', '+');
+    $reg('cs_stat2_label',  'Stat 2 Label',  'cs_stats', 'Government Agencies');
+    $reg('cs_stat3_value',  'Stat 3 Number', 'cs_stats', '10');
+    $reg('cs_stat3_suffix', 'Stat 3 Suffix', 'cs_stats', '+');
+    $reg('cs_stat3_label',  'Stat 3 Label',  'cs_stats', 'Years Experience');
+    $reg('cs_stat4_value',  'Stat 4 Number', 'cs_stats', '99');
+    $reg('cs_stat4_suffix', 'Stat 4 Suffix', 'cs_stats', '%');
+    $reg('cs_stat4_label',  'Stat 4 Label',  'cs_stats', 'Client Retention');
+
+    // ── Clients ─────────────────────────────────────────
+    $wp_customize->add_section('cs_clients', array(
+        'title' => __('Clients Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 50,
+    ));
+    $reg('cs_clients_heading', 'Section Heading', 'cs_clients', 'Trusted by Leading Organizations');
+    $client_defaults = array('DEPT. OF DEFENSE', 'DHS', 'STATE DEPT.', 'NASA', 'NSA', 'DOJ');
+    for ($i = 1; $i <= 6; $i++) {
+        $reg("cs_client{$i}_name", "Client {$i} Name", 'cs_clients', $client_defaults[$i - 1]);
+    }
+
+    // ── CTA ─────────────────────────────────────────────
+    $wp_customize->add_section('cs_cta', array(
+        'title' => __('CTA Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 60,
+    ));
+    $reg('cs_cta_heading',    'Heading',     'cs_cta', 'Ready to Solve Your Most Difficult Challenges?');
+    $reg('cs_cta_subheading', 'Sub-heading', 'cs_cta', "Our experts deliver tailored solutions that drive innovation, enhance efficiency, and create lasting impact. Let's discuss your mission.", 'textarea');
+
+    // ── Careers ─────────────────────────────────────────
+    $wp_customize->add_section('cs_careers', array(
+        'title' => __('Careers Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 70,
+    ));
+    $reg('cs_careers_heading',      'Heading',     'cs_careers', 'Join Our Mission');
+    $reg('cs_careers_desc',         'Description', 'cs_careers', "We're always looking for talented professionals who are passionate about making a difference through technology. Join a veteran-led team where your work directly supports critical missions.", 'textarea');
+    $reg('cs_careers_cta_url',      'Button URL',  'cs_careers', '#');
+    $tag_defaults = array('Cybersecurity Analysts', 'Cloud Engineers', 'Data Scientists', 'Program Managers', 'System Engineers');
+    for ($i = 1; $i <= 5; $i++) {
+        $reg("cs_careers_tag{$i}", "Job Tag {$i}", 'cs_careers', $tag_defaults[$i - 1]);
+    }
+    $reg('cs_careers_stat1_value', 'Stat 1 Value', 'cs_careers', '50+');
+    $reg('cs_careers_stat1_label', 'Stat 1 Label', 'cs_careers', 'Team Members');
+    $reg('cs_careers_stat2_value', 'Stat 2 Value', 'cs_careers', '85%');
+    $reg('cs_careers_stat2_label', 'Stat 2 Label', 'cs_careers', 'Cleared Staff');
+    $reg('cs_careers_stat3_value', 'Stat 3 Value', 'cs_careers', '4.8/5');
+    $reg('cs_careers_stat3_label', 'Stat 3 Label', 'cs_careers', 'Glassdoor Rating');
+    $reg('cs_careers_stat4_value', 'Stat 4 Value', 'cs_careers', '100%');
+    $reg('cs_careers_stat4_label', 'Stat 4 Label', 'cs_careers', 'Remote Friendly');
+
+    // ── Insights ────────────────────────────────────────
+    $wp_customize->add_section('cs_insights', array(
+        'title' => __('Insights Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 80,
+    ));
+    $reg('cs_insights_heading', 'Section Heading', 'cs_insights', 'Latest Thinking');
+
+    // ── Company Info ────────────────────────────────────
+    $wp_customize->add_section('cs_company_info', array(
+        'title' => __('Contact &amp; Identity', 'central-strategies'), 'panel' => 'cs_company', 'priority' => 10,
+    ));
+    $reg('cs_phone',      'Phone Number', 'cs_company_info', '(703) 873-7049');
+    $reg('cs_email',      'Email Address','cs_company_info', 'info@centralstrategies.com');
+    $reg('cs_address',    'Address',      'cs_company_info', 'Washington DC–Baltimore Area, United States', 'textarea');
+    $reg('cs_cage_code',  'CAGE Code',    'cs_company_info', '9L4U3');
+    $reg('cs_uei_number', 'UEI Number',   'cs_company_info', 'RVF8RK4SJRG8');
+}
+add_action('customize_register', 'cs_customize_register');
