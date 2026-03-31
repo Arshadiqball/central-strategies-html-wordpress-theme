@@ -24,11 +24,6 @@
                   </div>
                   <div class="h-px bg-white/10"></div>
 
-                  <div class="bg-white/5 rounded-lg p-4 border border-white/5">
-                    <div class="text-[11px] text-slate-500 uppercase tracking-wider font-medium mb-1">Socioeconomic Status</div>
-                    <div class="text-sm font-bold text-white">SDVOSB</div>
-                  </div>
-
                   <div class="flex items-center gap-3">
                     <div class="inline-flex shrink-0 items-center rounded border border-white/10 bg-white p-1.5">
                       <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/gsa-logo.png'); ?>" alt="GSA" width="120" height="80" decoding="async" class="h-[5.5rem] w-auto max-w-[5.5rem] object-contain object-center" />

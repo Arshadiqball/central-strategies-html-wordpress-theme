@@ -35,21 +35,6 @@
               </a>
             </div>
 
-            <!-- Quick Stats Row -->
-            <div class="hero-stats mt-16 grid grid-cols-3 gap-8 max-w-lg">
-              <div>
-                <div class="text-3xl font-extrabold text-white"><?php echo esc_html(get_theme_mod('cs_hero_stat1_value', 'SDVOSB')); ?></div>
-                <div class="mt-1 text-xs font-medium text-slate-500 uppercase tracking-wider"><?php echo esc_html(get_theme_mod('cs_hero_stat1_label', 'Certified')); ?></div>
-              </div>
-              <div class="border-l border-slate-800 pl-8">
-                <div class="text-3xl font-extrabold text-white"><?php echo esc_html(get_theme_mod('cs_hero_stat2_value', '100+')); ?></div>
-                <div class="mt-1 text-xs font-medium text-slate-500 uppercase tracking-wider"><?php echo esc_html(get_theme_mod('cs_hero_stat2_label', 'Projects')); ?></div>
-              </div>
-              <div class="border-l border-slate-800 pl-8">
-                <div class="text-3xl font-extrabold text-white"><?php echo esc_html(get_theme_mod('cs_hero_stat3_value', '24/7')); ?></div>
-                <div class="mt-1 text-xs font-medium text-slate-500 uppercase tracking-wider"><?php echo esc_html(get_theme_mod('cs_hero_stat3_label', 'Support')); ?></div>
-              </div>
-            </div>
           </div>
 
           <!-- Visual Column -->

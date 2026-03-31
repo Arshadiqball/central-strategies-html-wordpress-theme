@@ -15,15 +15,6 @@
           <p class="text-sm text-slate-500 leading-relaxed">
             <?php echo esc_html(get_bloginfo('description')); ?>
           </p>
-          <div class="mt-5 flex flex-wrap items-center gap-2">
-            <a href="<?php echo esc_url(cs_logo_home_url()); ?>" class="inline-flex shrink-0 items-center rounded border border-white/10 bg-white p-1.5 hover:border-white/25 transition-colors" aria-label="<?php esc_attr_e('GSA — General Services Administration', 'central-strategies'); ?>">
-              <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/gsa-logo.png'); ?>" alt="GSA" width="120" height="80" decoding="async" class="h-[5.5rem] w-auto max-w-[5.5rem] object-contain object-center" />
-            </a>
-            <a href="<?php echo esc_url(cs_logo_home_url()); ?>" class="inline-flex shrink-0 items-center rounded border border-white/10 bg-white p-1.5 hover:border-white/25 transition-colors" aria-label="<?php esc_attr_e('U.S. Small Business Administration — Service-Disabled Veteran-Owned certified', 'central-strategies'); ?>">
-              <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-certified.png'); ?>" alt="" width="120" height="180" decoding="async" class="h-[5.5rem] w-auto max-w-[5.5rem] object-contain object-left" />
-            </a>
-            <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400 uppercase tracking-wider">CAGE: 9L4U3</span>
-          </div>
           <div class="flex items-center gap-3 mt-6">
             <a href="#" class="w-9 h-9 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center hover:bg-cs-600 hover:border-cs-600 transition-all" aria-label="LinkedIn">
               <svg class="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
