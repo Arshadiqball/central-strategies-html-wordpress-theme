@@ -18,6 +18,7 @@ function central_strategies_setup() {
     add_theme_support('title-tag');
     add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script'));
     add_theme_support('post-thumbnails');
+    add_theme_support('customize-selective-refresh-widgets');
     add_theme_support('custom-logo', array(
         'height'      => 1080,
         'width'       => 1080,
@@ -48,6 +49,27 @@ function central_strategies_scripts() {
     );
 }
 add_action('wp_enqueue_scripts', 'central_strategies_scripts');
+
+/* ──────────────────────────────────────────────────────
+   Favicon: explicit link tags for Google / Bing
+   WordPress outputs basic site_icon via wp_head(), but
+   search engines need apple-touch-icon and explicit sizes.
+   ────────────────────────────────────────────────────── */
+function cs_output_favicon_tags() {
+    if (!has_site_icon()) {
+        return;
+    }
+    $icon_32  = get_site_icon_url(32);
+    $icon_180 = get_site_icon_url(180);
+    $icon_192 = get_site_icon_url(192);
+    $icon_270 = get_site_icon_url(270);
+
+    echo '<link rel="icon" type="image/png" sizes="32x32" href="' . esc_url($icon_32) . '" />' . "\n";
+    echo '<link rel="icon" type="image/png" sizes="192x192" href="' . esc_url($icon_192) . '" />' . "\n";
+    echo '<link rel="apple-touch-icon" sizes="180x180" href="' . esc_url($icon_180) . '" />' . "\n";
+    echo '<meta name="msapplication-TileImage" content="' . esc_url($icon_270) . '" />' . "\n";
+}
+add_action('wp_head', 'cs_output_favicon_tags', 4);
 
 /* ──────────────────────────────────────────────────────
    Custom Walker — Desktop nav (styled <a> tags)
@@ -95,6 +117,25 @@ class CS_Footer_Nav_Walker extends Walker_Nav_Menu {
     public function end_el(&$output, $item, $depth = 0, $args = null) {}
     public function start_lvl(&$output, $depth = 0, $args = null) {}
     public function end_lvl(&$output, $depth = 0, $args = null) {}
+}
+
+/* ──────────────────────────────────────────────────────
+   Fallback: footer Company column (when no menu is set)
+   ────────────────────────────────────────────────────── */
+function cs_footer_company_fallback() {
+    $links = array(
+        'about'    => 'About',
+        'services' => 'Services',
+        'careers'  => 'Careers',
+        'contact'  => 'Contact',
+    );
+    echo '<ul class="space-y-3">';
+    foreach ($links as $slug => $label) {
+        $page = get_page_by_path($slug);
+        $url  = $page ? get_permalink($page) : home_url('/' . $slug . '/');
+        echo '<li><a href="' . esc_url($url) . '" class="text-sm text-slate-500 hover:text-white transition-colors">' . esc_html($label) . '</a></li>';
+    }
+    echo '</ul>';
 }
 
 /* ──────────────────────────────────────────────────────
@@ -155,14 +196,9 @@ function cs_setup_default_pages() {
             'template' => 'page-about.php',
         ),
         array(
-            'title'    => 'Blog',
-            'slug'     => 'blog',
-            'template' => 'page-blog.php',
-        ),
-        array(
-            'title'    => 'FAQ',
-            'slug'     => 'faq',
-            'template' => 'page-faq.php',
+            'title'    => 'Careers',
+            'slug'     => 'careers',
+            'template' => 'page-careers.php',
         ),
     );
 
@@ -200,8 +236,7 @@ function cs_maybe_fix_page_templates() {
         'contact'  => 'page-contact.php',
         'services' => 'page-services.php',
         'about'    => 'page-about.php',
-        'blog'     => 'page-blog.php',
-        'faq'      => 'page-faq.php',
+        'careers'  => 'page-careers.php',
     );
     foreach ($map as $slug => $template) {
         $page = get_page_by_path($slug);
@@ -512,73 +547,18 @@ function cs_customize_register($wp_customize) {
     $wp_customize->add_section('cs_hero', array(
         'title' => __('Hero Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 10,
     ));
-    $reg('cs_hero_badge',       'Badge Text',        'cs_hero', 'Service-Disabled Veteran-Owned Small Business');
-    $reg('cs_hero_heading',     'Main Heading',      'cs_hero', 'We Help Organizations Achieve More.');
-    $reg('cs_hero_subheading',  'Sub-heading',       'cs_hero', 'Our experts deliver tailored solutions to help organizations solve the most difficult challenges. Central Strategies specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.', 'textarea');
-    $reg('cs_hero_cta1_text',   'Primary CTA Text',  'cs_hero', 'Learn More');
-    $reg('cs_hero_stat1_value', 'Stat 1 Value',      'cs_hero', 'SDVOSB');
-    $reg('cs_hero_stat1_label', 'Stat 1 Label',      'cs_hero', 'Certified');
-    $reg('cs_hero_stat2_value', 'Stat 2 Value',      'cs_hero', '100+');
-    $reg('cs_hero_stat2_label', 'Stat 2 Label',      'cs_hero', 'Projects');
-    $reg('cs_hero_stat3_value', 'Stat 3 Value',      'cs_hero', '24/7');
-    $reg('cs_hero_stat3_label', 'Stat 3 Label',      'cs_hero', 'Support');
-
-    // ── Solutions ───────────────────────────────────────
-    $wp_customize->add_section('cs_solutions', array(
-        'title' => __('Solutions Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 20,
-    ));
-    $reg('cs_solutions_heading',    'Section Heading',     'cs_solutions', 'Advanced IT Solutions That Drive Innovation');
-    $reg('cs_solutions_subheading', 'Section Sub-heading', 'cs_solutions', 'We deliver comprehensive technology and consulting solutions tailored to meet the unique demands of government agencies and enterprise organizations.', 'textarea');
+    $reg('cs_hero_heading',     'Headline',      'cs_hero', 'Mission-Driven Intelligence & Government Advisory');
+    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Supporting U.S. government agencies and defense innovators with strategic insight, analytics, and operational expertise.', 'textarea');
 
     // ── About ───────────────────────────────────────────
     $wp_customize->add_section('cs_about', array(
         'title' => __('About Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 30,
     ));
-    $reg('cs_about_heading',       'Section Heading', 'cs_about', 'A Veteran-Owned Technology Company');
-    $reg('cs_about_para1',         'Paragraph 1',     'cs_about', 'Central Strategies is a Service-Disabled Veteran-Owned Small Business (SDVOSB) that specializes in advanced IT solutions. We drive innovation, enhance efficiency, and solve complex challenges for government agencies and enterprise organizations.', 'textarea');
-    $reg('cs_about_para2',         'Paragraph 2',     'cs_about', 'Our team of cleared professionals brings deep domain expertise in cybersecurity, cloud computing, artificial intelligence, and enterprise IT management. We take a mission-first approach to every engagement, delivering measurable results that make a difference.', 'textarea');
-    $reg('cs_about_pillar1_title', 'Pillar 1 Title',  'cs_about', 'Veteran Leadership');
-    $reg('cs_about_pillar1_desc',  'Pillar 1 Desc',   'cs_about', 'Service-driven culture and values');
-    $reg('cs_about_pillar2_title', 'Pillar 2 Title',  'cs_about', 'Cleared Professionals');
-    $reg('cs_about_pillar2_desc',  'Pillar 2 Desc',   'cs_about', 'TS/SCI and Secret-cleared staff');
-    $reg('cs_about_pillar3_title', 'Pillar 3 Title',  'cs_about', 'Mission First');
-    $reg('cs_about_pillar3_desc',  'Pillar 3 Desc',   'cs_about', 'Results-oriented delivery model');
-    $reg('cs_about_pillar4_title', 'Pillar 4 Title',  'cs_about', 'Innovation Driven');
-    $reg('cs_about_pillar4_desc',  'Pillar 4 Desc',   'cs_about', 'Emerging tech with enterprise reliability');
-
-    // ── Stats ───────────────────────────────────────────
-    $wp_customize->add_section('cs_stats', array(
-        'title' => __('Stats Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 40,
-    ));
-    $reg('cs_stat1_value',  'Stat 1 Number', 'cs_stats', '100');
-    $reg('cs_stat1_suffix', 'Stat 1 Suffix', 'cs_stats', '+');
-    $reg('cs_stat1_label',  'Stat 1 Label',  'cs_stats', 'Projects Delivered');
-    $reg('cs_stat2_value',  'Stat 2 Number', 'cs_stats', '20');
-    $reg('cs_stat2_suffix', 'Stat 2 Suffix', 'cs_stats', '+');
-    $reg('cs_stat2_label',  'Stat 2 Label',  'cs_stats', 'Government Agencies');
-    $reg('cs_stat3_value',  'Stat 3 Number', 'cs_stats', '10');
-    $reg('cs_stat3_suffix', 'Stat 3 Suffix', 'cs_stats', '+');
-    $reg('cs_stat3_label',  'Stat 3 Label',  'cs_stats', 'Years Experience');
-    $reg('cs_stat4_value',  'Stat 4 Number', 'cs_stats', '99');
-    $reg('cs_stat4_suffix', 'Stat 4 Suffix', 'cs_stats', '%');
-    $reg('cs_stat4_label',  'Stat 4 Label',  'cs_stats', 'Client Retention');
-
-    // ── Clients ─────────────────────────────────────────
-    $wp_customize->add_section('cs_clients', array(
-        'title' => __('Clients Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 50,
-    ));
-    $reg('cs_clients_heading', 'Section Heading', 'cs_clients', 'Trusted by Leading Organizations');
-    $client_defaults = array('DEPT. OF DEFENSE', 'DHS', 'STATE DEPT.', 'NASA', 'NSA', 'DOJ');
-    for ($i = 1; $i <= 6; $i++) {
-        $reg("cs_client{$i}_name", "Client {$i} Name", 'cs_clients', $client_defaults[$i - 1]);
-    }
-
-    // ── CTA ─────────────────────────────────────────────
-    $wp_customize->add_section('cs_cta', array(
-        'title' => __('CTA Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 60,
-    ));
-    $reg('cs_cta_heading',    'Heading',     'cs_cta', 'Ready to Solve Your Most Difficult Challenges?');
-    $reg('cs_cta_subheading', 'Sub-heading', 'cs_cta', "Our experts deliver tailored solutions that drive innovation, enhance efficiency, and create lasting impact. Let's discuss your mission.", 'textarea');
+    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies is a government advisory and strategic consulting firm serving federal agencies, defense organizations, and national-security partners. We provide insight, analysis, and mission-aligned solutions to support complex operational, policy, and technology initiatives. Our team brings deep experience across intelligence, federal operations, and emerging tech.', 'textarea');
+    $reg('cs_about_pillar1_title', 'Capability 1',    'cs_about', 'Strategic advisory');
+    $reg('cs_about_pillar2_title', 'Capability 2',    'cs_about', 'Program support');
+    $reg('cs_about_pillar3_title', 'Capability 3',    'cs_about', 'Research & analysis');
+    $reg('cs_about_pillar4_title', 'Capability 4',    'cs_about', 'Technology & innovation strategy');
 
     // ── Careers ─────────────────────────────────────────
     $wp_customize->add_section('cs_careers', array(
@@ -600,12 +580,6 @@ function cs_customize_register($wp_customize) {
     $reg('cs_careers_stat4_value', 'Stat 4 Value', 'cs_careers', '100%');
     $reg('cs_careers_stat4_label', 'Stat 4 Label', 'cs_careers', 'Remote Friendly');
 
-    // ── Insights ────────────────────────────────────────
-    $wp_customize->add_section('cs_insights', array(
-        'title' => __('Insights Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 80,
-    ));
-    $reg('cs_insights_heading', 'Section Heading', 'cs_insights', 'Latest Thinking');
-
     // ── Company Info ────────────────────────────────────
     $wp_customize->add_section('cs_company_info', array(
         'title' => __('Contact &amp; Identity', 'central-strategies'), 'panel' => 'cs_company', 'priority' => 10,
@@ -613,7 +587,8 @@ function cs_customize_register($wp_customize) {
     $reg('cs_phone',      'Phone Number', 'cs_company_info', '(703) 873-7049');
     $reg('cs_email',      'Email Address','cs_company_info', 'info@centralstrategies.com');
     $reg('cs_address',    'Address',      'cs_company_info', 'Washington DC–Baltimore Area, United States', 'textarea');
-    $reg('cs_cage_code',  'CAGE Code',    'cs_company_info', '9L4U3');
-    $reg('cs_uei_number', 'UEI Number',   'cs_company_info', 'RVF8RK4SJRG8');
+    $reg('cs_cage_code',     'CAGE Code',     'cs_company_info', '9L4U3');
+    $reg('cs_uei_number',    'UEI Number',    'cs_company_info', 'RVF8RK4SJRG8');
+    $reg('cs_gsa_schedule',  'GSA Schedule',  'cs_company_info', 'GSA MAS');
 }
 add_action('customize_register', 'cs_customize_register');

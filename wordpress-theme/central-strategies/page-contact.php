@@ -89,52 +89,8 @@ get_header();
             </h1>
 
             <p class="hero-p mt-7 text-lg text-slate-400 leading-relaxed max-w-lg">
-              <?php
-              printf(
-                  esc_html__('Please call us at %s or use the form to contact us by email. Our team is ready to help you solve your most complex challenges.', 'central-strategies'),
-                  '<strong class="text-white font-semibold">' . esc_html($cs_phone_display) . '</strong>'
-              );
-              ?>
+              <?php esc_html_e("Fill out the form and our team will get back to you within one business day. We're ready to help you solve your most complex challenges.", 'central-strategies'); ?>
             </p>
-
-            <!-- Contact info cards -->
-            <div class="hero-form mt-12 space-y-4">
-
-              <div class="flex items-center gap-4 p-5 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
-                <div class="w-11 h-11 bg-cs-600/20 rounded-xl flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                </div>
-                <div>
-                  <div class="text-[11px] text-slate-500 uppercase tracking-wider font-medium mb-0.5"><?php esc_html_e('Phone', 'central-strategies'); ?></div>
-                  <a href="tel:+1<?php echo esc_attr(preg_replace('/[^0-9]/', '', $cs_phone_display)); ?>" class="text-white font-bold hover:text-cs-400 transition-colors"><?php echo esc_html($cs_phone_display); ?></a>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-4 p-5 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
-                <div class="w-11 h-11 bg-cs-600/20 rounded-xl flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                </div>
-                <div>
-                  <div class="text-[11px] text-slate-500 uppercase tracking-wider font-medium mb-0.5"><?php esc_html_e('Email', 'central-strategies'); ?></div>
-                  <a href="mailto:<?php echo esc_attr($cs_email_display); ?>" class="text-white font-bold hover:text-cs-400 transition-colors"><?php echo esc_html($cs_email_display); ?></a>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-4 p-5 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
-                <div class="w-11 h-11 bg-cs-600/20 rounded-xl flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                </div>
-                <div>
-                  <div class="text-[11px] text-slate-500 uppercase tracking-wider font-medium mb-0.5"><?php esc_html_e('Location', 'central-strategies'); ?></div>
-                  <span class="text-white font-bold"><?php echo esc_html($cs_address); ?></span>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-3 pt-4">
-                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span class="text-xs text-slate-500 font-medium"><?php esc_html_e('Service-Disabled Veteran-Owned Small Business (SDVOSB)', 'central-strategies'); ?></span>
-              </div>
-            </div>
           </div>
 
           <!-- Right: Contact form -->
@@ -217,61 +173,59 @@ get_header();
       </div>
     </section>
 
-
-    <!-- Why Contact Us -->
-    <section class="py-16 lg:py-20 bg-white border-b border-slate-100">
+    <!-- Trust / Why Us -->
+    <section class="py-16 lg:py-20 bg-white border-t border-slate-100">
       <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-14" data-animate="fade-up">
+        <div class="text-center max-w-3xl mx-auto mb-12" data-animate="fade-up">
           <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            <span class="w-8 h-px bg-cs-600"></span>
+            <span class="w-8 h-px bg-cs-600/50"></span>
             <?php esc_html_e('Why Central Strategies', 'central-strategies'); ?>
-            <span class="w-8 h-px bg-cs-600"></span>
+            <span class="w-8 h-px bg-cs-600/50"></span>
           </div>
           <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
             <?php esc_html_e('A partner you can', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('trust.', 'central-strategies'); ?></span>
           </h2>
-          <p class="mt-5 text-lg text-slate-500 leading-relaxed">
+          <p class="mt-4 text-slate-500 leading-relaxed">
             <?php esc_html_e('When you work with Central Strategies, you work with a team that understands the stakes.', 'central-strategies'); ?>
           </p>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" data-stagger>
-          <?php
-          $cs_trust = array(
-              array(
-                  'icon' => '<svg class="w-6 h-6 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>',
-                  'title' => 'Veteran-Owned',
-                  'desc'  => 'SDVOSB-certified with a service-driven culture rooted in discipline and accountability.',
-              ),
-              array(
-                  'icon' => '<svg class="w-6 h-6 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>',
-                  'title' => 'Cleared Staff',
-                  'desc'  => 'TS/SCI and Secret-cleared professionals ready for sensitive mission environments.',
-              ),
-              array(
-                  'icon' => '<svg class="w-6 h-6 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>',
-                  'title' => 'Fast Response',
-                  'desc'  => 'We respond to every inquiry within one business day — usually much faster.',
-              ),
-              array(
-                  'icon' => '<svg class="w-6 h-6 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>',
-                  'title' => '99% Retention',
-                  'desc'  => 'Our clients come back because we deliver measurable results, every time.',
-              ),
-          );
-          foreach ($cs_trust as $cs_t) :
-          ?>
-          <div class="bg-white rounded-xl border border-slate-200 p-7 text-center hover:shadow-lg hover:shadow-slate-100 transition-all duration-300" data-animate="fade-up">
-            <div class="w-12 h-12 bg-cs-50 rounded-xl flex items-center justify-center mx-auto mb-5">
-              <?php echo $cs_t['icon']; ?>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-stagger>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
+            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.077 10.1c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2"><?php echo esc_html($cs_t['title']); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php echo esc_html($cs_t['desc']); ?></p>
+            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Veteran-Owned', 'central-strategies'); ?></h3>
+            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('SDVOSB-certified with a service-driven culture built on discipline and accountability.', 'central-strategies'); ?></p>
           </div>
-          <?php endforeach; ?>
+
+          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
+            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 11h14v9H5v-9z" /></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Cleared Staff', 'central-strategies'); ?></h3>
+            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('TS/SCI and Secret-cleared professionals ready for sensitive mission environments.', 'central-strategies'); ?></p>
+          </div>
+
+          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
+            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Fast Response', 'central-strategies'); ?></h3>
+            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('We respond to every inquiry within one business day - usually much faster.', 'central-strategies'); ?></p>
+          </div>
+
+          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
+            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('99% Retention', 'central-strategies'); ?></h3>
+            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('Our clients come back because we deliver measurable results, every time.', 'central-strategies'); ?></p>
+          </div>
         </div>
       </div>
     </section>
+
 
 </main>
 
