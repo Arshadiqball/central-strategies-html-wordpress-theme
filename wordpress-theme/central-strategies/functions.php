@@ -171,6 +171,26 @@ function cs_contact_url() {
 }
 
 /* ──────────────────────────────────────────────────────
+   Helper: Careers page URL (for breadcrumbs / listings)
+   ────────────────────────────────────────────────────── */
+function cs_careers_page_url() {
+    $page = get_page_by_path('careers');
+    return $page ? get_permalink($page) : home_url('/careers/');
+}
+
+/* ──────────────────────────────────────────────────────
+   Flush permalinks once after job CPT becomes public
+   ────────────────────────────────────────────────────── */
+function cs_maybe_flush_job_public_rewrites() {
+    if (get_option('cs_job_public_rewrites_v1') === '1') {
+        return;
+    }
+    flush_rewrite_rules(false);
+    update_option('cs_job_public_rewrites_v1', '1');
+}
+add_action('init', 'cs_maybe_flush_job_public_rewrites', 999);
+
+/* ──────────────────────────────────────────────────────
    Theme activation: auto-create & assign page templates
    ────────────────────────────────────────────────────── */
 function cs_setup_default_pages() {
@@ -411,6 +431,177 @@ function cs_inquiry_admin_menu_badge() {
 add_action('admin_menu', 'cs_inquiry_admin_menu_badge');
 
 /* ──────────────────────────────────────────────────────
+   Custom Post Type: Career Applications (job apply form submissions)
+   ────────────────────────────────────────────────────── */
+function cs_register_career_application_cpt() {
+    register_post_type('cs_career_application', array(
+        'labels' => array(
+            'name'               => __('Career Applications', 'central-strategies'),
+            'singular_name'      => __('Career Application', 'central-strategies'),
+            'all_items'          => __('Career Applications', 'central-strategies'),
+            'view_item'          => __('View Application', 'central-strategies'),
+            'not_found'          => __('No applications found.', 'central-strategies'),
+            'not_found_in_trash' => __('No applications in trash.', 'central-strategies'),
+        ),
+        'public'        => false,
+        'show_ui'       => true,
+        'show_in_menu'  => true,
+        'supports'      => array('title'),
+        'menu_icon'     => 'dashicons-clipboard',
+        'menu_position' => 23,
+        'rewrite'       => false,
+        'capabilities'  => array(
+            'create_posts' => 'do_not_allow',
+        ),
+        'map_meta_cap'  => true,
+    ));
+}
+add_action('init', 'cs_register_career_application_cpt');
+
+function cs_career_application_columns($columns) {
+    return array(
+        'cb'           => $columns['cb'],
+        'title'        => __('Applicant', 'central-strategies'),
+        'cs_email'     => __('Email', 'central-strategies'),
+        'cs_phone'     => __('Phone', 'central-strategies'),
+        'cs_job'       => __('Job', 'central-strategies'),
+        'cs_message'   => __('Cover letter', 'central-strategies'),
+        'cs_status'    => __('Status', 'central-strategies'),
+        'date'         => __('Date', 'central-strategies'),
+    );
+}
+add_filter('manage_cs_career_application_posts_columns', 'cs_career_application_columns');
+
+function cs_career_application_column_content($column, $post_id) {
+    switch ($column) {
+        case 'cs_email':
+            $email = get_post_meta($post_id, '_cs_email', true);
+            echo $email ? '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>' : '—';
+            break;
+        case 'cs_phone':
+            echo esc_html(get_post_meta($post_id, '_cs_phone', true) ?: '—');
+            break;
+        case 'cs_job':
+            $jid   = (int) get_post_meta($post_id, '_cs_job_id', true);
+            $title = get_post_meta($post_id, '_cs_job_title', true);
+            if ($jid && get_post_status($jid)) {
+                echo '<a href="' . esc_url(get_edit_post_link($jid, 'raw')) . '">' . esc_html($title ?: get_the_title($jid)) . '</a>';
+            } else {
+                echo esc_html($title ?: '—');
+            }
+            break;
+        case 'cs_message':
+            $msg = get_post_meta($post_id, '_cs_message', true);
+            echo '<span title="' . esc_attr($msg) . '">' . esc_html(wp_trim_words($msg, 14, '…')) . '</span>';
+            break;
+        case 'cs_status':
+            $status = get_post_meta($post_id, '_cs_status', true) ?: 'new';
+            $labels = array('new' => '🟢 New', 'read' => '⚪ Read', 'replied' => '🔵 Replied');
+            echo isset($labels[$status]) ? $labels[$status] : esc_html($status);
+            break;
+    }
+}
+add_action('manage_cs_career_application_posts_custom_column', 'cs_career_application_column_content', 10, 2);
+
+function cs_career_application_sortable_columns($columns) {
+    $columns['cs_status'] = 'cs_status';
+    return $columns;
+}
+add_filter('manage_edit-cs_career_application_sortable_columns', 'cs_career_application_sortable_columns');
+
+function cs_career_application_detail_meta_box() {
+    add_meta_box('cs_career_application_detail', __('Application Details', 'central-strategies'), 'cs_career_application_detail_cb', 'cs_career_application', 'normal', 'high');
+    add_meta_box('cs_career_application_status', __('Status', 'central-strategies'), 'cs_career_application_status_cb', 'cs_career_application', 'side', 'high');
+}
+add_action('add_meta_boxes', 'cs_career_application_detail_meta_box');
+
+function cs_career_application_detail_cb($post) {
+    $job_id    = (int) get_post_meta($post->ID, '_cs_job_id', true);
+    $job_title = get_post_meta($post->ID, '_cs_job_title', true);
+    $link_url  = get_post_meta($post->ID, '_cs_link_url', true);
+    $email     = get_post_meta($post->ID, '_cs_email', true);
+    $phone     = get_post_meta($post->ID, '_cs_phone', true);
+    $message   = get_post_meta($post->ID, '_cs_message', true);
+    $job_label = $job_title ?: ($job_id ? get_the_title($job_id) : '—');
+
+    echo '<table class="widefat" style="border:0"><tbody>';
+    echo '<tr><th style="width:160px;padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('Applicant name', 'central-strategies') . '</th><td style="padding:10px 12px">' . esc_html(get_the_title($post->ID)) . '</td></tr>';
+    echo '<tr><th style="padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('Email', 'central-strategies') . '</th><td style="padding:10px 12px">';
+    echo $email && is_email($email) ? '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>' : esc_html($email ?: '—');
+    echo '</td></tr>';
+    echo '<tr><th style="padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('Phone', 'central-strategies') . '</th><td style="padding:10px 12px">' . esc_html($phone ?: '—') . '</td></tr>';
+    echo '<tr><th style="padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('Job applied for', 'central-strategies') . '</th><td style="padding:10px 12px">' . esc_html($job_label) . '</td></tr>';
+    echo '<tr><th style="padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('LinkedIn / portfolio URL', 'central-strategies') . '</th><td style="padding:10px 12px">';
+    if (!empty($link_url)) {
+        echo '<a href="' . esc_url($link_url) . '" target="_blank" rel="noopener noreferrer">' . esc_html($link_url) . '</a>';
+    } else {
+        echo '—';
+    }
+    echo '</td></tr>';
+    echo '<tr><th style="padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('Cover letter', 'central-strategies') . '</th><td style="padding:10px 12px">' . nl2br(esc_html($message)) . '</td></tr>';
+
+    if ($job_id && get_post($job_id)) {
+        echo '<tr><th style="padding:10px 12px;font-weight:600;vertical-align:top">' . esc_html__('Job listing', 'central-strategies') . '</th><td style="padding:10px 12px">';
+        echo '<a href="' . esc_url(get_edit_post_link($job_id, 'raw')) . '">' . esc_html__('Edit job in WordPress', 'central-strategies') . '</a>';
+        echo ' · <a href="' . esc_url(get_permalink($job_id)) . '" target="_blank" rel="noopener noreferrer">' . esc_html__('View live posting', 'central-strategies') . '</a>';
+        echo '</td></tr>';
+    }
+    echo '</tbody></table>';
+    if (get_post_meta($post->ID, '_cs_status', true) === 'new') {
+        update_post_meta($post->ID, '_cs_status', 'read');
+    }
+}
+
+function cs_career_application_status_cb($post) {
+    wp_nonce_field('cs_career_application_status_save', 'cs_career_application_status_nonce');
+    $status = get_post_meta($post->ID, '_cs_status', true) ?: 'new';
+    $options = array(
+        'new'     => 'New',
+        'read'    => 'Read',
+        'replied' => 'Replied',
+    );
+    echo '<select name="cs_career_application_status" style="width:100%">';
+    foreach ($options as $key => $label) {
+        echo '<option value="' . esc_attr($key) . '"' . selected($status, $key, false) . '>' . esc_html($label) . '</option>';
+    }
+    echo '</select>';
+}
+
+function cs_save_career_application_status($post_id) {
+    if (!isset($_POST['cs_career_application_status_nonce']) || !wp_verify_nonce($_POST['cs_career_application_status_nonce'], 'cs_career_application_status_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    if (isset($_POST['cs_career_application_status'])) {
+        $allowed = array('new', 'read', 'replied');
+        $val = sanitize_key($_POST['cs_career_application_status']);
+        if (in_array($val, $allowed, true)) {
+            update_post_meta($post_id, '_cs_status', $val);
+        }
+    }
+}
+add_action('save_post_cs_career_application', 'cs_save_career_application_status');
+
+function cs_career_application_admin_menu_badge() {
+    $new_unread = (int) (new WP_Query(array(
+        'post_type'      => 'cs_career_application',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'meta_query'     => array(array('key' => '_cs_status', 'value' => 'new', 'compare' => '=')),
+        'fields'         => 'ids',
+    )))->found_posts;
+    if ($new_unread > 0) {
+        global $menu;
+        foreach ($menu as &$item) {
+            if (isset($item[5]) && $item[5] === 'menu-posts-cs_career_application') {
+                $item[0] .= ' <span class="awaiting-mod">' . $new_unread . '</span>';
+                break;
+            }
+        }
+    }
+}
+add_action('admin_menu', 'cs_career_application_admin_menu_badge');
+
+/* ──────────────────────────────────────────────────────
    Custom Post Type: Service (Solutions section cards)
    ────────────────────────────────────────────────────── */
 function cs_register_post_types() {
@@ -430,6 +621,31 @@ function cs_register_post_types() {
         'menu_position' => 20,
         'rewrite'       => false,
     ));
+
+    register_post_type('cs_job', array(
+        'labels' => array(
+            'name'          => __('Jobs', 'central-strategies'),
+            'singular_name' => __('Job', 'central-strategies'),
+            'add_new_item'  => __('Add New Job', 'central-strategies'),
+            'edit_item'     => __('Edit Job', 'central-strategies'),
+            'view_item'     => __('View Job', 'central-strategies'),
+            'not_found'     => __('No jobs found.', 'central-strategies'),
+        ),
+        'public'              => true,
+        'publicly_queryable'  => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => false,
+        'exclude_from_search' => true,
+        'supports'            => array('title', 'editor', 'excerpt', 'thumbnail', 'page-attributes'),
+        'menu_icon'           => 'dashicons-id',
+        'menu_position'       => 21,
+        'has_archive'         => false,
+        'rewrite'             => array(
+            'slug'       => 'careers/job',
+            'with_front' => false,
+        ),
+    ));
 }
 add_action('init', 'cs_register_post_types');
 
@@ -439,6 +655,11 @@ function cs_service_meta_boxes() {
     add_meta_box('cs_service_link', __('Card Link URL', 'central-strategies'), 'cs_service_link_cb', 'cs_service', 'side');
 }
 add_action('add_meta_boxes', 'cs_service_meta_boxes');
+
+function cs_job_meta_boxes() {
+    add_meta_box('cs_job_details', __('Job Details', 'central-strategies'), 'cs_job_details_cb', 'cs_job', 'side');
+}
+add_action('add_meta_boxes', 'cs_job_meta_boxes');
 
 function cs_service_icon_cb($post) {
     wp_nonce_field('cs_service_meta', 'cs_service_meta_nonce');
@@ -457,6 +678,20 @@ function cs_service_link_cb($post) {
     echo '<p class="description">Leave blank to hide "Learn More" link.</p>';
 }
 
+function cs_job_details_cb($post) {
+    wp_nonce_field('cs_job_meta', 'cs_job_meta_nonce');
+    $type     = get_post_meta($post->ID, '_cs_job_type', true);
+    $location = get_post_meta($post->ID, '_cs_job_location', true);
+
+    echo '<p><label for="cs_job_type"><strong>' . esc_html__('Job Type', 'central-strategies') . '</strong></label></p>';
+    echo '<input id="cs_job_type" type="text" name="cs_job_type" value="' . esc_attr($type) . '" placeholder="' . esc_attr__('Full-time', 'central-strategies') . '" style="width:100%" />';
+
+    echo '<p style="margin-top:10px"><label for="cs_job_location"><strong>' . esc_html__('Location', 'central-strategies') . '</strong></label></p>';
+    echo '<input id="cs_job_location" type="text" name="cs_job_location" value="' . esc_attr($location) . '" placeholder="' . esc_attr__('Washington, DC (Hybrid)', 'central-strategies') . '" style="width:100%" />';
+
+    echo '<p class="description" style="margin-top:12px">' . esc_html__('Candidates apply on the public job page; submissions appear under Career Applications.', 'central-strategies') . '</p>';
+}
+
 function cs_save_service_meta($post_id) {
     if (!isset($_POST['cs_service_meta_nonce']) || !wp_verify_nonce($_POST['cs_service_meta_nonce'], 'cs_service_meta')) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
@@ -469,6 +704,41 @@ function cs_save_service_meta($post_id) {
     }
 }
 add_action('save_post_cs_service', 'cs_save_service_meta');
+
+function cs_save_job_meta($post_id) {
+    if (!isset($_POST['cs_job_meta_nonce']) || !wp_verify_nonce($_POST['cs_job_meta_nonce'], 'cs_job_meta')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    if (isset($_POST['cs_job_type'])) {
+        update_post_meta($post_id, '_cs_job_type', sanitize_text_field($_POST['cs_job_type']));
+    }
+    if (isset($_POST['cs_job_location'])) {
+        update_post_meta($post_id, '_cs_job_location', sanitize_text_field($_POST['cs_job_location']));
+    }
+}
+add_action('save_post_cs_job', 'cs_save_job_meta');
+
+function cs_job_columns($columns) {
+    return array(
+        'cb'              => $columns['cb'],
+        'title'           => __('Position', 'central-strategies'),
+        'cs_job_type'     => __('Type', 'central-strategies'),
+        'cs_job_location' => __('Location', 'central-strategies'),
+        'date'            => __('Date', 'central-strategies'),
+    );
+}
+add_filter('manage_cs_job_posts_columns', 'cs_job_columns');
+
+function cs_job_column_content($column, $post_id) {
+    if ($column === 'cs_job_type') {
+        echo esc_html(get_post_meta($post_id, '_cs_job_type', true) ?: '—');
+    }
+    if ($column === 'cs_job_location') {
+        echo esc_html(get_post_meta($post_id, '_cs_job_location', true) ?: '—');
+    }
+}
+add_action('manage_cs_job_posts_custom_column', 'cs_job_column_content', 10, 2);
 
 function cs_service_icon_options() {
     return array(
@@ -548,17 +818,21 @@ function cs_customize_register($wp_customize) {
         'title' => __('Hero Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 10,
     ));
     $reg('cs_hero_heading',     'Headline',      'cs_hero', 'Mission-Driven Intelligence & Government Advisory');
-    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Supporting U.S. government agencies and defense innovators with strategic insight, analytics, and operational expertise.', 'textarea');
+    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Central Strategies provides mission-aligned IT solutions that enable federal agencies to improve performance, strengthen operational resilience, and address complex technical challenges.', 'textarea');
 
     // ── About ───────────────────────────────────────────
     $wp_customize->add_section('cs_about', array(
         'title' => __('About Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 30,
     ));
-    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies is a government advisory and strategic consulting firm serving federal agencies, defense organizations, and national-security partners. We provide insight, analysis, and mission-aligned solutions to support complex operational, policy, and technology initiatives. Our team brings deep experience across intelligence, federal operations, and emerging tech.', 'textarea');
+    $reg('cs_about_hero_title',       'About page — hero title',       'cs_about', 'Our Story');
+    $reg('cs_about_hero_subheading',  'About page — hero intro',       'cs_about', 'The mission of Central Strategies is to protect our nation and its people through technology, talent, and trusted partnerships.', 'textarea');
+    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on IT solutions for federal industries, Central Strategies is committed to delivering superior services through outstanding technology and teams.', 'textarea');
     $reg('cs_about_pillar1_title', 'Capability 1',    'cs_about', 'Strategic advisory');
     $reg('cs_about_pillar2_title', 'Capability 2',    'cs_about', 'Program support');
     $reg('cs_about_pillar3_title', 'Capability 3',    'cs_about', 'Research & analysis');
     $reg('cs_about_pillar4_title', 'Capability 4',    'cs_about', 'Technology & innovation strategy');
+    $reg('cs_about_cta_heading',    'About page — CTA heading', 'cs_about', 'Ready to work with a team that puts mission first?');
+    $reg('cs_about_cta_subheading', 'About page — CTA subtext', 'cs_about', "Let's discuss how we can support your organization with custom information technology solutions.", 'textarea');
 
     // ── Careers ─────────────────────────────────────────
     $wp_customize->add_section('cs_careers', array(
@@ -566,7 +840,8 @@ function cs_customize_register($wp_customize) {
     ));
     $reg('cs_careers_heading',      'Heading',     'cs_careers', 'Join Our Mission');
     $reg('cs_careers_desc',         'Description', 'cs_careers', "We're always looking for talented professionals who are passionate about making a difference through technology. Join a veteran-led team where your work directly supports critical missions.", 'textarea');
-    $reg('cs_careers_cta_url',      'Button URL',  'cs_careers', '#');
+    $reg('cs_careers_cta_url',      'Button URL',  'cs_careers', '#openings');
+    $reg('cs_careers_job_about_text', 'Job page — “About” intro', 'cs_careers', 'Central Strategies is a Service-Disabled Veteran-Owned Small Business (SDVOSB) delivering mission-aligned information technology solutions for federal agencies and enterprise partners. We combine disciplined execution, cleared expertise, and modern engineering practices to help clients improve performance, strengthen resilience, and navigate complex technical challenges.', 'textarea');
     $tag_defaults = array('Cybersecurity Analysts', 'Cloud Engineers', 'Data Scientists', 'Program Managers', 'System Engineers');
     for ($i = 1; $i <= 5; $i++) {
         $reg("cs_careers_tag{$i}", "Job Tag {$i}", 'cs_careers', $tag_defaults[$i - 1]);

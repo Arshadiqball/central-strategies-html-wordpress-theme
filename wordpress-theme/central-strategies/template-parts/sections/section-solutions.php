@@ -8,11 +8,11 @@
             Our Capabilities
             <span class="w-8 h-px bg-cs-600"></span>
           </div>
-          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-normal text-balance">
             <?php echo esc_html(get_theme_mod('cs_solutions_heading', 'Advanced IT Solutions That Drive Innovation')); ?>
           </h2>
           <p class="mt-5 text-lg text-slate-500 leading-relaxed">
-            <?php echo esc_html(get_theme_mod('cs_solutions_subheading', 'We deliver comprehensive technology and consulting solutions tailored to meet the unique demands of government agencies and enterprise organizations.')); ?>
+            <?php echo esc_html(get_theme_mod('cs_solutions_subheading', 'We deliver comprehensive information technology solutions tailored to meet the unique demands of government agencies and enterprise organizations.')); ?>
           </p>
         </div>
 

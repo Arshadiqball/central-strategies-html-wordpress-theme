@@ -28,7 +28,7 @@ get_header();
             <span class="text-xs font-bold text-cs-300 uppercase tracking-widest"><?php esc_html_e('What We Do', 'central-strategies'); ?></span>
           </div>
 
-          <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-6xl xl:text-[4.1rem] font-extrabold text-white leading-[1.08] tracking-tight text-balance">
+          <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-6xl xl:text-[4.1rem] font-extrabold text-white leading-[1.14] sm:leading-[1.12] lg:leading-[1.1] tracking-tight text-balance">
             <?php esc_html_e('Advanced IT Services That', 'central-strategies'); ?><br class="hidden xl:block" />
             <span class="text-cs-500"><?php esc_html_e('Drive Real Impact.', 'central-strategies'); ?></span>
           </h1>
@@ -54,7 +54,7 @@ get_header();
     <section id="service-disciplines" class="py-16 lg:py-20 bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-12" data-animate="fade-up">
-          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-relaxed text-balance">
             <?php esc_html_e('We do three things', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('exceptionally well.', 'central-strategies'); ?></span>
           </h2>
           <p class="mt-5 text-lg text-slate-500 leading-relaxed">
@@ -99,11 +99,11 @@ get_header();
             <?php esc_html_e('Our Approach', 'central-strategies'); ?>
             <span class="w-8 h-px bg-cs-600"></span>
           </div>
-          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-relaxed text-balance">
             <?php esc_html_e('Mission complexity demands', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('integrated delivery.', 'central-strategies'); ?></span>
           </h2>
           <p class="mt-6 text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
-            <?php esc_html_e('Government IT is complex, high-stakes, and constantly evolving. We do not work in silos. Our teams integrate security, engineering, and data expertise from day one.', 'central-strategies'); ?>
+            <?php esc_html_e('Government IT is complex, high-stakes, and constantly evolving. We take a fully integrated approach with our teams that is seamless across security, engineering, and data expertise.', 'central-strategies'); ?>
           </p>
         </div>
 
@@ -139,12 +139,9 @@ get_header();
           <?php esc_html_e('Get Started', 'central-strategies'); ?>
           <span class="w-8 h-px bg-cs-600"></span>
         </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight text-balance" data-animate="fade-up">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-relaxed text-balance" data-animate="fade-up">
           <?php esc_html_e('Ready to Solve Your Most Difficult Challenges?', 'central-strategies'); ?>
         </h2>
-        <p class="mt-6 text-lg text-slate-400 max-w-xl mx-auto leading-relaxed" data-animate="fade-up">
-          <?php esc_html_e('Our experts deliver tailored solutions that drive innovation, enhance efficiency, and create lasting impact. Let us discuss your mission.', 'central-strategies'); ?>
-        </p>
         <div class="mt-8">
           <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center gap-2 px-10 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-500 transition-colors shadow-lg shadow-cs-600/25">
             <?php esc_html_e('Contact Us', 'central-strategies'); ?>

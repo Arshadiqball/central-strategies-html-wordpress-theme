@@ -13,12 +13,9 @@
           <?php esc_html_e('Get Started', 'central-strategies'); ?>
           <span class="w-8 h-px bg-cs-600 shrink-0"></span>
         </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight text-balance" data-animate="fade-up">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-normal text-balance" data-animate="fade-up">
           <?php echo esc_html(get_theme_mod('cs_cta_heading', 'Ready to Solve Your Most Difficult Challenges?')); ?>
         </h2>
-        <p class="mt-6 text-lg text-slate-400 max-w-xl mx-auto leading-relaxed" data-animate="fade-up">
-          <?php echo esc_html(get_theme_mod('cs_cta_subheading', "Our experts deliver tailored solutions that drive innovation, enhance efficiency, and create lasting impact. Let's discuss your mission.")); ?>
-        </p>
         <?php
         $cs_phone     = get_theme_mod('cs_phone', '(703) 873-7049');
         $cs_phone_raw = preg_replace('/[^0-9+]/', '', $cs_phone);

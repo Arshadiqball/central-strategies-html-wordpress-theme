@@ -7,12 +7,12 @@
             <span class="w-10 h-px bg-cs-300"></span>
           </div>
 
-          <h2 class="mt-4 text-4xl sm:text-5xl lg:text-[3.75rem] font-extrabold text-slate-900 leading-[1.05] tracking-tight text-balance">
+          <h2 class="mt-4 text-4xl sm:text-5xl lg:text-[3.75rem] font-extrabold text-slate-900 leading-[1.18] sm:leading-[1.15] lg:leading-[1.12] tracking-tight text-balance">
             <?php echo esc_html(get_theme_mod('cs_capabilities_heading', 'Advanced IT Solutions That Drive Innovation')); ?>
           </h2>
 
           <p class="mt-6 text-lg lg:text-xl text-slate-500 leading-relaxed max-w-3xl mx-auto">
-            <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'We deliver comprehensive technology and consulting solutions tailored to meet the unique demands of government agencies and enterprise organizations.')); ?>
+            <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'We deliver comprehensive information technology solutions tailored to meet the unique demands of government agencies and enterprise organizations.')); ?>
           </p>
 
           <div class="mt-10">

@@ -59,6 +59,10 @@ if (isset($_POST['cs_contact_submit']) && wp_verify_nonce($_POST['_cs_nonce'], $
 $cs_phone_display = get_theme_mod('cs_phone', '703.873.7049');
 $cs_email_display = get_theme_mod('cs_email', 'info@centralstrategies.com');
 $cs_address       = get_theme_mod('cs_address', 'Washington DC–Baltimore Area, United States');
+$cs_job_interest  = sanitize_text_field($_GET['job'] ?? '');
+$cs_message_prefill = $cs_job_interest !== ''
+    ? sprintf(__('I am interested in applying for the %s position.', 'central-strategies'), $cs_job_interest)
+    : '';
 
 get_header();
 ?>
@@ -83,7 +87,7 @@ get_header();
               <span class="text-xs font-bold text-cs-300 uppercase tracking-widest"><?php esc_html_e('Get In Touch', 'central-strategies'); ?></span>
             </div>
 
-            <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight text-balance">
+            <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.14] sm:leading-[1.12] lg:leading-[1.1] tracking-tight text-balance">
               <?php esc_html_e("Let's Discuss", 'central-strategies'); ?> <br class="hidden sm:block" />
               <span class="text-cs-500"><?php esc_html_e('Your Mission.', 'central-strategies'); ?></span>
             </h1>
@@ -155,7 +159,7 @@ get_header();
                   </label>
                   <textarea id="cs_message" name="cs_message" required rows="5"
                     placeholder="<?php esc_attr_e('Tell us about your project or challenge...', 'central-strategies'); ?>"
-                    class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-cs-600 focus:ring-2 focus:ring-cs-600/10 transition-colors resize-y"><?php echo esc_textarea($_POST['cs_message'] ?? ''); ?></textarea>
+                    class="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-cs-600 focus:ring-2 focus:ring-cs-600/10 transition-colors resize-y"><?php echo esc_textarea($_POST['cs_message'] ?? $cs_message_prefill); ?></textarea>
                 </div>
 
                 <button type="submit" name="cs_contact_submit" value="1"
@@ -182,7 +186,7 @@ get_header();
             <?php esc_html_e('Why Central Strategies', 'central-strategies'); ?>
             <span class="w-8 h-px bg-cs-600/50"></span>
           </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-normal text-balance">
             <?php esc_html_e('A partner you can', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('trust.', 'central-strategies'); ?></span>
           </h2>
           <p class="mt-4 text-slate-500 leading-relaxed">

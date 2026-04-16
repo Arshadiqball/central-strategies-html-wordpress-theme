@@ -48,11 +48,11 @@
               <span class="w-8 h-px bg-cs-600"></span>
               About Us
             </div>
-            <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-normal text-balance">
               <?php echo esc_html(get_theme_mod('cs_about_heading', 'A Veteran-Owned Technology Company')); ?>
             </h2>
             <p class="mt-6 text-lg text-slate-500 leading-relaxed">
-              <?php echo esc_html(get_theme_mod('cs_about_para1', 'Central Strategies is a Service-Disabled Veteran-Owned Small Business (SDVOSB) that specializes in advanced IT solutions. We drive innovation, enhance efficiency, and solve complex challenges for government agencies and enterprise organizations.')); ?>
+              <?php echo esc_html(get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on IT solutions for federal industries, Central Strategies is committed to delivering superior services through outstanding technology and teams.')); ?>
             </p>
             <p class="mt-4 text-slate-500 leading-relaxed">
               <?php echo esc_html(get_theme_mod('cs_about_para2', 'Our team of cleared professionals brings deep domain expertise in cybersecurity, cloud computing, artificial intelligence, and enterprise IT management. We take a mission-first approach to every engagement, delivering measurable results that make a difference.')); ?>

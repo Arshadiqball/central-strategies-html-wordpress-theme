@@ -9,89 +9,138 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$cs_jobs_query = new WP_Query(array(
+    'post_type'      => 'cs_job',
+    'post_status'    => 'publish',
+    'posts_per_page' => -1,
+    'orderby'        => array(
+        'menu_order' => 'ASC',
+        'date'       => 'DESC',
+    ),
+));
+
+$cs_hero_image_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'large') : '';
+if (empty($cs_hero_image_url)) {
+    $cs_hero_image_url = get_template_directory_uri() . '/assets/images/careers-team.png';
+}
+$cs_open_positions_url = trim((string) get_theme_mod('cs_careers_cta_url', ''));
+if ($cs_open_positions_url === '' || $cs_open_positions_url === '#') {
+    $cs_open_positions_url = '#openings';
+}
+
 get_header();
 ?>
 
 <main id="primary" class="site-main">
-
-    <!-- Hero -->
-    <section class="relative pt-20 overflow-hidden bg-slate-950">
-      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-brand-950" aria-hidden="true"></div>
-      <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 40px 40px;" aria-hidden="true"></div>
-      <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/40 to-transparent" aria-hidden="true"></div>
-      <div class="absolute top-1/3 right-0 w-[600px] h-[600px] bg-cs-600/5 rounded-full blur-[120px]" aria-hidden="true"></div>
-
-      <div class="relative max-w-site mx-auto px-5 lg:px-8 w-full py-24 lg:py-32">
-        <div class="max-w-4xl">
-          <div class="hero-badge inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cs-600/30 bg-cs-600/10 mb-8">
-            <svg class="w-4 h-4 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            <span class="text-xs font-bold text-cs-300 uppercase tracking-widest"><?php esc_html_e('Careers', 'central-strategies'); ?></span>
+  <section class="pt-20 lg:pt-24 pb-16 bg-white">
+    <div class="max-w-site mx-auto px-5 lg:px-8">
+      <div class="overflow-hidden border border-slate-200 bg-white">
+        <div class="grid lg:grid-cols-2">
+          <div class="min-h-[240px] lg:min-h-[380px]">
+            <img src="<?php echo esc_url($cs_hero_image_url); ?>" alt="<?php esc_attr_e('Central Strategies team collaborating in the office', 'central-strategies'); ?>" width="1024" height="593" class="block w-full h-full min-h-[240px] lg:min-h-[380px] object-cover object-center" />
           </div>
-          <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-extrabold text-white leading-[1.08] tracking-tight text-balance">
-            <?php echo esc_html(get_theme_mod('cs_careers_heading', 'Join Our Mission')); ?>
-          </h1>
-          <p class="hero-p mt-7 text-lg lg:text-xl text-slate-400 leading-relaxed max-w-2xl">
-            <?php echo esc_html(get_theme_mod('cs_careers_desc', "We're always looking for talented professionals who are passionate about making a difference through technology. Join a veteran-led team where your work directly supports critical missions.")); ?>
-          </p>
-          <div class="hero-ctas mt-10">
-            <a href="<?php echo esc_url(get_theme_mod('cs_careers_cta_url', '#')); ?>" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-500 transition-all shadow-lg shadow-cs-600/25">
-              <?php esc_html_e('View Open Positions', 'central-strategies'); ?>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          <div class="bg-slate-100 min-h-[240px] flex flex-col justify-center items-center text-center p-8 lg:p-12">
+            <h1 class="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+              <?php echo esc_html(get_theme_mod('cs_careers_heading', 'Ready to join a great team?')); ?>
+            </h1>
+            <a href="<?php echo esc_url($cs_open_positions_url); ?>" class="mt-8 inline-flex items-center justify-center px-6 py-3 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider hover:bg-cs-500 transition-colors">
+              <?php esc_html_e('View Jobs', 'central-strategies'); ?>
             </a>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Roles We're Hiring -->
-    <section class="py-16 lg:py-20 bg-white">
-      <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center mb-14" data-animate="fade-up">
-          <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            <span class="w-8 h-px bg-cs-600"></span>
-            <?php esc_html_e('Open Roles', 'central-strategies'); ?>
-            <span class="w-8 h-px bg-cs-600"></span>
-          </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            <?php esc_html_e('We\'re Looking For', 'central-strategies'); ?>
-          </h2>
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-4" data-stagger>
-          <?php
-          $cs_tag_defaults = array('Cybersecurity Analysts', 'Cloud Engineers', 'Data Scientists', 'Program Managers', 'System Engineers');
-          for ($cs_i = 1; $cs_i <= 5; $cs_i++) :
-              $cs_tag = get_theme_mod("cs_careers_tag{$cs_i}", $cs_tag_defaults[$cs_i - 1]);
-              if (empty(trim($cs_tag))) continue;
-          ?>
-          <span class="px-6 py-3 bg-white text-slate-700 text-sm font-semibold rounded-xl border border-slate-200 hover:border-cs-200 hover:shadow-md transition-all" data-animate="fade-up"><?php echo esc_html($cs_tag); ?></span>
-          <?php endfor; ?>
-        </div>
-
-        <!-- Stats -->
-        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6" data-stagger>
-          <?php
-          $cs_career_stats = array(
-              array('value' => get_theme_mod('cs_careers_stat1_value', '50+'),   'label' => get_theme_mod('cs_careers_stat1_label', 'Team Members')),
-              array('value' => get_theme_mod('cs_careers_stat2_value', '85%'),   'label' => get_theme_mod('cs_careers_stat2_label', 'Cleared Staff')),
-              array('value' => get_theme_mod('cs_careers_stat3_value', '4.8/5'), 'label' => get_theme_mod('cs_careers_stat3_label', 'Glassdoor Rating')),
-              array('value' => get_theme_mod('cs_careers_stat4_value', '100%'),  'label' => get_theme_mod('cs_careers_stat4_label', 'Remote Friendly')),
-          );
-          foreach ($cs_career_stats as $cs_cstat) :
-          ?>
-          <div class="bg-slate-50 rounded-xl p-8 border border-slate-200 text-center" data-animate="fade-up">
-            <div class="text-3xl font-extrabold text-cs-600"><?php echo esc_html($cs_cstat['value']); ?></div>
-            <div class="mt-1 text-sm text-slate-500 font-medium"><?php echo esc_html($cs_cstat['label']); ?></div>
-          </div>
-          <?php endforeach; ?>
-        </div>
+      <div class="max-w-2xl mx-auto text-center mt-14">
+        <p class="text-slate-600 leading-relaxed">
+          <?php echo esc_html(get_theme_mod('cs_careers_desc', 'With an emphasis on hiring and developing top talent, Central Strategies is committed to deliver superior services and results to the public sector and the private sector.')); ?>
+        </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CTA -->
-    <?php get_template_part('template-parts/sections/section', 'cta'); ?>
+  <section id="openings" class="pb-20 bg-white">
+    <div class="max-w-3xl mx-auto px-5 lg:px-8">
+      <h2 class="text-center text-3xl font-extrabold text-cs-600 tracking-tight">
+        <?php esc_html_e('Current Job Openings', 'central-strategies'); ?>
+      </h2>
 
+      <div class="mt-5 border border-slate-200 bg-white">
+        <div class="border-b border-slate-200 p-2">
+          <input
+            id="cs-job-search"
+            type="search"
+            class="w-full border border-slate-200 px-3 py-2 text-sm text-slate-700 placeholder-slate-400 outline-none focus:border-cs-600 focus:ring-1 focus:ring-cs-600/20"
+            placeholder="<?php esc_attr_e('Search by job title or location...', 'central-strategies'); ?>"
+          />
+        </div>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-slate-200 bg-slate-50">
+              <th class="text-left px-4 py-2.5 font-bold text-slate-800"><?php esc_html_e('Job Title', 'central-strategies'); ?></th>
+              <th class="text-left px-4 py-2.5 font-bold text-slate-800"><?php esc_html_e('Location', 'central-strategies'); ?></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($cs_jobs_query->have_posts()) : ?>
+              <?php while ($cs_jobs_query->have_posts()) : $cs_jobs_query->the_post(); ?>
+                <?php
+                $cs_job_type     = get_post_meta(get_the_ID(), '_cs_job_type', true);
+                $cs_job_location = get_post_meta(get_the_ID(), '_cs_job_location', true);
+                $cs_detail_url   = get_permalink();
+                $cs_search_raw   = trim(get_the_title() . ' ' . $cs_job_location . ' ' . $cs_job_type);
+                $cs_search_blob  = function_exists('mb_strtolower') ? mb_strtolower($cs_search_raw, 'UTF-8') : strtolower($cs_search_raw);
+                ?>
+                <tr class="border-b border-slate-100 last:border-b-0" data-job-row data-search="<?php echo esc_attr($cs_search_blob); ?>">
+                  <td class="px-4 py-2.5 text-slate-700">
+                    <a href="<?php echo esc_url($cs_detail_url); ?>" class="font-medium text-slate-800 hover:text-cs-600 transition-colors">
+                      <?php the_title(); ?>
+                    </a>
+                    <?php if (!empty($cs_job_type)) : ?>
+                      <div class="text-xs text-slate-500 mt-0.5"><?php echo esc_html($cs_job_type); ?></div>
+                    <?php endif; ?>
+                  </td>
+                  <td class="px-4 py-2.5 text-slate-700"><?php echo esc_html($cs_job_location ?: __('Remote / TBD', 'central-strategies')); ?></td>
+                </tr>
+              <?php endwhile; wp_reset_postdata(); ?>
+            <?php endif; ?>
+            <tr id="cs-job-empty-row" class="<?php echo $cs_jobs_query->have_posts() ? 'hidden' : ''; ?>">
+              <td colspan="2" class="px-4 py-5 text-center text-slate-500">
+                <?php esc_html_e('No current job openings available.', 'central-strategies'); ?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var input = document.getElementById('cs-job-search');
+  if (!input) return;
+  var rows = Array.prototype.slice.call(document.querySelectorAll('[data-job-row]'));
+  var emptyRow = document.getElementById('cs-job-empty-row');
+
+  function filterRows() {
+    var query = input.value.toLowerCase().trim();
+    var visibleCount = 0;
+
+    rows.forEach(function (row) {
+      var haystack = row.getAttribute('data-search') || '';
+      var isMatch = query === '' || haystack.indexOf(query) !== -1;
+      row.classList.toggle('hidden', !isMatch);
+      if (isMatch) visibleCount += 1;
+    });
+
+    if (emptyRow) {
+      emptyRow.classList.toggle('hidden', visibleCount > 0);
+    }
+  }
+
+  input.addEventListener('input', filterRows);
+});
+</script>
 
 <?php
 get_footer();

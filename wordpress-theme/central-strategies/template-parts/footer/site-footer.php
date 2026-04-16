@@ -13,7 +13,7 @@
         <div data-animate="fade-up">
           <?php cs_logo('footer'); ?>
           <p class="mt-5 max-w-sm text-base leading-relaxed text-slate-400">
-            <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A Veteran-Owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
+            <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A Service-Disabled Veteran-Owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges for government agencies and enterprise organizations.')); ?>
           </p>
         </div>
 

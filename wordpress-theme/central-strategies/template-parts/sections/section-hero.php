@@ -2,7 +2,7 @@
     $hero_heading = get_theme_mod('cs_hero_heading', 'We Help Organizations Achieve More.');
     $hero_subheading = get_theme_mod(
       'cs_hero_subheading',
-      'Our experts deliver tailored solutions to help organizations solve the most difficult challenges. Central Strategies specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.'
+      'Central Strategies provides mission-aligned IT solutions that enable federal agencies to improve performance, strengthen operational resilience, and address complex technical challenges.'
     );
 
     // Keep heading editable from WordPress while styling key phrase in red.
@@ -25,7 +25,7 @@
           <div class="max-w-2xl">
             <div class="hero-badge h-7 w-60 bg-black/85 rounded-sm mb-8"></div>
 
-            <h1 class="hero-h1 text-[2.5rem] leading-[1.03] sm:text-6xl lg:text-[4.3rem] font-extrabold text-white tracking-tight text-balance">
+            <h1 class="hero-h1 text-[2.5rem] leading-[1.14] sm:text-6xl sm:leading-[1.12] lg:text-[4.3rem] lg:leading-[1.1] font-extrabold text-white tracking-tight text-balance">
               <?php echo wp_kses($hero_heading_highlighted, array('span' => array('class' => true))); ?>
             </h1>
 
