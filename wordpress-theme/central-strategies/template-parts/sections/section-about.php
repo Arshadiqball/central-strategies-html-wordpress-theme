@@ -49,7 +49,7 @@
               About Us
             </div>
             <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-normal text-balance">
-              <?php echo esc_html(get_theme_mod('cs_about_heading', 'A Veteran-Owned Technology Company')); ?>
+              <?php echo esc_html(get_theme_mod('cs_about_heading', 'A service-disabled veteran-owned Technology Company')); ?>
             </h2>
             <p class="mt-6 text-lg text-slate-500 leading-relaxed">
               <?php echo esc_html(get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on IT solutions for federal industries, Central Strategies is committed to delivering superior services through outstanding technology and teams.')); ?>

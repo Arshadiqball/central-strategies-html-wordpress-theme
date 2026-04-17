@@ -824,6 +824,17 @@ function cs_customize_register($wp_customize) {
     $reg('cs_hero_heading',     'Headline',      'cs_hero', 'Mission-Driven Intelligence & Government Advisory');
     $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Central Strategies provides mission-aligned IT solutions that enable federal agencies to improve performance, strengthen operational resilience, and address complex technical challenges.', 'textarea');
 
+    $wp_customize->add_setting('cs_hero_visual_bg', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ));
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'cs_hero_visual_bg', array(
+        'label'       => __('Hero visual — background image', 'central-strategies'),
+        'description' => __('Optional. Use a wide, high-contrast image; the theme fades it into the dark hero. You can also add assets/images/hero-visual-bg.jpg in the theme folder instead.', 'central-strategies'),
+        'section'     => 'cs_hero',
+    )));
+
     // ── About ───────────────────────────────────────────
     $wp_customize->add_section('cs_about', array(
         'title' => __('About Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 30,
@@ -869,7 +880,7 @@ function cs_customize_register($wp_customize) {
     $reg('cs_cage_code',     'CAGE Code',     'cs_company_info', '9L4U3');
     $reg('cs_uei_number',    'UEI Number',    'cs_company_info', 'RVF8RK4SJRG8');
     $reg('cs_gsa_schedule',  'GSA Schedule',  'cs_company_info', 'GSA MAS');
-    $reg('cs_footer_tagline', 'Footer — tagline', 'cs_company_info', 'A Veteran-Owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.', 'textarea');
+    $reg('cs_footer_tagline', 'Footer — tagline', 'cs_company_info', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.', 'textarea');
     $reg('cs_footer_legal_name', 'Footer — copyright legal name', 'cs_company_info', 'Central Strategies, LLC');
 }
 add_action('customize_register', 'cs_customize_register');

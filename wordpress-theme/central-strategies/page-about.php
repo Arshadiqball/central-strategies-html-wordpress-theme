@@ -32,6 +32,7 @@ get_header();
     <!-- Hero -->
     <section class="relative pt-20 min-h-[74vh] flex items-center overflow-hidden bg-slate-950">
       <div class="absolute inset-0 bg-slate-900 bg-cover bg-center brightness-110 saturate-[1.06]" style="background-image: url('<?php echo esc_url($cs_hero_bg_url); ?>');" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-black/70" aria-hidden="true"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-slate-950/78 via-slate-950/38 to-slate-950/12" aria-hidden="true"></div>
       <div class="absolute inset-0 opacity-[0.025]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 1px, transparent 0); background-size: 40px 40px;" aria-hidden="true"></div>
       <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/40 to-transparent" aria-hidden="true"></div>
@@ -61,9 +62,9 @@ get_header();
     </section>
 
     <!-- Who We Are -->
-    <section id="who-we-are" class="py-20 lg:py-28 bg-white">
+    <section id="who-we-are" class="pt-20 lg:pt-28 pb-8 lg:pb-10 bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center mb-14" data-animate="fade-up">
+        <div class="max-w-3xl mx-auto text-center mb-10" data-animate="fade-up">
           <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
             <span class="w-8 h-px bg-cs-600"></span>
             <?php esc_html_e('Who We Are', 'central-strategies'); ?>
@@ -83,7 +84,7 @@ get_header();
     </section>
 
     <!-- CTA -->
-    <section class="relative py-20 lg:py-24 overflow-hidden bg-white border-t border-slate-100">
+    <section class="relative pt-6 lg:pt-8 pb-10 lg:pb-12 overflow-hidden bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8 text-center">
         <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-animate="fade-up">
           <span class="w-8 h-px bg-cs-600"></span>

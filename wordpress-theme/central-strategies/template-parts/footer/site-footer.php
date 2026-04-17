@@ -20,7 +20,7 @@ $cs_legal_name = get_theme_mod('cs_footer_legal_name', 'Central Strategies, LLC'
         <div class="min-w-0 lg:max-w-xl xl:max-w-2xl" data-animate="fade-up">
           <?php cs_logo('footer'); ?>
           <p class="mt-5 max-w-md text-sm leading-relaxed text-slate-400">
-            <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A Veteran-Owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
+            <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
           </p>
 
           <div class="mt-10 flex flex-col gap-8 sm:flex-row sm:items-stretch">
@@ -38,13 +38,13 @@ $cs_legal_name = get_theme_mod('cs_footer_legal_name', 'Central Strategies, LLC'
                 <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_gsa_schedule', 'GSA MAS')); ?></div>
               </div>
             </div>
-            <div class="flex shrink-0 items-center justify-center sm:w-44 sm:max-w-[11rem]">
+            <div class="flex shrink-0 items-center justify-center sm:w-[5.5rem] sm:max-w-[5.5rem]">
               <img
                 src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-certified.png'); ?>"
                 alt="<?php esc_attr_e('SBA Service-Disabled Veteran-Owned Certified', 'central-strategies'); ?>"
-                width="220"
-                height="220"
-                class="w-36 sm:w-40 h-auto object-contain"
+                width="110"
+                height="110"
+                class="w-[4.5rem] sm:w-20 h-auto object-contain"
                 loading="lazy"
                 decoding="async"
               />

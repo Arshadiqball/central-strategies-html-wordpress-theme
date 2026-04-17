@@ -12,6 +12,13 @@
       esc_html($hero_heading),
       1
     );
+
+    $hero_visual_bg = get_theme_mod('cs_hero_visual_bg', '');
+    $hero_visual_default_fs = get_template_directory() . '/assets/images/hero-visual-bg.jpg';
+    if ($hero_visual_bg === '' && is_readable($hero_visual_default_fs)) {
+        $hero_visual_bg = get_template_directory_uri() . '/assets/images/hero-visual-bg.jpg';
+    }
+    $has_hero_visual_bg = ($hero_visual_bg !== '');
     ?>
 
     <section id="hero" class="relative min-h-[90vh] flex items-center pt-16 lg:pt-24 overflow-hidden bg-slate-950">
@@ -41,10 +48,27 @@
             </div> -->
           </div>
 
-          <div class="relative hidden lg:block min-h-[420px]" aria-hidden="true">
-            <div class="hero-ring absolute inset-0 rounded-[40px] border border-white/5"></div>
+          <div class="relative isolate hidden lg:block min-h-[420px]" aria-hidden="true">
+            <div class="pointer-events-none absolute inset-0 rounded-[40px] overflow-hidden border border-white/[0.06]">
+              <?php if ($has_hero_visual_bg) : ?>
+                <img
+                  src="<?php echo esc_url($hero_visual_bg); ?>"
+                  alt=""
+                  class="absolute inset-0 h-full w-full object-cover object-center scale-105"
+                  decoding="async"
+                  loading="eager"
+                />
+              <?php else : ?>
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_85%_65%_at_78%_32%,rgba(190,32,38,0.35),transparent_58%),radial-gradient(ellipse_70%_50%_at_100%_100%,rgba(37,99,235,0.12),transparent_55%),linear-gradient(160deg,rgba(15,23,42,0.95)_0%,rgba(2,6,23,0.4)_45%,rgba(2,6,23,0.85)_100%)]"></div>
+              <?php endif; ?>
+              <div class="absolute inset-0 bg-gradient-to-l from-transparent via-slate-950/55 to-slate-950"></div>
+              <div class="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-transparent to-slate-950"></div>
+              <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/80 via-transparent to-transparent"></div>
+            </div>
 
-            <div class="hero-visual-shield absolute right-24 top-24 h-56 w-56 rounded-[2.25rem] bg-gradient-to-br from-cs-800/55 via-cs-700/35 to-brand-700/30 border border-white/10 backdrop-blur-sm shadow-2xl shadow-black/40 flex items-center justify-center rotate-45">
+            <div class="hero-ring absolute inset-0 z-[1] rounded-[40px] border border-white/5"></div>
+
+            <div class="hero-visual-shield absolute right-24 top-24 z-[2] h-56 w-56 rounded-[2.25rem] bg-gradient-to-br from-cs-800/55 via-cs-700/35 to-brand-700/30 border border-white/10 backdrop-blur-sm shadow-2xl shadow-black/40 flex items-center justify-center rotate-45">
               <div class="-rotate-45">
                 <svg class="w-16 h-16 text-white/95" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z" />
@@ -53,22 +77,22 @@
               </div>
             </div>
 
-            <div class="hero-node-1 absolute top-8 right-8 h-12 w-12 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
+            <div class="hero-node-1 absolute top-8 right-8 z-[2] h-12 w-12 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
               <svg class="w-5 h-5 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4s-3 1.567-3 3.5S10.343 11 12 11zM5 20a7 7 0 0114 0" />
               </svg>
             </div>
-            <div class="hero-node-2 absolute top-20 left-10 h-11 w-11 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
+            <div class="hero-node-2 absolute top-20 left-10 z-[2] h-11 w-11 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
               <svg class="w-[18px] h-[18px] text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <div class="hero-node-3 absolute bottom-20 left-16 h-11 w-11 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
+            <div class="hero-node-3 absolute bottom-20 left-16 z-[2] h-11 w-11 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
               <svg class="w-[18px] h-[18px] text-cs-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 114.67-3.95A5.002 5.002 0 0117.93 13H18a3 3 0 010 6H6a3 3 0 01-3-3z" />
               </svg>
             </div>
-            <div class="hero-node-4 absolute bottom-6 right-10 h-11 w-11 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
+            <div class="hero-node-4 absolute bottom-6 right-10 z-[2] h-11 w-11 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center">
               <svg class="w-[18px] h-[18px] text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6m3 6V7m3 10v-4m3 4V9M3 21h18" />
               </svg>

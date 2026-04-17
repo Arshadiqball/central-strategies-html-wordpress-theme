@@ -6,7 +6,7 @@
  * @package Central_Strategies
  */
 ?>
-  <meta name="description" content="Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges." />
+  <meta name="description" content="Central Strategies, a service-disabled veteran-owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

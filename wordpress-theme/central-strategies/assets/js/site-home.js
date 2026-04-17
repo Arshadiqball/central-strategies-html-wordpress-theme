@@ -86,7 +86,7 @@
       }
 
       if (!prefersReduced) {
-        var statsSection = document.getElementById('stats');
+        var statsSection = document.getElementById('stats') || document.getElementById('capabilities-stats');
         if (statsSection) {
           var statsObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {

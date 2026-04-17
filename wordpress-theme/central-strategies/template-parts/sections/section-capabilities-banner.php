@@ -30,34 +30,34 @@
         <?php
         $cs_stats = array(
             array(
-                'value'  => get_theme_mod('cs_stat1_value', '100'),
                 'suffix' => get_theme_mod('cs_stat1_suffix', '+'),
                 'label'  => get_theme_mod('cs_stat1_label', 'Projects Delivered'),
+                'count'  => intval(get_theme_mod('cs_stat1_value', '100')),
             ),
             array(
-                'value'  => get_theme_mod('cs_stat2_value', '20'),
                 'suffix' => get_theme_mod('cs_stat2_suffix', '+'),
                 'label'  => get_theme_mod('cs_stat2_label', 'Government Agencies'),
+                'count'  => intval(get_theme_mod('cs_stat2_value', '20')),
             ),
             array(
-                'value'  => get_theme_mod('cs_stat3_value', '10'),
                 'suffix' => get_theme_mod('cs_stat3_suffix', '+'),
                 'label'  => get_theme_mod('cs_stat3_label', 'Years Experience'),
+                'count'  => intval(get_theme_mod('cs_stat3_value', '10')),
             ),
             array(
-                'value'  => get_theme_mod('cs_stat4_value', '99'),
                 'suffix' => get_theme_mod('cs_stat4_suffix', '%'),
                 'label'  => get_theme_mod('cs_stat4_label', 'Client Retention'),
+                'count'  => intval(get_theme_mod('cs_stat4_value', '99')),
             ),
         );
         ?>
 
-        <div class="relative max-w-site mx-auto px-5 lg:px-8">
+        <div id="capabilities-stats" class="relative max-w-site mx-auto px-5 lg:px-8">
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-8 lg:gap-0" data-stagger>
             <?php foreach ($cs_stats as $cs_i => $cs_stat) : ?>
             <div class="text-center<?php echo $cs_i > 0 ? ' lg:border-l lg:border-white/15' : ''; ?>" data-animate="fade-up">
               <div class="text-[2.8rem] sm:text-5xl lg:text-[3.45rem] font-extrabold text-white leading-none tracking-tight">
-                <?php echo esc_html($cs_stat['value']); ?><span class="text-cs-200"><?php echo esc_html($cs_stat['suffix']); ?></span>
+                <span class="stat-number" data-count="<?php echo esc_attr($cs_stat['count']); ?>">0</span><span class="text-cs-200"><?php echo esc_html($cs_stat['suffix']); ?></span>
               </div>
               <div class="mt-2 text-sm text-white/75 font-bold uppercase tracking-wide">
                 <?php echo esc_html($cs_stat['label']); ?>
