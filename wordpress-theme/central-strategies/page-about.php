@@ -31,9 +31,9 @@ get_header();
 
     <!-- Hero -->
     <section class="relative pt-20 min-h-[74vh] flex items-center overflow-hidden bg-slate-950">
-      <div class="absolute inset-0 bg-slate-950 bg-cover bg-center" style="background-image: url('<?php echo esc_url($cs_hero_bg_url); ?>');" aria-hidden="true"></div>
-      <div class="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-950/72 to-slate-950/48" aria-hidden="true"></div>
-      <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 1px, transparent 0); background-size: 40px 40px;" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-slate-900 bg-cover bg-center brightness-110 saturate-[1.06]" style="background-image: url('<?php echo esc_url($cs_hero_bg_url); ?>');" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-slate-950/78 via-slate-950/38 to-slate-950/12" aria-hidden="true"></div>
+      <div class="absolute inset-0 opacity-[0.025]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 1px, transparent 0); background-size: 40px 40px;" aria-hidden="true"></div>
       <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/40 to-transparent" aria-hidden="true"></div>
       <div class="relative max-w-site mx-auto px-5 lg:px-8 w-full py-20 lg:py-24">
         <div class="max-w-4xl">
@@ -50,13 +50,10 @@ get_header();
             <?php echo esc_html(get_theme_mod('cs_about_hero_subheading', 'The mission of Central Strategies is to protect our nation and its people through technology, talent, and trusted partnerships.')); ?>
           </p>
 
-          <div class="hero-ctas mt-10 flex flex-col sm:flex-row gap-4">
+          <div class="hero-ctas mt-10">
             <a href="#who-we-are" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-500 transition-all shadow-lg shadow-cs-600/25">
               <?php esc_html_e('Read More', 'central-strategies'); ?>
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
-            </a>
-            <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-white font-bold text-sm uppercase tracking-wider rounded border border-white/20 hover:bg-white/10 transition-all">
-              <?php esc_html_e('Contact Us', 'central-strategies'); ?>
             </a>
           </div>
         </div>
@@ -88,19 +85,20 @@ get_header();
     <!-- CTA -->
     <section class="relative py-20 lg:py-24 overflow-hidden bg-white border-t border-slate-100">
       <div class="max-w-site mx-auto px-5 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-animate="fade-up">
+          <span class="w-8 h-px bg-cs-600"></span>
+          <?php esc_html_e('Learn More', 'central-strategies'); ?>
+          <span class="w-8 h-px bg-cs-600"></span>
+        </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight max-w-2xl mx-auto leading-normal text-balance" data-animate="fade-up">
           <?php echo esc_html(get_theme_mod('cs_about_cta_heading', 'Ready to work with a team that puts mission first?')); ?>
         </h2>
         <p class="mt-5 text-slate-500 max-w-xl mx-auto leading-relaxed" data-animate="fade-up">
           <?php echo esc_html(get_theme_mod('cs_about_cta_subheading', "Let's discuss how we can support your organization with custom information technology solutions.")); ?>
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4" data-animate="fade-up">
-          <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center gap-2 px-10 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-700 transition-colors shadow-lg shadow-cs-600/20">
-            <?php esc_html_e('Contact Us', 'central-strategies'); ?>
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-          </a>
-          <a href="<?php echo esc_url(get_permalink(get_page_by_path('services')) ?: home_url('/services/')); ?>" class="inline-flex items-center gap-2 px-10 py-4 text-slate-700 font-bold text-sm uppercase tracking-wider rounded border border-slate-200 hover:border-cs-200 hover:bg-cs-50 transition-all">
-            <?php esc_html_e('View Services', 'central-strategies'); ?>
+        <div class="mt-8 flex justify-center" data-animate="fade-up">
+          <a href="<?php echo esc_url(get_permalink(get_page_by_path('services')) ?: home_url('/services/')); ?>" class="inline-flex items-center gap-2 px-10 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-700 transition-colors shadow-lg shadow-cs-600/20">
+            <?php esc_html_e('View Solutions', 'central-strategies'); ?>
           </a>
         </div>
       </div>

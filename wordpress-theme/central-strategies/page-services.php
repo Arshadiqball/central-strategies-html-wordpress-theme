@@ -29,7 +29,7 @@ get_header();
           </div>
 
           <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-6xl xl:text-[4.1rem] font-extrabold text-white leading-[1.14] sm:leading-[1.12] lg:leading-[1.1] tracking-tight text-balance">
-            <?php esc_html_e('Advanced IT Services That', 'central-strategies'); ?><br class="hidden xl:block" />
+            <?php esc_html_e('Advanced IT Solutions That', 'central-strategies'); ?><br class="hidden xl:block" />
             <span class="text-cs-500"><?php esc_html_e('Drive Real Impact.', 'central-strategies'); ?></span>
           </h1>
 
@@ -39,7 +39,7 @@ get_header();
 
           <div class="hero-ctas mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#service-disciplines" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-500 transition-all shadow-lg shadow-cs-600/25">
-              <?php esc_html_e('Explore Our Services', 'central-strategies'); ?>
+              <?php esc_html_e('Explore Our Solutions', 'central-strategies'); ?>
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </a>
             <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-white font-bold text-sm uppercase tracking-wider rounded border border-white/20 hover:bg-white/10 transition-all">

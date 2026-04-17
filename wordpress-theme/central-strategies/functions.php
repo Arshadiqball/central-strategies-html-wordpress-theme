@@ -110,7 +110,7 @@ class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
    ────────────────────────────────────────────────────── */
 class CS_Footer_Nav_Walker extends Walker_Nav_Menu {
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-        $output .= '<li><a href="' . esc_url($item->url) . '" class="text-sm text-slate-500 hover:text-white transition-colors">';
+        $output .= '<li><a href="' . esc_url($item->url) . '" class="text-sm text-slate-400 hover:text-white transition-colors">';
         $output .= esc_html($item->title);
         $output .= '</a></li>';
     }
@@ -124,16 +124,20 @@ class CS_Footer_Nav_Walker extends Walker_Nav_Menu {
    ────────────────────────────────────────────────────── */
 function cs_footer_company_fallback() {
     $links = array(
-        'about'    => 'About',
-        'services' => 'Services',
-        'careers'  => 'Careers',
-        'contact'  => 'Contact',
+        ''         => __('Home', 'central-strategies'),
+        'about'    => __('About', 'central-strategies'),
+        'services' => __('Services', 'central-strategies'),
+        'careers'  => __('Careers', 'central-strategies'),
     );
     echo '<ul class="space-y-3">';
     foreach ($links as $slug => $label) {
-        $page = get_page_by_path($slug);
-        $url  = $page ? get_permalink($page) : home_url('/' . $slug . '/');
-        echo '<li><a href="' . esc_url($url) . '" class="text-sm text-slate-500 hover:text-white transition-colors">' . esc_html($label) . '</a></li>';
+        if ($slug === '') {
+            $url = home_url('/');
+        } else {
+            $page = get_page_by_path($slug);
+            $url  = $page ? get_permalink($page) : home_url('/' . $slug . '/');
+        }
+        echo '<li><a href="' . esc_url($url) . '" class="text-sm text-slate-400 hover:text-white transition-colors">' . esc_html($label) . '</a></li>';
     }
     echo '</ul>';
 }
@@ -865,5 +869,7 @@ function cs_customize_register($wp_customize) {
     $reg('cs_cage_code',     'CAGE Code',     'cs_company_info', '9L4U3');
     $reg('cs_uei_number',    'UEI Number',    'cs_company_info', 'RVF8RK4SJRG8');
     $reg('cs_gsa_schedule',  'GSA Schedule',  'cs_company_info', 'GSA MAS');
+    $reg('cs_footer_tagline', 'Footer — tagline', 'cs_company_info', 'A Veteran-Owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.', 'textarea');
+    $reg('cs_footer_legal_name', 'Footer — copyright legal name', 'cs_company_info', 'Central Strategies, LLC');
 }
 add_action('customize_register', 'cs_customize_register');

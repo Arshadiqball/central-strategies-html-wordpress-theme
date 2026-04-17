@@ -77,6 +77,11 @@
     }
   </style>
   <style>
+    /* Global h2 line-height (overrides Tailwind leading-* on headings) */
+    h2 {
+      line-height: 1.4 !important;
+    }
+
     /* ── Scroll-reveal base states ── */
     [data-animate] {
       opacity: 0;
