@@ -126,7 +126,7 @@ function cs_footer_company_fallback() {
     $links = array(
         ''         => __('Home', 'central-strategies'),
         'about'    => __('About', 'central-strategies'),
-        'services' => __('Services', 'central-strategies'),
+        'services' => __('Solutions', 'central-strategies'),
         'careers'  => __('Careers', 'central-strategies'),
     );
     echo '<ul class="space-y-3">';
