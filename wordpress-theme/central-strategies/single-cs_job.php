@@ -91,10 +91,6 @@ while (have_posts()) :
     $cs_job_type     = get_post_meta($cs_job_id, '_cs_job_type', true);
     $cs_job_location = get_post_meta($cs_job_id, '_cs_job_location', true);
     $cs_careers_url  = cs_careers_page_url();
-    $cs_about_intro  = get_theme_mod(
-        'cs_careers_job_about_text',
-        'Central Strategies is a Service-Disabled Veteran-Owned Small Business (SDVOSB) delivering mission-aligned information technology solutions for federal agencies and enterprise partners. We combine disciplined execution, cleared expertise, and modern engineering practices to help clients improve performance, strengthen resilience, and navigate complex technical challenges.'
-    );
     ?>
 
 <main id="primary" class="site-main bg-white">
@@ -124,17 +120,6 @@ while (have_posts()) :
         <?php endif; ?>
       </div>
     </header>
-
-    <?php if (has_excerpt()) : ?>
-      <section class="mt-10 border-t border-slate-100 pt-10" aria-labelledby="cs-job-role-overview">
-        <h2 id="cs-job-role-overview" class="text-lg font-extrabold text-slate-900 tracking-tight">
-          <?php esc_html_e('Role overview', 'central-strategies'); ?>
-        </h2>
-        <div class="mt-3 text-base text-slate-600 leading-relaxed">
-          <?php the_excerpt(); ?>
-        </div>
-      </section>
-    <?php endif; ?>
 
     <section class="mt-10 border-t border-slate-100 pt-10" aria-labelledby="cs-job-description-heading">
       <h2 id="cs-job-description-heading" class="text-lg font-extrabold text-slate-900 tracking-tight">
