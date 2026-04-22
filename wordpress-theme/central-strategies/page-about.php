@@ -29,9 +29,9 @@ get_header();
     );
     ?>
 
-    <!-- Hero — bg-bottom keeps hull + water in frame (wide photo + cover crops top, not bottom) -->
+    <!-- Hero — custom bg position keeps antennas + hull + water all in frame -->
     <section class="relative pt-20 min-h-[78vh] sm:min-h-[82vh] flex items-center overflow-hidden bg-slate-950">
-      <div class="absolute inset-0 bg-slate-900 bg-cover bg-bottom brightness-110 saturate-[1.06]" style="background-image: url('<?php echo esc_url($cs_hero_bg_url); ?>');" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-slate-900 bg-cover brightness-110 saturate-[1.06]" style="background-image: url('<?php echo esc_url($cs_hero_bg_url); ?>'); background-position: center 35%;" aria-hidden="true"></div>
       <div class="absolute inset-0 bg-black/55" aria-hidden="true"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-slate-950/78 via-slate-950/38 to-slate-950/12" aria-hidden="true"></div>
       <div class="absolute inset-0 opacity-[0.025]" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 1px, transparent 0); background-size: 40px 40px;" aria-hidden="true"></div>
@@ -62,7 +62,7 @@ get_header();
     </section>
 
     <!-- Who We Are -->
-    <section id="who-we-are" class="pt-20 lg:pt-28 pb-8 lg:pb-10 bg-white">
+    <section id="who-we-are" class="pt-20 lg:pt-28 pb-2 lg:pb-3 bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8">
         <div class="max-w-3xl mx-auto text-center mb-10" data-animate="fade-up">
           <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
@@ -84,7 +84,7 @@ get_header();
     </section>
 
     <!-- Why Central Strategies -->
-    <section class="py-16 lg:py-20 bg-white border-t border-slate-100" aria-labelledby="why-central-strategies-heading">
+    <section class="pt-8 lg:pt-10 pb-12 lg:pb-16 bg-white" aria-labelledby="why-central-strategies-heading">
       <div class="max-w-site mx-auto px-5 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-12" data-animate="fade-up">
           <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
@@ -137,7 +137,7 @@ get_header();
     </section>
 
     <!-- CTA -->
-    <section class="relative pt-6 lg:pt-8 pb-10 lg:pb-12 overflow-hidden bg-white">
+    <section class="relative pt-4 lg:pt-6 pb-24 lg:pb-32 overflow-hidden bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8 text-center">
         <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-animate="fade-up">
           <span class="w-8 h-px bg-cs-600"></span>

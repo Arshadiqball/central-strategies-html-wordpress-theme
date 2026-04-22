@@ -121,7 +121,7 @@ while (have_posts()) :
       </div>
     </header>
 
-    <section class="mt-10 border-t border-slate-100 pt-10" aria-labelledby="cs-job-description-heading">
+    <section class="mt-10 " aria-labelledby="cs-job-description-heading">
       <h2 id="cs-job-description-heading" class="text-lg font-extrabold text-slate-900 tracking-tight">
         <?php esc_html_e('Job Description:', 'central-strategies'); ?>
       </h2>
