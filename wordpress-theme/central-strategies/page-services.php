@@ -23,14 +23,9 @@ get_header();
 
       <div class="relative max-w-site mx-auto px-5 lg:px-8 w-full py-24 lg:py-32">
         <div class="max-w-4xl mx-auto text-center">
-          <div class="hero-badge inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cs-600/30 bg-cs-600/10 mb-8">
-            <svg class="w-4 h-4 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            <span class="text-xs font-bold text-cs-300 uppercase tracking-widest"><?php esc_html_e('What We Do', 'central-strategies'); ?></span>
-          </div>
-
           <h1 class="hero-h1 text-4xl sm:text-5xl lg:text-6xl xl:text-[4.1rem] font-extrabold text-white leading-[1.14] sm:leading-[1.12] lg:leading-[1.1] tracking-tight text-balance">
             <?php esc_html_e('Advanced IT Solutions That', 'central-strategies'); ?><br class="hidden xl:block" />
-            <span class="text-cs-500"><?php esc_html_e('Drive Real Impact.', 'central-strategies'); ?></span>
+            <span class="text-cs-500"><?php esc_html_e('Drive Impact.', 'central-strategies'); ?></span>
           </h1>
 
           <p class="hero-p mt-7 text-lg lg:text-xl text-slate-400 leading-relaxed max-w-2xl mx-auto">
@@ -42,7 +37,7 @@ get_header();
               <?php esc_html_e('Explore Our Solutions', 'central-strategies'); ?>
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </a>
-            <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-white font-bold text-sm uppercase tracking-wider rounded border border-white/20 hover:bg-white/10 transition-all">
+            <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center justify-center px-8 py-4 text-white font-bold text-sm uppercase tracking-wider rounded border border-white/20 hover:bg-white/10 transition-all">
               <?php esc_html_e('Contact Us', 'central-strategies'); ?>
             </a>
           </div>
@@ -54,10 +49,12 @@ get_header();
     <section id="service-disciplines" class="py-16 lg:py-20 bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-12" data-animate="fade-up">
-          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-relaxed text-balance">
-            <?php esc_html_e('We do three things', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('exceptionally well.', 'central-strategies'); ?></span>
+          <h2 class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
+            <span class="w-8 h-px bg-cs-600" aria-hidden="true"></span>
+            <?php esc_html_e('What We Do', 'central-strategies'); ?>
+            <span class="w-8 h-px bg-cs-600" aria-hidden="true"></span>
           </h2>
-          <p class="mt-5 text-lg text-slate-500 leading-relaxed">
+          <p class="text-lg text-slate-500 leading-relaxed">
             <?php esc_html_e('Security, Innovation, and Operations. Like any mission-critical system, the power is not in the components alone - it is in how they work together.', 'central-strategies'); ?>
           </p>
         </div>
@@ -128,13 +125,13 @@ get_header();
     </section>
 
     <!-- Bottom CTA -->
-    <section class="relative py-24 lg:py-28 overflow-hidden bg-slate-950">
+    <section class="relative z-[1] -mt-8 lg:-mt-10 py-12 lg:py-14 overflow-hidden bg-slate-950">
       <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-brand-950" aria-hidden="true"></div>
       <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-cs-600/8 rounded-full blur-[100px]" aria-hidden="true"></div>
       <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/30 to-transparent" aria-hidden="true"></div>
 
       <div class="relative max-w-site mx-auto px-5 lg:px-8 text-center">
-        <div class="inline-flex items-center gap-2 text-cs-400 text-xs font-bold uppercase tracking-[0.2em] mb-6" data-animate="fade-in">
+        <div class="inline-flex items-center gap-2 text-cs-400 text-xs font-bold uppercase tracking-[0.2em] mb-3" data-animate="fade-in">
           <span class="w-8 h-px bg-cs-600"></span>
           <?php esc_html_e('Get Started', 'central-strategies'); ?>
           <span class="w-8 h-px bg-cs-600"></span>
@@ -142,13 +139,11 @@ get_header();
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-relaxed text-balance" data-animate="fade-up">
           <?php esc_html_e('Ready to Solve Your Most Difficult Challenges?', 'central-strategies'); ?>
         </h2>
-        <div class="mt-8">
-          <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center gap-2 px-10 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-500 transition-colors shadow-lg shadow-cs-600/25">
+        <div class="mt-5">
+          <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center justify-center px-10 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-500 transition-colors shadow-lg shadow-cs-600/25">
             <?php esc_html_e('Contact Us', 'central-strategies'); ?>
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
         </div>
-        <div class="w-24 h-1 bg-cs-600/80 rounded-full mx-auto mt-8" aria-hidden="true"></div>
       </div>
     </section>
 

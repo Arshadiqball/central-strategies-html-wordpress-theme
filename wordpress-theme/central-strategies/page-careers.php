@@ -43,8 +43,14 @@ get_header();
             <h1 class="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
               <?php echo esc_html(get_theme_mod('cs_careers_heading', 'Ready to join a great team?')); ?>
             </h1>
-            <a href="<?php echo esc_url($cs_open_positions_url); ?>" class="mt-8 inline-flex items-center justify-center px-6 py-3 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider hover:bg-cs-500 transition-colors">
+            <?php
+            $cs_jobs_cta_scroll = (strpos($cs_open_positions_url, '#') === 0 && strlen($cs_open_positions_url) > 1);
+            ?>
+            <a href="<?php echo esc_url($cs_open_positions_url); ?>" class="mt-8 inline-flex items-center <?php echo $cs_jobs_cta_scroll ? 'gap-2' : 'justify-center'; ?> px-6 py-3 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider hover:bg-cs-500 transition-colors">
               <?php esc_html_e('View Jobs', 'central-strategies'); ?>
+              <?php if ($cs_jobs_cta_scroll) : ?>
+              <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              <?php endif; ?>
             </a>
           </div>
         </div>

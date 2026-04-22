@@ -7,7 +7,7 @@
 $cs_phone      = get_theme_mod('cs_phone', '(703) 873-7049');
 $cs_phone_raw  = preg_replace('/[^0-9+]/', '', $cs_phone);
 $cs_email      = get_theme_mod('cs_email', 'info@centralstrategies.com');
-$cs_address    = get_theme_mod('cs_address', "Washington DC–Baltimore Area\nUnited States");
+$cs_address    = get_theme_mod('cs_address', "Washington DC\nUnited States");
 $cs_legal_name = get_theme_mod('cs_footer_legal_name', 'Central Strategies, LLC');
 ?>
   <footer class="bg-[#080910] text-slate-400">
@@ -19,35 +19,35 @@ $cs_legal_name = get_theme_mod('cs_footer_legal_name', 'Central Strategies, LLC'
         <!-- Left: Brand + credentials -->
         <div class="min-w-0 lg:max-w-xl xl:max-w-2xl" data-animate="fade-up">
           <?php cs_logo('footer'); ?>
-          <p class="mt-5 max-w-md text-sm leading-relaxed text-slate-400">
-            <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
-          </p>
+          <div class="mt-5 max-w-md">
+            <p class="text-sm leading-relaxed text-slate-400">
+              <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
+            </p>
 
-          <div class="mt-10 flex flex-col gap-8 sm:flex-row sm:items-stretch">
-            <div class="min-w-0 flex-1 space-y-3">
-              <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
-                <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('UEI Number', 'central-strategies'); ?></div>
-                <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_uei_number', 'RVF8RK4SJRG8')); ?></div>
-              </div>
-              <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
-                <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('CAGE Code', 'central-strategies'); ?></div>
-                <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_cage_code', '9L4U3')); ?></div>
-              </div>
-              <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
-                <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('GSA Schedule', 'central-strategies'); ?></div>
-                <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_gsa_schedule', 'GSA MAS')); ?></div>
-              </div>
+            <div class="mt-10 w-1/2 min-w-0 max-w-full space-y-3">
+            <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
+              <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('UEI Number', 'central-strategies'); ?></div>
+              <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_uei_number', 'RVF8RK4SJRG8')); ?></div>
             </div>
-            <div class="flex shrink-0 items-center justify-center sm:w-[5.5rem] sm:max-w-[5.5rem]">
+            <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
+              <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('CAGE Code', 'central-strategies'); ?></div>
+              <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_cage_code', '9L4U3')); ?></div>
+            </div>
+            <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
+              <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('GSA Schedule', 'central-strategies'); ?></div>
+              <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_gsa_schedule', 'GSA MAS')); ?></div>
+            </div>
+            <div class="pt-2">
               <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-certified.png'); ?>"
-                alt="<?php esc_attr_e('SBA Service-Disabled Veteran-Owned Certified', 'central-strategies'); ?>"
-                width="110"
-                height="110"
-                class="w-[4.5rem] sm:w-20 h-auto object-contain"
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-badge-wide.png'); ?>"
+                alt="<?php esc_attr_e('SBA Service-Disabled Veteran-Owned Small Business logo', 'central-strategies'); ?>"
+                width="600"
+                height="150"
+                class="w-full h-auto object-contain object-left"
                 loading="lazy"
                 decoding="async"
               />
+            </div>
             </div>
           </div>
         </div>

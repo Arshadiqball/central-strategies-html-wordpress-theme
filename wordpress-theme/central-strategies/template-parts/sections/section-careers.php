@@ -29,9 +29,15 @@
               <span class="px-4 py-2 bg-slate-50 text-slate-600 text-sm font-medium rounded-lg border border-slate-200"><?php echo esc_html($cs_tag); ?></span>
               <?php endfor; ?>
             </div>
-            <a href="<?php echo esc_url(get_theme_mod('cs_careers_cta_url', '#')); ?>" class="mt-8 inline-flex items-center gap-2 px-7 py-3.5 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-700 transition-colors">
+            <?php
+            $cs_careers_cta_href = trim((string) get_theme_mod('cs_careers_cta_url', '#'));
+            $cs_careers_scroll_down = ($cs_careers_cta_href !== '' && $cs_careers_cta_href[0] === '#' && strlen($cs_careers_cta_href) > 1);
+            ?>
+            <a href="<?php echo esc_url(get_theme_mod('cs_careers_cta_url', '#')); ?>" class="mt-8 inline-flex items-center <?php echo $cs_careers_scroll_down ? 'gap-2' : 'justify-center'; ?> px-7 py-3.5 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-cs-700 transition-colors">
               <?php esc_html_e('View Open Positions', 'central-strategies'); ?>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              <?php if ($cs_careers_scroll_down) : ?>
+              <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              <?php endif; ?>
             </a>
           </div>
 

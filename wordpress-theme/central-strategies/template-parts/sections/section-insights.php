@@ -15,9 +15,8 @@
           $cs_blog_page = get_page_by_path('blog');
           $cs_blog_url  = $cs_blog_page ? get_permalink($cs_blog_page) : home_url('/blog/');
           ?>
-          <a href="<?php echo esc_url($cs_blog_url); ?>" class="inline-flex items-center gap-1.5 text-xs font-bold text-cs-600 uppercase tracking-wider hover:text-cs-700 transition-colors group shrink-0">
+          <a href="<?php echo esc_url($cs_blog_url); ?>" class="inline-flex items-center text-xs font-bold text-cs-600 uppercase tracking-wider hover:text-cs-700 transition-colors shrink-0">
             <?php esc_html_e('View All', 'central-strategies'); ?>
-            <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
         </div>
 

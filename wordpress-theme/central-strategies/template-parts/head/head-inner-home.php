@@ -124,18 +124,6 @@
       from { opacity: 0; transform: translateX(-20px); }
       to   { opacity: 1; transform: translateX(0); }
     }
-    @keyframes heroVisualReveal {
-      from { opacity: 0; transform: scale(0.9) rotate(45deg); }
-      to   { opacity: 1; transform: scale(1) rotate(45deg); }
-    }
-    @keyframes floatNode {
-      from { opacity: 0; transform: translateY(20px) scale(0.8); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes pulseRing {
-      0%, 100% { transform: scale(1); opacity: 0.2; }
-      50%      { transform: scale(1.05); opacity: 0.35; }
-    }
     @keyframes statCount {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -145,12 +133,7 @@
     .hero-p      { animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.4s both; }
     .hero-ctas   { animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.55s both; }
     .hero-stats  { animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
-    .hero-visual-shield { animation: heroVisualReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.5s both; }
-    .hero-node-1 { animation: floatNode 0.6s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
-    .hero-node-2 { animation: floatNode 0.6s cubic-bezier(0.16,1,0.3,1) 0.85s both; }
-    .hero-node-3 { animation: floatNode 0.6s cubic-bezier(0.16,1,0.3,1) 1.0s both; }
-    .hero-node-4 { animation: floatNode 0.6s cubic-bezier(0.16,1,0.3,1) 1.15s both; }
-    .hero-ring   { animation: pulseRing 4s ease-in-out infinite; }
+    .hero-cap-panel { animation: heroFadeUp 0.75s cubic-bezier(0.16,1,0.3,1) 0.35s both; }
 
     /* ── Hover micro-interactions for cards ── */
     .card-lift {
@@ -170,14 +153,12 @@
     /* ── Reduce motion for accessibility ── */
     @media (prefers-reduced-motion: reduce) {
       [data-animate],
-      .hero-badge, .hero-h1, .hero-p, .hero-ctas, .hero-stats,
-      .hero-visual-shield, .hero-node-1, .hero-node-2, .hero-node-3, .hero-node-4 {
+      .hero-badge, .hero-h1, .hero-p, .hero-ctas, .hero-stats, .hero-cap-panel {
         animation: none !important;
         transition: none !important;
         opacity: 1 !important;
         transform: none !important;
       }
-      .hero-visual-shield { transform: scale(1) rotate(45deg) !important; }
       .card-lift:hover { transform: none; }
     }
   </style>

@@ -62,9 +62,8 @@
               $cs_about_page = get_page_by_path('about');
               $cs_about_url  = $cs_about_page ? get_permalink($cs_about_page) : home_url('/about/');
               ?>
-              <a href="<?php echo esc_url($cs_about_url); ?>" class="inline-flex items-center gap-2 text-sm font-bold text-cs-600 uppercase tracking-wider hover:text-cs-700 transition-colors group">
+              <a href="<?php echo esc_url($cs_about_url); ?>" class="inline-flex items-center text-sm font-bold text-cs-600 uppercase tracking-wider hover:text-cs-700 transition-colors">
                 <?php esc_html_e('Read our full story', 'central-strategies'); ?>
-                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </a>
             </p>
 

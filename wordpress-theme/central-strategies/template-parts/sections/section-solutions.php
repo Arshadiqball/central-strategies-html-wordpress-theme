@@ -43,7 +43,6 @@
             <?php if ($cs_card_url) : ?>
             <a href="<?php echo esc_url($cs_card_url); ?>" class="inline-flex items-center text-xs font-bold text-cs-600 uppercase tracking-wider hover:text-cs-700 transition-colors group/l">
               <?php esc_html_e('Learn More', 'central-strategies'); ?>
-              <svg class="ml-1 w-3.5 h-3.5 group-hover/l:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </a>
             <?php endif; ?>
           </div>
@@ -63,7 +62,6 @@
             <p class="text-sm text-slate-500 leading-relaxed mb-5"><?php echo esc_html($cs_svc['desc']); ?></p>
             <a href="<?php echo esc_url($cs_svc['link']); ?>" class="inline-flex items-center text-xs font-bold text-cs-600 uppercase tracking-wider hover:text-cs-700 transition-colors group/l">
               <?php esc_html_e('Learn More', 'central-strategies'); ?>
-              <svg class="ml-1 w-3.5 h-3.5 group-hover/l:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </a>
           </div>
           <?php
@@ -74,9 +72,8 @@
 
         <!-- Find Out More CTA -->
         <div class="mt-14 text-center" data-animate="fade-up">
-          <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-900 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-slate-800 transition-colors">
+          <a href="<?php echo esc_url(cs_contact_url()); ?>" class="inline-flex items-center justify-center px-8 py-3.5 bg-slate-900 text-white font-bold text-sm uppercase tracking-wider rounded hover:bg-slate-800 transition-colors">
             <?php esc_html_e('Find Out More', 'central-strategies'); ?>
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
         </div>
       </div>

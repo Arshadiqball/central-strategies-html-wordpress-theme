@@ -125,15 +125,6 @@ while (have_posts()) :
       </div>
     </header>
 
-    <section class="mt-10" aria-labelledby="cs-job-about-heading">
-      <h2 id="cs-job-about-heading" class="text-lg font-extrabold text-slate-900 tracking-tight">
-        <?php esc_html_e('About Central Strategies', 'central-strategies'); ?>
-      </h2>
-      <p class="mt-3 text-base text-slate-600 leading-relaxed">
-        <?php echo esc_html($cs_about_intro); ?>
-      </p>
-    </section>
-
     <?php if (has_excerpt()) : ?>
       <section class="mt-10 border-t border-slate-100 pt-10" aria-labelledby="cs-job-role-overview">
         <h2 id="cs-job-role-overview" class="text-lg font-extrabold text-slate-900 tracking-tight">
@@ -147,7 +138,7 @@ while (have_posts()) :
 
     <section class="mt-10 border-t border-slate-100 pt-10" aria-labelledby="cs-job-description-heading">
       <h2 id="cs-job-description-heading" class="text-lg font-extrabold text-slate-900 tracking-tight">
-        <?php esc_html_e('Position details', 'central-strategies'); ?>
+        <?php esc_html_e('Job Description:', 'central-strategies'); ?>
       </h2>
       <div class="cs-job-content mt-4 text-base text-slate-700 leading-relaxed
         [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-xl [&_h2]:font-extrabold [&_h2]:text-slate-900 [&_h2]:tracking-tight

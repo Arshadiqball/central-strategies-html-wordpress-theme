@@ -56,9 +56,6 @@ if (isset($_POST['cs_contact_submit']) && wp_verify_nonce($_POST['_cs_nonce'], $
     }
 }
 
-$cs_phone_display = get_theme_mod('cs_phone', '703.873.7049');
-$cs_email_display = get_theme_mod('cs_email', 'info@centralstrategies.com');
-$cs_address       = get_theme_mod('cs_address', 'Washington DC–Baltimore Area, United States');
 $cs_job_interest  = sanitize_text_field($_GET['job'] ?? '');
 $cs_message_prefill = $cs_job_interest !== ''
     ? sprintf(__('I am interested in applying for the %s position.', 'central-strategies'), $cs_job_interest)
@@ -111,7 +108,7 @@ get_header();
               </div>
               <?php else : ?>
 
-              <h2 class="text-2xl font-extrabold text-slate-900 mb-2"><?php esc_html_e('Send Us a Message', 'central-strategies'); ?></h2>
+              <h2 class="text-2xl font-extrabold text-slate-900 mb-2"><?php esc_html_e('Contact Us', 'central-strategies'); ?></h2>
               <p class="text-sm text-slate-500 mb-8"><?php esc_html_e("Fill out the form below and we'll get back to you promptly.", 'central-strategies'); ?></p>
 
               <?php if ($cs_form_error) : ?>
@@ -163,9 +160,8 @@ get_header();
                 </div>
 
                 <button type="submit" name="cs_contact_submit" value="1"
-                  class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded-lg hover:bg-cs-500 active:bg-cs-700 transition-colors shadow-lg shadow-cs-600/25">
+                  class="w-full inline-flex items-center justify-center px-8 py-4 bg-cs-600 text-white font-bold text-sm uppercase tracking-wider rounded-lg hover:bg-cs-500 active:bg-cs-700 transition-colors shadow-lg shadow-cs-600/25">
                   <?php esc_html_e('Send Message', 'central-strategies'); ?>
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </button>
               </form>
               <?php endif; ?>
@@ -176,60 +172,6 @@ get_header();
         </div>
       </div>
     </section>
-
-    <!-- Trust / Why Us -->
-    <section class="py-16 lg:py-20 bg-white border-t border-slate-100">
-      <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-12" data-animate="fade-up">
-          <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            <span class="w-8 h-px bg-cs-600/50"></span>
-            <?php esc_html_e('Why Central Strategies', 'central-strategies'); ?>
-            <span class="w-8 h-px bg-cs-600/50"></span>
-          </div>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-normal text-balance">
-            <?php esc_html_e('A partner you can', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('trust.', 'central-strategies'); ?></span>
-          </h2>
-          <p class="mt-4 text-slate-500 leading-relaxed">
-            <?php esc_html_e('When you work with Central Strategies, you work with a team that understands the stakes.', 'central-strategies'); ?>
-          </p>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-stagger>
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.077 10.1c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Veteran-Owned', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('SDVOSB-certified with a service-driven culture built on discipline and accountability.', 'central-strategies'); ?></p>
-          </div>
-
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 11h14v9H5v-9z" /></svg>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Cleared Staff', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('TS/SCI and Secret-cleared professionals ready for sensitive mission environments.', 'central-strategies'); ?></p>
-          </div>
-
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Fast Response', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('We respond to every inquiry within one business day - usually much faster.', 'central-strategies'); ?></p>
-          </div>
-
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('99% Retention', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('Our clients come back because we deliver measurable results, every time.', 'central-strategies'); ?></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
 
 </main>
 
