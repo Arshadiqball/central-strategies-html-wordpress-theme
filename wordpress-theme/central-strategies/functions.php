@@ -72,38 +72,165 @@ function cs_output_favicon_tags() {
 add_action('wp_head', 'cs_output_favicon_tags', 4);
 
 /* ──────────────────────────────────────────────────────
-   Custom Walker — Desktop nav (styled <a> tags)
+   Custom Walker — Desktop nav (styled <a> tags, supports dropdowns)
    ────────────────────────────────────────────────────── */
 class CS_Desktop_Nav_Walker extends Walker_Nav_Menu {
-    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-        $classes  = empty($item->classes) ? array() : (array) $item->classes;
-        $active   = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true);
-        $color    = $active ? 'text-cs-600' : 'text-slate-500 hover:text-slate-900';
-        $output  .= '<a href="' . esc_url($item->url) . '" class="relative px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors">';
-        $output  .= esc_html($item->title);
-        $output  .= '</a>';
+    public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output) {
+        if (!empty($element)) {
+            $element->cs_has_children = !empty($children_elements[$element->ID]);
+        }
+        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
     }
+
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $classes      = empty($item->classes) ? array() : (array) $item->classes;
+        $active       = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true) || in_array('current-menu-parent', $classes, true) || in_array('current-menu-ancestor', $classes, true);
+        $color        = $active ? 'text-cs-600' : 'text-slate-500 hover:text-slate-900';
+        $has_children = !empty($item->cs_has_children);
+
+        if ($depth === 0 && $has_children) {
+            $output .= '<div class="cs-nav-group group relative">';
+            $output .= '<button type="button" class="cs-nav-trigger relative inline-flex items-center gap-1 px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors" aria-haspopup="true" aria-expanded="false">';
+            $output .= esc_html($item->title);
+            $output .= '<svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>';
+            $output .= '</button>';
+        } elseif ($depth === 0) {
+            $output .= '<a href="' . esc_url($item->url) . '" class="relative px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors">';
+            $output .= esc_html($item->title);
+            $output .= '</a>';
+        } else {
+            $child_active = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
+            $output .= '<a href="' . esc_url($item->url) . '" class="block px-4 py-2.5 text-[12px] font-semibold ' . esc_attr($child_active) . ' uppercase tracking-wider transition-colors">';
+            $output .= esc_html($item->title);
+            $output .= '</a>';
+        }
+    }
+
+    public function end_el(&$output, $item, $depth = 0, $args = null) {
+        if ($depth === 0 && !empty($item->cs_has_children)) {
+            $output .= '</div>';
+        }
+    }
+
+    public function start_lvl(&$output, $depth = 0, $args = null) {
+        if ($depth === 0) {
+            $output .= '<div class="cs-nav-submenu absolute left-0 top-full pt-2 min-w-[220px] opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-200 z-50">';
+            $output .= '<div class="overflow-hidden rounded-md bg-white border border-slate-100 shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5 py-1.5">';
+        }
+    }
+
+    public function end_lvl(&$output, $depth = 0, $args = null) {
+        if ($depth === 0) {
+            $output .= '</div></div>';
+        }
+    }
+}
+
+/* ──────────────────────────────────────────────────────
+   Custom Walker — Mobile nav (styled <a> tags, indents children)
+   ────────────────────────────────────────────────────── */
+class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
+    public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output) {
+        if (!empty($element)) {
+            $element->cs_has_children = !empty($children_elements[$element->ID]);
+        }
+        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
+    }
+
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $classes      = empty($item->classes) ? array() : (array) $item->classes;
+        $active       = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true);
+        $color        = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
+        $has_children = !empty($item->cs_has_children);
+
+        if ($depth === 0 && $has_children) {
+            $output .= '<div class="px-4 pt-3 pb-1 text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">';
+            $output .= esc_html($item->title);
+            $output .= '</div>';
+        } elseif ($depth === 0) {
+            $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
+            $output .= esc_html($item->title);
+            $output .= '</a>';
+        } else {
+            $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-2.5 ml-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
+            $output .= esc_html($item->title);
+            $output .= '</a>';
+        }
+    }
+
     public function end_el(&$output, $item, $depth = 0, $args = null) {}
     public function start_lvl(&$output, $depth = 0, $args = null) {}
     public function end_lvl(&$output, $depth = 0, $args = null) {}
 }
 
 /* ──────────────────────────────────────────────────────
-   Custom Walker — Mobile nav (styled <a> tags)
+   Inject "Company Profile" + "Careers" as children of "About"
+   in the primary / mobile nav menus. Also makes "About" a
+   non-link parent (dropdown trigger only).
    ────────────────────────────────────────────────────── */
-class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
-    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-        $classes = empty($item->classes) ? array() : (array) $item->classes;
-        $active  = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true);
-        $color   = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
-        $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
-        $output .= esc_html($item->title);
-        $output .= '</a>';
+function cs_inject_about_submenu($items, $menu, $args) {
+    if (empty($items) || !is_array($items)) {
+        return $items;
     }
-    public function end_el(&$output, $item, $depth = 0, $args = null) {}
-    public function start_lvl(&$output, $depth = 0, $args = null) {}
-    public function end_lvl(&$output, $depth = 0, $args = null) {}
+
+    $about_item = null;
+    foreach ($items as $item) {
+        $title_match = isset($item->title) && strcasecmp(trim($item->title), 'About') === 0;
+        $url_match   = isset($item->url) && preg_match('#/about/?(\?|$|#)#i', (string) $item->url);
+        if ($title_match || $url_match) {
+            $about_item = $item;
+            break;
+        }
+    }
+
+    if (!$about_item) {
+        return $items;
+    }
+
+    // Make About behave as a non-link dropdown trigger.
+    $about_item->url = '#';
+
+    // Don't duplicate children if the menu already has some under About.
+    foreach ($items as $item) {
+        if ((int) $item->menu_item_parent === (int) $about_item->ID) {
+            return $items;
+        }
+    }
+
+    $about_page   = get_page_by_path('about');
+    $careers_page = get_page_by_path('careers');
+    $about_url    = $about_page ? get_permalink($about_page) : home_url('/about/');
+    $careers_url  = $careers_page ? get_permalink($careers_page) : home_url('/careers/');
+
+    $make_child = function($id, $title, $url, $order) use ($about_item) {
+        $child = new stdClass();
+        $child->ID               = $id;
+        $child->db_id            = $id;
+        $child->title            = $title;
+        $child->url              = $url;
+        $child->menu_item_parent = (string) $about_item->ID;
+        $child->object_id        = $id;
+        $child->object           = 'custom';
+        $child->type             = 'custom';
+        $child->type_label       = 'Custom Link';
+        $child->classes          = array();
+        $child->target           = '';
+        $child->attr_title       = '';
+        $child->description      = '';
+        $child->xfn              = '';
+        $child->menu_order       = (int) $about_item->menu_order * 10 + $order;
+        $child->current          = false;
+        $child->post_parent      = 0;
+        $child->post_title       = $title;
+        return $child;
+    };
+
+    $items[] = $make_child(900001, 'Company Profile', $about_url, 1);
+    $items[] = $make_child(900002, 'Careers',         $careers_url, 2);
+
+    return $items;
 }
+add_filter('wp_get_nav_menu_items', 'cs_inject_about_submenu', 20, 3);
 
 /* ──────────────────────────────────────────────────────
    Custom Walker — Footer columns (styled <li><a>)
@@ -159,7 +286,7 @@ function cs_logo($variant = 'header') {
         if (has_custom_logo()) {
             $logo_id  = get_theme_mod('custom_logo');
             $logo_url = wp_get_attachment_image_url($logo_id, 'full');
-            echo '<a href="' . $home . '" class="shrink-0 flex items-center" aria-label="' . esc_attr(get_bloginfo('name')) . ' Home"><span class="inline-flex overflow-hidden h-16 max-w-[min(360px,88vw)] items-center"><img src="' . esc_url($logo_url) . '" alt="" width="1080" height="1080" decoding="async" class="block h-[8.5rem] w-auto object-contain object-left origin-left -my-8" /></span></a>';
+            echo '<a href="' . $home . '" class="shrink-0 flex items-center" aria-label="' . esc_attr(get_bloginfo('name')) . ' Home"><span class="inline-flex h-14 sm:h-16 lg:h-[5.5rem] max-w-[min(480px,88vw)] items-center"><img src="' . esc_url($logo_url) . '" alt="" width="1080" height="1080" decoding="async" class="block h-full w-auto object-contain object-left origin-left" /></span></a>';
         } else {
             echo '<a href="' . $home . '" class="text-xl font-bold text-slate-900">' . esc_html(get_bloginfo('name')) . '</a>';
         }
@@ -822,7 +949,7 @@ function cs_customize_register($wp_customize) {
         'title' => __('Hero Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 10,
     ));
     $reg('cs_hero_heading',     'Headline',      'cs_hero', 'Mission-Driven Intelligence & Government Advisory');
-    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Central Strategies provides mission-aligned IT solutions that enable federal agencies to improve performance, strengthen operational resilience, and address complex technical challenges.', 'textarea');
+    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.', 'textarea');
 
     // ── About ───────────────────────────────────────────
     $wp_customize->add_section('cs_about', array(
@@ -830,7 +957,7 @@ function cs_customize_register($wp_customize) {
     ));
     $reg('cs_about_hero_title',       'About page — hero title',       'cs_about', 'Our Story');
     $reg('cs_about_hero_subheading',  'About page — hero intro',       'cs_about', 'The mission of Central Strategies is to protect our nation and its people through technology, talent, and trusted partnerships.', 'textarea');
-    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on IT solutions for federal industries, Central Strategies is committed to delivering superior services through outstanding technology and teams.', 'textarea');
+    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through outstanding technology and teams.', 'textarea');
     $reg('cs_about_pillar1_title', 'Capability 1',    'cs_about', 'Strategic advisory');
     $reg('cs_about_pillar2_title', 'Capability 2',    'cs_about', 'Program support');
     $reg('cs_about_pillar3_title', 'Capability 3',    'cs_about', 'Research & analysis');

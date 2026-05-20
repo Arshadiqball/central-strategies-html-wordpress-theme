@@ -28,8 +28,14 @@ get_header();
             <span class="text-cs-500"><?php esc_html_e('Drive Impact.', 'central-strategies'); ?></span>
           </h1>
 
-          <p class="hero-p mt-7 text-lg lg:text-xl text-slate-400 leading-relaxed max-w-2xl mx-auto">
-            <?php echo esc_html(get_theme_mod('cs_services_subheading', 'Three core disciplines. One integrated approach. We combine security, innovation, and operational excellence to deliver solutions that move the mission forward.')); ?>
+          <p class="hero-p mt-7 p-0 bg-transparent text-lg lg:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
+            <?php
+            $cs_services_subheading = get_theme_mod('cs_services_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges');
+            if (trim($cs_services_subheading) === 'Three core disciplines. One integrated approach. We combine security, innovation, and operational excellence to deliver solutions that move the mission forward.') {
+                $cs_services_subheading = 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges';
+            }
+            echo esc_html($cs_services_subheading);
+            ?>
           </p>
 
           <div class="hero-ctas mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -59,66 +65,86 @@ get_header();
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6" data-stagger>
-          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center card-lift" data-animate="fade-up">
-            <div class="w-11 h-11 bg-cs-50 rounded-xl flex items-center justify-center mx-auto mb-5">
-              <svg class="w-5 h-5 text-cs-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
-            </div>
-            <h3 class="text-lg font-extrabold text-slate-900 mb-2"><?php esc_html_e('Operations', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('Data engineering, analytics, and automation capabilities built to optimize every dollar.', 'central-strategies'); ?></p>
+        <?php
+        $cs_capability_labels = array(
+            'Cybersecurity',
+            'Enterprise IT Management and Innovation',
+            'AI/ML',
+            'Data Analytics & Business Intelligence',
+            'Technological Automation',
+            'System Engineering',
+            'Cloud Computing',
+            'Budget Planning, Accounting, and Audit Services',
+        );
+        ?>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4" data-stagger>
+          <?php foreach ($cs_capability_labels as $cs_capability) : ?>
+          <div class="group bg-slate-50 rounded-md border border-slate-200 min-h-[74px] px-4 py-4 flex items-center justify-center text-center transition-all duration-300 hover:border-cs-300 hover:bg-white hover:shadow-[0_0_0_1px_rgba(190,32,38,0.28),0_0_20px_rgba(190,32,38,0.22)]" data-animate="fade-up">
+            <span class="text-[11px] md:text-xs font-extrabold uppercase tracking-wide text-slate-700 group-hover:text-slate-900 leading-snug">
+              <?php echo esc_html($cs_capability); ?>
+            </span>
           </div>
-
-          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center card-lift" data-animate="fade-up">
-            <div class="w-11 h-11 bg-brand-50 rounded-xl flex items-center justify-center mx-auto mb-5">
-              <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
-            </div>
-            <h3 class="text-lg font-extrabold text-slate-900 mb-2"><?php esc_html_e('Innovation', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('Cloud modernization and AI-powered solutions that keep pace with emerging threats.', 'central-strategies'); ?></p>
-          </div>
-
-          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center card-lift" data-animate="fade-up">
-            <div class="w-11 h-11 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-5">
-              <svg class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            </div>
-            <h3 class="text-lg font-extrabold text-slate-900 mb-2"><?php esc_html_e('Security', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('System engineering and cybersecurity solutions with full-lifecycle threat monitoring.', 'central-strategies'); ?></p>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
 
-    <!-- Approach -->
+    <!-- Detailed Solutions -->
     <section class="py-20 lg:py-24 bg-slate-50 border-y border-slate-100">
       <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="max-w-4xl mx-auto text-center" data-animate="fade-up">
-          <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            <span class="w-8 h-px bg-cs-600"></span>
-            <?php esc_html_e('Our Approach', 'central-strategies'); ?>
-            <span class="w-8 h-px bg-cs-600"></span>
-          </div>
-          <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-slate-900 tracking-tight leading-relaxed text-balance">
-            <?php esc_html_e('Mission complexity demands', 'central-strategies'); ?> <span class="text-cs-600"><?php esc_html_e('integrated delivery.', 'central-strategies'); ?></span>
-          </h2>
-          <p class="mt-6 text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
-            <?php esc_html_e('Government IT is complex, high-stakes, and constantly evolving. We take a fully integrated approach with our teams that is seamless across security, engineering, and data expertise.', 'central-strategies'); ?>
-          </p>
-        </div>
+        <?php
+        $cs_solution_details = array(
+            array(
+                'title' => 'Information Technology',
+                'desc'  => 'Our capabilities focus on delivering secure, automated, and innovative IT solutions. We safeguard digital assets, optimize workflows through intelligent automation, and leverage scalable cloud technologies for operational efficiency. By integrating advanced analytics, AI-driven insights, and automation, we enable data-driven decision-making that enhances performance and adaptability.',
+                'image' => 'https://img1.wsimg.com/isteam/ip/b035d520-8899-4fd2-a537-05db45ef218c/blob-f1b08dc.png/:/cr=t:5.53%25,l:0%25,w:100%25,h:88.94%25/rs=w:600,h:300,cg:true',
+                'alt'   => 'Information Technology',
+                'items' => array('Cybersecurity', 'Technological Automation', 'Cloud Computing', 'Data Analytics', 'AI/ML Integration', 'Business Intelligence', 'Digital Transformation', 'Analytics Strategies', 'Enterprise Service Management', 'Enterprise Modernization', 'Health IT', 'IT Service Management', 'DevOpsSec'),
+            ),
+            array(
+                'title' => 'Engineering',
+                'desc'  => 'We provide comprehensive engineering and technology solutions that enhance system performance, infrastructure efficiency, and security.',
+                'image' => 'https://img1.wsimg.com/isteam/stock/51159/:/cr=t:10.94%25,l:0%25,w:100%25,h:78.12%25/rs=w:600,h:300,cg:true',
+                'alt'   => 'Engineering',
+                'items' => array('Systems Engineering', 'Facilities Improvements and Support Services', 'Engineering Support Services', 'Cybersecurity Engineering', 'Software Engineering', 'Network Engineering', 'Telecommunication', 'Environmental Services', 'Research and Development Services'),
+            ),
+            array(
+                'title' => 'Business Optimization',
+                'desc'  => 'Mission success requires the alignment of all business processes. We provide industry and functional expertise to help our clients exceed requirements and address the most complex challenges.',
+                'image' => 'https://img1.wsimg.com/isteam/stock/y6A7wxR/:/cr=t:12.4%25,l:0%25,w:100%25,h:75.21%25/rs=w:600,h:300,cg:true',
+                'alt'   => 'Business Optimization',
+                'items' => array('Acquisitions/Contracting', 'Logistics Management', 'Requirements Management', 'Strategic Planning', 'National Security Operations', 'Business Systems Transformation', 'Test and Evaluation Management', 'Budget Planning, Accounting, and Audit Remediation', 'Innovation Strategy', 'Workforce Analysis', 'Agile Development'),
+            ),
+        );
+        ?>
 
-        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-stagger>
-          <?php
-          $cs_steps = array(
-              array('num' => '01', 'title' => 'Discover', 'desc' => 'Deep-dive into mission environments and constraints to define the real problem.'),
-              array('num' => '02', 'title' => 'Architect', 'desc' => 'Design solutions that balance innovation, compliance, security, and speed.'),
-              array('num' => '03', 'title' => 'Deliver', 'desc' => 'Implement with agile sprints, transparent reporting, and continuous testing.'),
-              array('num' => '04', 'title' => 'Sustain', 'desc' => 'Provide ongoing optimization, monitoring, and long-term mission support.'),
-          );
-          foreach ($cs_steps as $cs_step) :
-          ?>
-          <div class="bg-white rounded-xl border border-slate-200 p-6 text-center" data-animate="fade-up">
-            <div class="text-cs-500 text-lg font-extrabold mb-4"><?php echo esc_html($cs_step['num']); ?></div>
-            <h3 class="text-base font-bold text-slate-900 mb-2"><?php echo esc_html($cs_step['title']); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php echo esc_html($cs_step['desc']); ?></p>
-          </div>
+        <div class="space-y-10 lg:space-y-12">
+          <?php foreach ($cs_solution_details as $cs_i => $cs_solution) : ?>
+          <article class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-[0_14px_34px_rgba(15,23,42,0.08)] hover:shadow-[0_14px_36px_rgba(190,32,38,0.14)] transition-shadow duration-300" data-animate="fade-up">
+            <div class="grid lg:grid-cols-2">
+              <div class="<?php echo ($cs_i % 2 === 1) ? 'lg:order-2' : ''; ?>">
+                <img
+                  src="<?php echo esc_url($cs_solution['image']); ?>"
+                  alt="<?php echo esc_attr($cs_solution['alt']); ?>"
+                  class="h-full min-h-[220px] w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="p-7 lg:p-9 <?php echo ($cs_i % 2 === 1) ? 'lg:order-1' : ''; ?>">
+                <h3 class="text-2xl lg:text-[1.75rem] font-extrabold text-slate-900 leading-tight"><?php echo esc_html($cs_solution['title']); ?></h3>
+                <p class="mt-4 text-slate-600 leading-relaxed"><?php echo esc_html($cs_solution['desc']); ?></p>
+                <ul class="mt-6 grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+                  <?php foreach ($cs_solution['items'] as $cs_item) : ?>
+                  <li class="flex items-start gap-2.5">
+                    <svg class="w-4 h-4 mt-0.5 text-cs-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span class="text-sm font-semibold text-slate-700 leading-snug"><?php echo esc_html($cs_item); ?></span>
+                  </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+            </div>
+          </article>
           <?php endforeach; ?>
         </div>
       </div>

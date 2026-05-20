@@ -77,7 +77,11 @@ get_header();
 
         <div class="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed" data-animate="fade-up">
           <p>
-            <?php echo esc_html(get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on IT solutions for federal industries, Central Strategies is committed to delivering superior services through outstanding technology and teams.')); ?>
+            <?php
+            $cs_about_para1 = get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through outstanding technology and teams.');
+            $cs_about_para1 = str_ireplace('With an emphasis on IT solutions for federal industries, ', '', $cs_about_para1);
+            echo esc_html($cs_about_para1);
+            ?>
           </p>
         </div>
       </div>
@@ -86,7 +90,7 @@ get_header();
     <!-- Why Central Strategies -->
     <section class="pt-8 lg:pt-10 pb-12 lg:pb-16 bg-white" aria-labelledby="why-central-strategies-heading">
       <div class="max-w-site mx-auto px-5 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-12" data-animate="fade-up">
+        <div class="text-center max-w-3xl mx-auto" data-animate="fade-up">
           <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
             <span class="w-8 h-px bg-cs-600/50"></span>
             <?php esc_html_e('Why Central Strategies', 'central-strategies'); ?>
@@ -100,37 +104,71 @@ get_header();
           </p>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-stagger>
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118L2.077 10.1c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+        <div class="mt-12 lg:mt-14 grid gap-6 lg:gap-8 lg:grid-cols-2 max-w-5xl mx-auto" data-stagger>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 lg:p-7" data-animate="fade-up">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" /><circle cx="12" cy="12" r="3" /></svg>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900"><?php esc_html_e('Our Mission', 'central-strategies'); ?></h3>
             </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Veteran-Owned', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('SDVOSB-certified with a service-driven culture built on discipline and accountability.', 'central-strategies'); ?></p>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              <?php esc_html_e('To empower organizations and their people to solve critical challenges.', 'central-strategies'); ?>
+            </p>
           </div>
 
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 11h14v9H5v-9z" /></svg>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 lg:p-7" data-animate="fade-up">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900"><?php esc_html_e('Our Vision', 'central-strategies'); ?></h3>
             </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Cleared Staff', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('TS/SCI and Secret-cleared professionals ready for sensitive mission environments.', 'central-strategies'); ?></p>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              <?php esc_html_e('To foster superior teams and to create cutting-edge products and services that revolutionize industries, protect our nation, and ensure mission success.', 'central-strategies'); ?>
+            </p>
           </div>
 
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 lg:p-7 lg:col-span-2" data-animate="fade-up">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" /></svg>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900"><?php esc_html_e('Our Commitment', 'central-strategies'); ?></h3>
             </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('Fast Response', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('We respond to every inquiry within one business day - usually much faster.', 'central-strategies'); ?></p>
+            <p class="text-sm text-slate-500 leading-relaxed">
+              <?php
+              echo wp_kses(
+                  __('Through our <strong class="font-semibold text-slate-700">commitment</strong> to excellence, collaboration, and sustainable practices, we aim to make emerging technology accessible, inclusive, and beneficial for all. Our industry-leading experts integrate themselves into your organization, applying industry expertise, powerful solutions, and innovative technology to deliver sustainable results. Whether it&rsquo;s helping you lead an emerging technology integration, leverage technological automation to streamline operations, enhance productivity, and reduce costs, deliver cybersecurity services, or drive digital transformation, Central Strategies creates tailored, data-driven solutions that foster innovation, build stakeholder trust, and exceed organizational goals.', 'central-strategies'),
+                  array('strong' => array('class' => true))
+              );
+              ?>
+            </p>
           </div>
 
-          <div class="rounded-xl border border-slate-200 bg-white p-6 text-center" data-animate="fade-up">
-            <div class="w-10 h-10 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center mx-auto mb-4">
-              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 lg:p-7 lg:col-span-2" data-animate="fade-up">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-9 h-9 rounded-lg bg-cs-50 text-cs-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900"><?php esc_html_e('Our Values', 'central-strategies'); ?></h3>
             </div>
-            <h3 class="text-base font-extrabold text-slate-900 mb-2"><?php esc_html_e('99% Retention', 'central-strategies'); ?></h3>
-            <p class="text-sm text-slate-500 leading-relaxed"><?php esc_html_e('Our clients come back because we deliver measurable results, every time.', 'central-strategies'); ?></p>
+            <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-slate-600">
+              <?php
+              $cs_values = array(
+                  __('Operational Excellence', 'central-strategies'),
+                  __('Integrity', 'central-strategies'),
+                  __('Courage', 'central-strategies'),
+                  __('Responsibility to Team', 'central-strategies'),
+              );
+              foreach ($cs_values as $cs_value) :
+              ?>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 text-cs-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span class="font-semibold text-slate-700"><?php echo esc_html($cs_value); ?></span>
+              </li>
+              <?php endforeach; ?>
+            </ul>
           </div>
         </div>
       </div>

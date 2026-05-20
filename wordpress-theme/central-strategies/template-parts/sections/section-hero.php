@@ -2,8 +2,9 @@
     $hero_heading = get_theme_mod('cs_hero_heading', 'We Help Organizations Achieve More.');
     $hero_subheading = get_theme_mod(
       'cs_hero_subheading',
-      'Central Strategies provides mission-aligned IT solutions that enable federal agencies to improve performance, strengthen operational resilience, and address complex technical challenges.'
+      'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.'
     );
+    $hero_subheading = str_ireplace('federal agencies', 'our clients', $hero_subheading);
 
     // Keep heading editable from WordPress while styling key phrase in red.
     $hero_heading_highlighted = preg_replace(

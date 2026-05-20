@@ -30,6 +30,46 @@
         });
       });
 
+      /* ── Desktop nav dropdowns (click/tap toggle in addition to hover) ── */
+      var navGroups = document.querySelectorAll('.cs-nav-group');
+      navGroups.forEach(function (group) {
+        var trigger = group.querySelector('.cs-nav-trigger');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          var isOpen = group.classList.toggle('is-open');
+          trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          navGroups.forEach(function (other) {
+            if (other !== group) {
+              other.classList.remove('is-open');
+              var otherTrigger = other.querySelector('.cs-nav-trigger');
+              if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+            }
+          });
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        navGroups.forEach(function (group) {
+          if (!group.contains(e.target)) {
+            group.classList.remove('is-open');
+            var t = group.querySelector('.cs-nav-trigger');
+            if (t) t.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          navGroups.forEach(function (group) {
+            group.classList.remove('is-open');
+            var t = group.querySelector('.cs-nav-trigger');
+            if (t) t.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+
       /* ── Scroll-triggered reveal animations ── */
       var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

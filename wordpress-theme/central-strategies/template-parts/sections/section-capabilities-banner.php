@@ -12,7 +12,7 @@
           </h2>
 
           <p class="mt-6 text-lg lg:text-xl text-slate-500 leading-relaxed max-w-3xl mx-auto">
-            <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'We deliver comprehensive information technology solutions tailored to meet the unique demands of government agencies and enterprise organizations.')); ?>
+            <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
           </p>
 
           <div class="mt-10">
@@ -23,47 +23,48 @@
         </div>
       </div>
 
+      <?php
+      $cs_logo_base = get_template_directory_uri() . '/assets/images/clients/';
+      $cs_client_logos = array(
+          array('file' => 'caci.png',     'alt' => 'CACI'),
+          array('file' => 'uscg.png',     'alt' => 'United States Coast Guard'),
+          array('file' => 'leidos.png',   'alt' => 'Leidos'),
+          array('file' => 'gdit.png',     'alt' => 'General Dynamics Information Technology'),
+          array('file' => 'epa.png',      'alt' => 'U.S. Environmental Protection Agency'),
+          array('file' => 'saic.png',     'alt' => 'SAIC'),
+          array('file' => 'dod.png',      'alt' => 'U.S. Department of Defense'),
+          array('file' => 'dos.png',      'alt' => 'U.S. Department of State'),
+          array('file' => 'dhs.png',      'alt' => 'U.S. Department of Homeland Security'),
+          array('file' => 'dia.png',      'alt' => 'Defense Intelligence Agency'),
+          array('file' => 'gunnison.png', 'alt' => 'Gunnison'),
+      );
+      ?>
+
       <div class="relative overflow-hidden py-10 lg:py-12">
         <div class="absolute inset-0 bg-gradient-to-r from-cs-700 via-cs-600 to-cs-700" aria-hidden="true"></div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.24) 1px, transparent 0); background-size: 34px 34px;" aria-hidden="true"></div>
 
-        <?php
-        $cs_stats = array(
-            array(
-                'suffix' => get_theme_mod('cs_stat1_suffix', '+'),
-                'label'  => get_theme_mod('cs_stat1_label', 'Projects Delivered'),
-                'count'  => intval(get_theme_mod('cs_stat1_value', '100')),
-            ),
-            array(
-                'suffix' => get_theme_mod('cs_stat2_suffix', '+'),
-                'label'  => get_theme_mod('cs_stat2_label', 'Government Agencies'),
-                'count'  => intval(get_theme_mod('cs_stat2_value', '20')),
-            ),
-            array(
-                'suffix' => get_theme_mod('cs_stat3_suffix', '+'),
-                'label'  => get_theme_mod('cs_stat3_label', 'Years Experience'),
-                'count'  => intval(get_theme_mod('cs_stat3_value', '10')),
-            ),
-            array(
-                'suffix' => get_theme_mod('cs_stat4_suffix', '%'),
-                'label'  => get_theme_mod('cs_stat4_label', 'Client Retention'),
-                'count'  => intval(get_theme_mod('cs_stat4_value', '99')),
-            ),
-        );
-        ?>
-
-        <div id="capabilities-stats" class="relative max-w-site mx-auto px-5 lg:px-8">
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-8 lg:gap-0" data-stagger>
-            <?php foreach ($cs_stats as $cs_i => $cs_stat) : ?>
-            <div class="text-center<?php echo $cs_i > 0 ? ' lg:border-l lg:border-white/15' : ''; ?>" data-animate="fade-up">
-              <div class="text-[2.8rem] sm:text-5xl lg:text-[3.45rem] font-extrabold text-white leading-none tracking-tight">
-                <span class="stat-number" data-count="<?php echo esc_attr($cs_stat['count']); ?>">0</span><span class="text-cs-200"><?php echo esc_html($cs_stat['suffix']); ?></span>
+        <div class="relative" role="region" aria-label="<?php esc_attr_e('Clients and partners', 'central-strategies'); ?>">
+          <div class="cs-logo-marquee">
+            <div class="cs-logo-marquee__track">
+              <?php
+              for ($cs_loop = 0; $cs_loop < 2; $cs_loop++) :
+                  foreach ($cs_client_logos as $cs_logo) :
+                      $cs_aria_hidden = $cs_loop === 0 ? 'false' : 'true';
+              ?>
+              <div class="cs-logo-card" aria-hidden="<?php echo esc_attr($cs_aria_hidden); ?>">
+                <img
+                  src="<?php echo esc_url($cs_logo_base . $cs_logo['file']); ?>"
+                  alt="<?php echo $cs_loop === 0 ? esc_attr($cs_logo['alt']) : ''; ?>"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <div class="mt-2 text-sm text-white/75 font-bold uppercase tracking-wide">
-                <?php echo esc_html($cs_stat['label']); ?>
-              </div>
+              <?php
+                  endforeach;
+              endfor;
+              ?>
             </div>
-            <?php endforeach; ?>
           </div>
         </div>
       </div>

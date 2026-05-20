@@ -7,7 +7,7 @@
 ?>
   <header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
     <div class="max-w-site mx-auto px-5 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="flex items-center justify-between h-20 lg:h-24">
 
         <?php cs_logo('header'); ?>
 

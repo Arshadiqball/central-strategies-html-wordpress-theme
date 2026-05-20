@@ -161,4 +161,64 @@
       }
       .card-lift:hover { transform: none; }
     }
+
+    /* ── Header dropdown (click/keyboard open state) ── */
+    .cs-nav-group.is-open > .cs-nav-submenu {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translate3d(0, 0, 0) !important;
+    }
+    .cs-nav-group.is-open .cs-nav-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    /* ── Logo marquee (infinite horizontal scroll) ── */
+    @keyframes cs-logo-marquee {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+    .cs-logo-marquee {
+      position: relative;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+              mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+    .cs-logo-marquee__track {
+      display: flex;
+      width: max-content;
+      gap: 1.25rem;
+      animation: cs-logo-marquee 45s linear infinite;
+      will-change: transform;
+    }
+    .cs-logo-marquee:hover .cs-logo-marquee__track { animation-play-state: paused; }
+    .cs-logo-card {
+      flex: 0 0 auto;
+      width: 180px;
+      height: 96px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+    }
+    .cs-logo-card img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    @media (min-width: 640px) {
+      .cs-logo-card { width: 200px; height: 104px; }
+    }
+    @media (min-width: 1024px) {
+      .cs-logo-card { width: 220px; height: 112px; }
+      .cs-logo-marquee__track { gap: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-logo-marquee__track { animation: none !important; }
+    }
   </style>
