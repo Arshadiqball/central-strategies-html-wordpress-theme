@@ -13,13 +13,15 @@ get_header();
 ?>
 
 <main id="primary" class="site-main max-w-site mx-auto px-5 py-24">
-	<?php
-	while (have_posts()) {
-		the_post();
-		the_title('<h1 class="text-3xl font-extrabold text-slate-900 mb-6">', '</h1>');
-		the_content();
-	}
-	?>
+	<div data-animate="fade-up">
+		<?php
+		while (have_posts()) {
+			the_post();
+			the_title('<h1 class="text-3xl font-extrabold text-slate-900 mb-6">', '</h1>');
+			the_content();
+		}
+		?>
+	</div>
 </main>
 
 <?php

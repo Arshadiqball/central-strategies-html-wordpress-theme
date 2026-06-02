@@ -75,11 +75,24 @@ add_action('wp_head', 'cs_output_favicon_tags', 4);
    Custom Walker — Desktop nav (styled <a> tags, supports dropdowns)
    ────────────────────────────────────────────────────── */
 class CS_Desktop_Nav_Walker extends Walker_Nav_Menu {
+<<<<<<< HEAD
     public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output) {
         if (!empty($element)) {
             $element->cs_has_children = !empty($children_elements[$element->ID]);
         }
         parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
+=======
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        if ($depth > 0) {
+            return;
+        }
+        $classes  = empty($item->classes) ? array() : (array) $item->classes;
+        $active   = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true);
+        $color    = $active ? 'text-cs-600' : 'text-slate-500 hover:text-slate-900';
+        $output  .= '<a href="' . esc_url($item->url) . '" class="relative px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors">';
+        $output  .= esc_html($item->title);
+        $output  .= '</a>';
+>>>>>>> 2731a16 (implement)
     }
 
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
@@ -168,9 +181,23 @@ class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
    in the primary / mobile nav menus. Also makes "About" a
    non-link parent (dropdown trigger only).
    ────────────────────────────────────────────────────── */
+<<<<<<< HEAD
 function cs_inject_about_submenu($items, $menu, $args) {
     if (empty($items) || !is_array($items)) {
         return $items;
+=======
+class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        if ($depth > 0) {
+            return;
+        }
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $active  = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true);
+        $color   = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
+        $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
+        $output .= esc_html($item->title);
+        $output .= '</a>';
+>>>>>>> 2731a16 (implement)
     }
 
     $about_item = null;
@@ -237,6 +264,9 @@ add_filter('wp_get_nav_menu_items', 'cs_inject_about_submenu', 20, 3);
    ────────────────────────────────────────────────────── */
 class CS_Footer_Nav_Walker extends Walker_Nav_Menu {
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        if (cs_is_company_profile_menu_item($item)) {
+            return;
+        }
         $output .= '<li><a href="' . esc_url($item->url) . '" class="text-sm text-slate-400 hover:text-white transition-colors">';
         $output .= esc_html($item->title);
         $output .= '</a></li>';
@@ -245,6 +275,260 @@ class CS_Footer_Nav_Walker extends Walker_Nav_Menu {
     public function start_lvl(&$output, $depth = 0, $args = null) {}
     public function end_lvl(&$output, $depth = 0, $args = null) {}
 }
+
+/* ──────────────────────────────────────────────────────
+   Helpers: page URLs + active state for nav fallbacks
+   ────────────────────────────────────────────────────── */
+function cs_page_url($slug) {
+    if ($slug === '' || $slug === 'home') {
+        return home_url('/');
+    }
+    $page = get_page_by_path($slug);
+    return $page ? get_permalink($page) : home_url('/' . $slug . '/');
+}
+
+function cs_nav_item_is_active($slug) {
+    if ($slug === '' || $slug === 'home') {
+        return is_front_page();
+    }
+    return is_page($slug);
+}
+
+/**
+ * Whether a menu item is the deprecated "Company Profile" link.
+ */
+function cs_is_company_profile_menu_item($item) {
+    $title = strtolower(trim($item->title));
+    if (strpos($title, 'company profile') !== false) {
+        return true;
+    }
+    $path = strtolower((string) wp_parse_url($item->url, PHP_URL_PATH));
+    return strpos($path, 'company-profile') !== false || strpos($path, 'company_profile') !== false;
+}
+
+/* ──────────────────────────────────────────────────────
+   Fallback: header nav (Home → About → Solutions → Careers)
+   ────────────────────────────────────────────────────── */
+function cs_primary_nav_fallback() {
+    $links = array(
+        ''         => __('Home', 'central-strategies'),
+        'about'    => __('About', 'central-strategies'),
+        'services' => __('Solutions', 'central-strategies'),
+        'careers'  => __('Careers', 'central-strategies'),
+    );
+    foreach ($links as $slug => $label) {
+        $active = cs_nav_item_is_active($slug);
+        $color  = $active ? 'text-cs-600' : 'text-slate-500 hover:text-slate-900';
+        echo '<a href="' . esc_url(cs_page_url($slug)) . '" class="relative px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors">';
+        echo esc_html($label);
+        echo '</a>';
+    }
+}
+
+function cs_mobile_nav_fallback() {
+    $links = array(
+        ''         => __('Home', 'central-strategies'),
+        'about'    => __('About', 'central-strategies'),
+        'services' => __('Solutions', 'central-strategies'),
+        'careers'  => __('Careers', 'central-strategies'),
+    );
+    foreach ($links as $slug => $label) {
+        $active = cs_nav_item_is_active($slug);
+        $color  = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
+        echo '<a href="' . esc_url(cs_page_url($slug)) . '" class="mobile-link px-4 py-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
+        echo esc_html($label);
+        echo '</a>';
+    }
+}
+
+/**
+ * Flatten About sub-menus: promote Careers to top level after Solutions.
+ */
+function cs_flatten_header_nav_menu($menu_id) {
+    $items = wp_get_nav_menu_items($menu_id);
+    if (!$items) {
+        return;
+    }
+
+    $about_item     = null;
+    $solutions_item = null;
+    $careers_item   = null;
+
+    foreach ($items as $item) {
+        $title = strtolower(trim($item->title));
+
+        if ((int) $item->menu_item_parent === 0) {
+            if (strpos($title, 'about') !== false) {
+                $about_item = $item;
+            }
+            if (strpos($title, 'solution') !== false || strpos($title, 'service') !== false) {
+                $solutions_item = $item;
+            }
+            if (strpos($title, 'career') !== false) {
+                $careers_item = $item;
+            }
+        }
+    }
+
+    if ($about_item) {
+        foreach ($items as $item) {
+            if ((int) $item->menu_item_parent !== (int) $about_item->ID) {
+                continue;
+            }
+            $title = strtolower(trim($item->title));
+            if (strpos($title, 'career') !== false) {
+                $careers_item = $item;
+            } else {
+                wp_delete_post($item->ID, true);
+            }
+        }
+    }
+
+    if (!$solutions_item && !$careers_item) {
+        return;
+    }
+
+    $position = $solutions_item ? ((int) $solutions_item->menu_order + 1) : 99;
+
+    if ($careers_item) {
+        wp_update_nav_menu_item($menu_id, $careers_item->ID, array(
+            'menu-item-title'       => $careers_item->title,
+            'menu-item-url'         => $careers_item->url,
+            'menu-item-status'      => 'publish',
+            'menu-item-type'        => $careers_item->type,
+            'menu-item-object'      => $careers_item->object,
+            'menu-item-object-id'   => $careers_item->object_id,
+            'menu-item-parent-id'   => 0,
+            'menu-item-position'    => $position,
+        ));
+    } else {
+        $careers_page = get_page_by_path('careers');
+        if ($careers_page) {
+            wp_update_nav_menu_item($menu_id, 0, array(
+                'menu-item-title'       => __('Careers', 'central-strategies'),
+                'menu-item-object'      => 'page',
+                'menu-item-object-id'   => $careers_page->ID,
+                'menu-item-type'        => 'post_type',
+                'menu-item-status'      => 'publish',
+                'menu-item-parent-id'   => 0,
+                'menu-item-position'    => $position,
+            ));
+        }
+    }
+}
+
+function cs_fix_header_nav_menus() {
+    if (get_option('cs_nav_flattened_v2') === '1') {
+        return;
+    }
+
+    $locations = get_nav_menu_locations();
+    $menu_ids  = array();
+
+    foreach (array('primary', 'mobile') as $location) {
+        if (!empty($locations[$location])) {
+            $menu_ids[(int) $locations[$location]] = true;
+        }
+    }
+
+    foreach (array_keys($menu_ids) as $menu_id) {
+        cs_flatten_header_nav_menu($menu_id);
+    }
+
+    update_option('cs_nav_flattened_v2', '1');
+}
+add_action('init', 'cs_fix_header_nav_menus', 20);
+
+/**
+ * Remove "Company Profile" from the Footer — Company menu.
+ */
+function cs_remove_footer_company_profile() {
+    if (get_option('cs_footer_company_profile_removed_v1') === '1') {
+        return;
+    }
+
+    $locations = get_nav_menu_locations();
+    if (empty($locations['footer_company'])) {
+        update_option('cs_footer_company_profile_removed_v1', '1');
+        return;
+    }
+
+    $items = wp_get_nav_menu_items((int) $locations['footer_company']);
+    if ($items) {
+        foreach ($items as $item) {
+            if (cs_is_company_profile_menu_item($item)) {
+                wp_delete_post($item->ID, true);
+            }
+        }
+    }
+
+    update_option('cs_footer_company_profile_removed_v1', '1');
+}
+add_action('init', 'cs_remove_footer_company_profile', 21);
+
+/**
+ * Update hero sub-headline when it still uses the previous default copy.
+ */
+function cs_maybe_update_hero_subheading() {
+    if (get_option('cs_hero_subheading_updated_v1') === '1') {
+        return;
+    }
+
+    $new_text = 'Our experts deliver tailored solutions to help organizations solve the most difficult challenges';
+    $old_texts = array(
+        'Central Strategies provides mission-aligned IT solutions that enable federal agencies to improve performance, strengthen operational resilience, and address complex technical challenges.',
+        'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.',
+    );
+
+    $current = get_theme_mod('cs_hero_subheading', '');
+    if ($current === '' || in_array($current, $old_texts, true)) {
+        set_theme_mod('cs_hero_subheading', $new_text);
+    }
+
+    update_option('cs_hero_subheading_updated_v1', '1');
+}
+add_action('init', 'cs_maybe_update_hero_subheading', 22);
+
+/**
+ * Update About paragraph: remove "outstanding", use "technologies".
+ */
+function cs_maybe_update_about_para1() {
+    if (get_option('cs_about_para1_updated_v1') === '1') {
+        return;
+    }
+
+    $current = get_theme_mod('cs_about_para1', '');
+    if ($current !== '') {
+        $updated = str_ireplace('outstanding ', '', $current);
+        $updated = preg_replace('/\btechnology\b/i', 'technologies', $updated);
+        if ($updated !== $current) {
+            set_theme_mod('cs_about_para1', $updated);
+        }
+    }
+
+    update_option('cs_about_para1_updated_v1', '1');
+}
+add_action('init', 'cs_maybe_update_about_para1', 22);
+
+/**
+ * Fix verb agreement: "that drive innovation" → "that drives innovation".
+ */
+function cs_maybe_fix_drive_innovation_copy() {
+    if (get_option('cs_drive_innovation_copy_v1') === '1') {
+        return;
+    }
+
+    $keys = array('cs_capabilities_subheading', 'cs_services_subheading', 'cs_footer_tagline');
+    foreach ($keys as $key) {
+        $current = get_theme_mod($key, '');
+        if ($current !== '' && stripos($current, 'that drive innovation') !== false) {
+            set_theme_mod($key, str_ireplace('that drive innovation', 'that drives innovation', $current));
+        }
+    }
+
+    update_option('cs_drive_innovation_copy_v1', '1');
+}
+add_action('init', 'cs_maybe_fix_drive_innovation_copy', 22);
 
 /* ──────────────────────────────────────────────────────
    Fallback: footer Company column (when no menu is set)
@@ -949,7 +1233,11 @@ function cs_customize_register($wp_customize) {
         'title' => __('Hero Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 10,
     ));
     $reg('cs_hero_heading',     'Headline',      'cs_hero', 'Mission-Driven Intelligence & Government Advisory');
+<<<<<<< HEAD
     $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.', 'textarea');
+=======
+    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Our experts deliver tailored solutions to help organizations solve the most difficult challenges', 'textarea');
+>>>>>>> 2731a16 (implement)
 
     // ── About ───────────────────────────────────────────
     $wp_customize->add_section('cs_about', array(
@@ -957,7 +1245,11 @@ function cs_customize_register($wp_customize) {
     ));
     $reg('cs_about_hero_title',       'About page — hero title',       'cs_about', 'Our Story');
     $reg('cs_about_hero_subheading',  'About page — hero intro',       'cs_about', 'The mission of Central Strategies is to protect our nation and its people through technology, talent, and trusted partnerships.', 'textarea');
+<<<<<<< HEAD
     $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through outstanding technology and teams.', 'textarea');
+=======
+    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through technologies and teams.', 'textarea');
+>>>>>>> 2731a16 (implement)
     $reg('cs_about_pillar1_title', 'Capability 1',    'cs_about', 'Strategic advisory');
     $reg('cs_about_pillar2_title', 'Capability 2',    'cs_about', 'Program support');
     $reg('cs_about_pillar3_title', 'Capability 3',    'cs_about', 'Research & analysis');
@@ -996,7 +1288,7 @@ function cs_customize_register($wp_customize) {
     $reg('cs_cage_code',     'CAGE Code',     'cs_company_info', '9L4U3');
     $reg('cs_uei_number',    'UEI Number',    'cs_company_info', 'RVF8RK4SJRG8');
     $reg('cs_gsa_schedule',  'GSA Schedule',  'cs_company_info', 'GSA MAS');
-    $reg('cs_footer_tagline', 'Footer — tagline', 'cs_company_info', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.', 'textarea');
+    $reg('cs_footer_tagline', 'Footer — tagline', 'cs_company_info', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges.', 'textarea');
     $reg('cs_footer_legal_name', 'Footer — copyright legal name', 'cs_company_info', 'Central Strategies, LLC');
 }
 add_action('customize_register', 'cs_customize_register');

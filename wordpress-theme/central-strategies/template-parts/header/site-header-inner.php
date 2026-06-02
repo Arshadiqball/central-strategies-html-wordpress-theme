@@ -19,7 +19,7 @@
                 'container'      => false,
                 'items_wrap'     => '%3$s',
                 'walker'         => new CS_Desktop_Nav_Walker(),
-                'fallback_cb'    => false,
+                'fallback_cb'    => 'cs_primary_nav_fallback',
             ));
             ?>
           </nav>
@@ -44,7 +44,7 @@
               'container'      => false,
               'items_wrap'     => '%3$s',
               'walker'         => new CS_Mobile_Nav_Walker(),
-              'fallback_cb'    => false,
+              'fallback_cb'    => 'cs_mobile_nav_fallback',
           ));
           ?>
           <a href="<?php echo esc_url(cs_contact_url()); ?>" class="mt-2 px-4 py-3 bg-cs-600 text-white text-sm font-bold text-center rounded hover:bg-cs-700 transition-colors sm:hidden">

@@ -13,16 +13,18 @@ get_header();
 ?>
 
 <main id="primary" class="site-main max-w-site mx-auto px-5 py-24">
-	<?php
-	if (have_posts()) {
-		while (have_posts()) {
-			the_post();
-			the_content();
+	<div data-animate="fade-up">
+		<?php
+		if (have_posts()) {
+			while (have_posts()) {
+				the_post();
+				the_content();
+			}
+		} else {
+			echo '<p>' . esc_html__('No content found.', 'central-strategies') . '</p>';
 		}
-	} else {
-		echo '<p>' . esc_html__('No content found.', 'central-strategies') . '</p>';
-	}
-	?>
+		?>
+	</div>
 </main>
 
 <?php

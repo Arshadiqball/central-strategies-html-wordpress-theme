@@ -30,9 +30,15 @@ get_header();
 
           <p class="hero-p mt-7 p-0 bg-transparent text-lg lg:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
             <?php
+<<<<<<< HEAD
             $cs_services_subheading = get_theme_mod('cs_services_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges');
             if (trim($cs_services_subheading) === 'Three core disciplines. One integrated approach. We combine security, innovation, and operational excellence to deliver solutions that move the mission forward.') {
                 $cs_services_subheading = 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges';
+=======
+            $cs_services_subheading = get_theme_mod('cs_services_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges');
+            if (trim($cs_services_subheading) === 'Three core disciplines. One integrated approach. We combine security, innovation, and operational excellence to deliver solutions that move the mission forward.') {
+                $cs_services_subheading = 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges';
+>>>>>>> 2731a16 (implement)
             }
             echo esc_html($cs_services_subheading);
             ?>
@@ -104,8 +110,13 @@ get_header();
             array(
                 'title' => 'Engineering',
                 'desc'  => 'We provide comprehensive engineering and technology solutions that enhance system performance, infrastructure efficiency, and security.',
+<<<<<<< HEAD
                 'image' => 'https://img1.wsimg.com/isteam/stock/51159/:/cr=t:10.94%25,l:0%25,w:100%25,h:78.12%25/rs=w:600,h:300,cg:true',
                 'alt'   => 'Engineering',
+=======
+                'image' => get_template_directory_uri() . '/assets/images/engineering-telecom.jpg',
+                'alt'   => __('Telecommunications infrastructure', 'central-strategies'),
+>>>>>>> 2731a16 (implement)
                 'items' => array('Systems Engineering', 'Facilities Improvements and Support Services', 'Engineering Support Services', 'Cybersecurity Engineering', 'Software Engineering', 'Network Engineering', 'Telecommunication', 'Environmental Services', 'Research and Development Services'),
             ),
             array(

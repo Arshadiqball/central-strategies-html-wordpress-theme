@@ -6,7 +6,7 @@
  * @package Central_Strategies
  */
 ?>
-  <meta name="description" content="Central Strategies, a service-disabled veteran-owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges." />
+  <meta name="description" content="Central Strategies, a service-disabled veteran-owned technology company, specializes in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -162,6 +162,7 @@
       .card-lift:hover { transform: none; }
     }
 
+<<<<<<< HEAD
     /* ── Header dropdown (click/keyboard open state) ── */
     .cs-nav-group.is-open > .cs-nav-submenu {
       opacity: 1 !important;
@@ -172,6 +173,8 @@
       transform: rotate(180deg);
     }
 
+=======
+>>>>>>> 2731a16 (implement)
     /* ── Logo marquee (infinite horizontal scroll) ── */
     @keyframes cs-logo-marquee {
       from { transform: translate3d(0, 0, 0); }

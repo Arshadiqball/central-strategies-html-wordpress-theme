@@ -12,7 +12,11 @@
           </h2>
 
           <p class="mt-6 text-lg lg:text-xl text-slate-500 leading-relaxed max-w-3xl mx-auto">
+<<<<<<< HEAD
             <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
+=======
+            <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges.')); ?>
+>>>>>>> 2731a16 (implement)
           </p>
 
           <div class="mt-10">
@@ -26,6 +30,7 @@
       <?php
       $cs_logo_base = get_template_directory_uri() . '/assets/images/clients/';
       $cs_client_logos = array(
+<<<<<<< HEAD
           array('file' => 'caci.png',     'alt' => 'CACI'),
           array('file' => 'uscg.png',     'alt' => 'United States Coast Guard'),
           array('file' => 'leidos.png',   'alt' => 'Leidos'),
@@ -37,6 +42,20 @@
           array('file' => 'dhs.png',      'alt' => 'U.S. Department of Homeland Security'),
           array('file' => 'dia.png',      'alt' => 'Defense Intelligence Agency'),
           array('file' => 'gunnison.png', 'alt' => 'Gunnison'),
+=======
+          array('file' => 'caci.png',       'alt' => 'CACI'),
+          array('file' => 'uscg.png',       'alt' => 'United States Coast Guard'),
+          array('file' => 'leidos.png',     'alt' => 'Leidos'),
+          array('file' => 'gdit.png',       'alt' => 'General Dynamics Information Technology'),
+          array('file' => 'epa.png',       'alt' => 'U.S. Environmental Protection Agency'),
+          array('file' => 'saic.png',       'alt' => 'SAIC'),
+          array('file' => 'databricks.png', 'alt' => 'Databricks'),
+          array('file' => 'dod.png',        'alt' => 'U.S. Department of Defense'),
+          array('file' => 'dos.png',        'alt' => 'U.S. Department of State'),
+          array('file' => 'dhs.png',        'alt' => 'U.S. Department of Homeland Security'),
+          array('file' => 'dia.png',        'alt' => 'Defense Intelligence Agency'),
+          array('file' => 'gunnison.png',   'alt' => 'Gunnison'),
+>>>>>>> 2731a16 (implement)
       );
       ?>
 

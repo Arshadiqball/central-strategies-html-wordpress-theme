@@ -21,7 +21,7 @@ $cs_linkedin   = get_theme_mod('cs_linkedin_url', 'https://www.linkedin.com/comp
           <?php cs_logo('footer'); ?>
           <div class="mt-5 max-w-md">
             <p class="text-sm leading-relaxed text-slate-400">
-              <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
+              <?php echo esc_html(get_theme_mod('cs_footer_tagline', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges.')); ?>
             </p>
 
             <div class="mt-10 w-1/2 min-w-0 max-w-full space-y-3">

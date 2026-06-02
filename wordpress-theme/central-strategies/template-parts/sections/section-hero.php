@@ -2,7 +2,11 @@
     $hero_heading = get_theme_mod('cs_hero_heading', 'We Help Organizations Achieve More.');
     $hero_subheading = get_theme_mod(
       'cs_hero_subheading',
+<<<<<<< HEAD
       'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.'
+=======
+      'Our experts deliver tailored solutions to help organizations solve the most difficult challenges'
+>>>>>>> 2731a16 (implement)
     );
     $hero_subheading = str_ireplace('federal agencies', 'our clients', $hero_subheading);
 
@@ -26,7 +30,7 @@
 
       <div class="relative max-w-site mx-auto px-5 lg:px-8 w-full py-16 lg:py-24">
         <div class="grid items-center gap-12 lg:gap-8 lg:grid-cols-2">
-          <div class="max-w-2xl">
+          <div class="max-w-2xl" data-animate="fade-right">
             <h1 class="hero-h1 text-[2.5rem] leading-[1.14] sm:text-6xl sm:leading-[1.12] lg:text-[4.3rem] lg:leading-[1.1] font-extrabold text-white tracking-tight text-balance">
               <?php echo wp_kses($hero_heading_highlighted, array('span' => array('class' => true))); ?>
             </h1>

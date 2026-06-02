@@ -78,7 +78,7 @@ get_header();
         <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
 
           <!-- Left: headline + contact info -->
-          <div>
+          <div data-animate="fade-right">
             <div class="hero-badge inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-cs-600/30 bg-cs-600/10 mb-8">
               <svg class="w-4 h-4 text-cs-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
               <span class="text-xs font-bold text-cs-300 uppercase tracking-widest"><?php esc_html_e('Get In Touch', 'central-strategies'); ?></span>
@@ -95,7 +95,7 @@ get_header();
           </div>
 
           <!-- Right: Contact form -->
-          <div class="hero-form">
+          <div class="hero-form" data-animate="fade-left">
             <div class="bg-white rounded-2xl p-8 sm:p-10 shadow-2xl shadow-black/20 border border-white/10">
 
               <?php if ($cs_form_sent) : ?>

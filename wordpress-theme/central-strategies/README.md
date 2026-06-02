@@ -89,12 +89,11 @@ Go to **Appearance → Menus** and create the following menus:
 #### Menu 1: Primary Navigation
 - **Menu Name**: Primary Navigation
 - **Display location**: ✅ Primary Navigation
-- **Items to add** (in order):
+- **Items to add** (in order, all top-level — no sub-menus):
   1. Home → link to `Home` page
-  2. Services → link to `Services` page
-  3. About → link to `About` page
-  4. Blog → link to `Blog` page
-  5. FAQ → link to `FAQ` page
+  2. About → link to `About` page
+  3. Solutions → link to `Services` page
+  4. Careers → link to `Careers` page
 
 #### Menu 2: Mobile Navigation
 - **Menu Name**: Mobile Navigation
@@ -109,12 +108,11 @@ Go to **Appearance → Menus** and create the following menus:
 #### Menu 4: Footer — Company
 - **Menu Name**: Footer Company
 - **Display location**: ✅ Footer — Company
-- **Items**:
-  1. About Us → link to `About` page
-  2. Blog → link to `Blog` page
-  3. FAQ → link to `FAQ` page
-  4. Careers → custom link (or page)
-  5. Newsroom → custom link (or page)
+- **Items** (top-level only):
+  1. Home → link to `Home` page
+  2. About → link to `About` page
+  3. Careers → link to `Careers` page
+  4. Solutions → link to `Services` page
 
 #### Menu 5: Footer — Legal
 - **Menu Name**: Footer Legal
