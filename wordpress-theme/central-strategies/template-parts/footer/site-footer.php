@@ -8,7 +8,10 @@ $cs_phone      = get_theme_mod('cs_phone', '(703) 873-7049');
 $cs_phone_raw  = preg_replace('/[^0-9+]/', '', $cs_phone);
 $cs_address    = get_theme_mod('cs_address', "Washington DC\nUnited States");
 $cs_legal_name = get_theme_mod('cs_footer_legal_name', 'Central Strategies, LLC');
-$cs_linkedin   = get_theme_mod('cs_linkedin_url', 'https://www.linkedin.com/company/centralstrategiesllc');
+$cs_linkedin   = trim((string) get_theme_mod('cs_linkedin_url', 'https://www.linkedin.com/company/centralstrategiesllc'));
+if ($cs_linkedin === '') {
+    $cs_linkedin = 'https://www.linkedin.com/company/centralstrategiesllc';
+}
 ?>
   <footer class="bg-[#080910] text-slate-400">
     <div class="h-2 w-full bg-cs-600" aria-hidden="true"></div>
@@ -36,17 +39,6 @@ $cs_linkedin   = get_theme_mod('cs_linkedin_url', 'https://www.linkedin.com/comp
             <div class="rounded-md border border-white/[0.08] bg-[#12141c] px-4 py-3">
               <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"><?php esc_html_e('GSA Schedule', 'central-strategies'); ?></div>
               <div class="mt-1 font-mono text-sm font-bold tracking-wider text-slate-200"><?php echo esc_html(get_theme_mod('cs_gsa_schedule', 'GSA MAS')); ?></div>
-            </div>
-            <div class="pt-2">
-              <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-badge-wide.png'); ?>"
-                alt="<?php esc_attr_e('SBA Service-Disabled Veteran-Owned Small Business logo', 'central-strategies'); ?>"
-                width="600"
-                height="150"
-                class="w-full h-auto object-contain object-left"
-                loading="lazy"
-                decoding="async"
-              />
             </div>
             </div>
           </div>
@@ -79,8 +71,7 @@ $cs_linkedin   = get_theme_mod('cs_linkedin_url', 'https://www.linkedin.com/comp
               </li>
             </ul>
 
-            <?php if ($cs_linkedin) : ?>
-            <div class="mt-5">
+            <div class="mt-5 flex justify-center">
               <a
                 href="<?php echo esc_url($cs_linkedin); ?>"
                 target="_blank"
@@ -93,7 +84,6 @@ $cs_linkedin   = get_theme_mod('cs_linkedin_url', 'https://www.linkedin.com/comp
                 </svg>
               </a>
             </div>
-            <?php endif; ?>
           </div>
         </div>
 

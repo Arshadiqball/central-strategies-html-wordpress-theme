@@ -1,22 +1,8 @@
     <section id="capabilities-banner" class="bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8 pt-20 pb-16 lg:pt-24 lg:pb-20">
         <div class="text-center max-w-4xl mx-auto" data-animate="fade-up">
-          <div class="inline-flex items-center gap-3 text-cs-600 text-xs font-bold uppercase tracking-[0.2em]">
-            <span class="w-10 h-px bg-cs-300"></span>
-            <?php esc_html_e('Our Capabilities', 'central-strategies'); ?>
-            <span class="w-10 h-px bg-cs-300"></span>
-          </div>
-
-          <h2 class="mt-4 text-4xl sm:text-5xl lg:text-[3.75rem] font-extrabold text-slate-900 leading-[1.18] sm:leading-[1.15] lg:leading-[1.12] tracking-tight text-balance">
-            <?php echo esc_html(get_theme_mod('cs_capabilities_heading', 'Advanced IT Solutions That Drive Innovation')); ?>
-          </h2>
-
-          <p class="mt-6 text-lg lg:text-xl text-slate-500 leading-relaxed max-w-3xl mx-auto">
-<<<<<<< HEAD
-            <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drive innovation, enhance efficiency, and solve complex challenges.')); ?>
-=======
+          <p class="text-xl sm:text-2xl lg:text-[1.75rem] font-bold text-slate-900 leading-relaxed text-balance max-w-3xl mx-auto">
             <?php echo esc_html(get_theme_mod('cs_capabilities_subheading', 'Central Strategies, a Veteran-Owned technology company, specializes in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges.')); ?>
->>>>>>> 2731a16 (implement)
           </p>
 
           <div class="mt-10">
@@ -24,30 +10,30 @@
               <?php esc_html_e('Learn More', 'central-strategies'); ?>
             </a>
           </div>
+
+          <div class="mt-10 flex justify-center">
+            <img
+              src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/sba-sdvosb-certified.png'); ?>"
+              alt="<?php esc_attr_e('SBA Service-Disabled Veteran-Owned Certified', 'central-strategies'); ?>"
+              width="120"
+              height="180"
+              loading="lazy"
+              decoding="async"
+              class="h-28 sm:h-32 w-auto object-contain"
+            />
+          </div>
         </div>
       </div>
 
       <?php
+      /* Logo marquee — disabled for now; restore when ready to show partner logos again.
       $cs_logo_base = get_template_directory_uri() . '/assets/images/clients/';
       $cs_client_logos = array(
-<<<<<<< HEAD
-          array('file' => 'caci.png',     'alt' => 'CACI'),
-          array('file' => 'uscg.png',     'alt' => 'United States Coast Guard'),
-          array('file' => 'leidos.png',   'alt' => 'Leidos'),
-          array('file' => 'gdit.png',     'alt' => 'General Dynamics Information Technology'),
-          array('file' => 'epa.png',      'alt' => 'U.S. Environmental Protection Agency'),
-          array('file' => 'saic.png',     'alt' => 'SAIC'),
-          array('file' => 'dod.png',      'alt' => 'U.S. Department of Defense'),
-          array('file' => 'dos.png',      'alt' => 'U.S. Department of State'),
-          array('file' => 'dhs.png',      'alt' => 'U.S. Department of Homeland Security'),
-          array('file' => 'dia.png',      'alt' => 'Defense Intelligence Agency'),
-          array('file' => 'gunnison.png', 'alt' => 'Gunnison'),
-=======
           array('file' => 'caci.png',       'alt' => 'CACI'),
           array('file' => 'uscg.png',       'alt' => 'United States Coast Guard'),
           array('file' => 'leidos.png',     'alt' => 'Leidos'),
           array('file' => 'gdit.png',       'alt' => 'General Dynamics Information Technology'),
-          array('file' => 'epa.png',       'alt' => 'U.S. Environmental Protection Agency'),
+          array('file' => 'epa.png',        'alt' => 'U.S. Environmental Protection Agency'),
           array('file' => 'saic.png',       'alt' => 'SAIC'),
           array('file' => 'databricks.png', 'alt' => 'Databricks'),
           array('file' => 'dod.png',        'alt' => 'U.S. Department of Defense'),
@@ -55,10 +41,8 @@
           array('file' => 'dhs.png',        'alt' => 'U.S. Department of Homeland Security'),
           array('file' => 'dia.png',        'alt' => 'Defense Intelligence Agency'),
           array('file' => 'gunnison.png',   'alt' => 'Gunnison'),
->>>>>>> 2731a16 (implement)
       );
       ?>
-
       <div class="relative overflow-hidden py-10 lg:py-12">
         <div class="absolute inset-0 bg-gradient-to-r from-cs-700 via-cs-600 to-cs-700" aria-hidden="true"></div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.24) 1px, transparent 0); background-size: 34px 34px;" aria-hidden="true"></div>
@@ -87,4 +71,6 @@
           </div>
         </div>
       </div>
+      */
+      ?>
     </section>

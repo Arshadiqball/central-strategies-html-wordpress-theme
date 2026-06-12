@@ -2,11 +2,7 @@
     $hero_heading = get_theme_mod('cs_hero_heading', 'We Help Organizations Achieve More.');
     $hero_subheading = get_theme_mod(
       'cs_hero_subheading',
-<<<<<<< HEAD
-      'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.'
-=======
       'Our experts deliver tailored solutions to help organizations solve the most difficult challenges'
->>>>>>> 2731a16 (implement)
     );
     $hero_subheading = str_ireplace('federal agencies', 'our clients', $hero_subheading);
 

@@ -162,19 +162,6 @@
       .card-lift:hover { transform: none; }
     }
 
-<<<<<<< HEAD
-    /* ── Header dropdown (click/keyboard open state) ── */
-    .cs-nav-group.is-open > .cs-nav-submenu {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translate3d(0, 0, 0) !important;
-    }
-    .cs-nav-group.is-open .cs-nav-trigger svg {
-      transform: rotate(180deg);
-    }
-
-=======
->>>>>>> 2731a16 (implement)
     /* ── Logo marquee (infinite horizontal scroll) ── */
     @keyframes cs-logo-marquee {
       from { transform: translate3d(0, 0, 0); }

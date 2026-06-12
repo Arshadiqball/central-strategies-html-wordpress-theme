@@ -91,8 +91,8 @@ Go to **Appearance → Menus** and create the following menus:
 - **Display location**: ✅ Primary Navigation
 - **Items to add** (in order, all top-level — no sub-menus):
   1. Home → link to `Home` page
-  2. About → link to `About` page
-  3. Solutions → link to `Services` page
+  2. Solutions → link to `Services` page
+  3. About → link to `About` page
   4. Careers → link to `Careers` page
 
 #### Menu 2: Mobile Navigation
@@ -110,9 +110,9 @@ Go to **Appearance → Menus** and create the following menus:
 - **Display location**: ✅ Footer — Company
 - **Items** (top-level only):
   1. Home → link to `Home` page
-  2. About → link to `About` page
-  3. Careers → link to `Careers` page
-  4. Solutions → link to `Services` page
+  2. Solutions → link to `Services` page
+  3. About → link to `About` page
+  4. Careers → link to `Careers` page
 
 #### Menu 5: Footer — Legal
 - **Menu Name**: Footer Legal

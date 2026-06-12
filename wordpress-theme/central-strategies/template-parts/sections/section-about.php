@@ -52,17 +52,7 @@
               <?php echo esc_html(get_theme_mod('cs_about_heading', 'A service-disabled veteran-owned Technology Company')); ?>
             </h2>
             <p class="mt-6 text-lg text-slate-500 leading-relaxed">
-              <?php
-<<<<<<< HEAD
-              $cs_about_para1 = get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through outstanding technology and teams.');
-              $cs_about_para1 = str_ireplace('With an emphasis on IT solutions for federal industries, ', '', $cs_about_para1);
-=======
-              $cs_about_para1 = get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through technologies and teams.');
-              $cs_about_para1 = str_ireplace('outstanding ', '', $cs_about_para1);
-              $cs_about_para1 = preg_replace('/\btechnology\b/i', 'technologies', $cs_about_para1);
->>>>>>> 2731a16 (implement)
-              echo esc_html($cs_about_para1);
-              ?>
+              <?php echo esc_html(get_theme_mod('cs_about_para1', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on hiring and developing top talents, Central Strategies is committed to deliver superior services and results to the public sector and the private sector.')); ?>
             </p>
             <p class="mt-4 text-slate-500 leading-relaxed">
               <?php echo esc_html(get_theme_mod('cs_about_para2', 'Our team of cleared professionals brings deep domain expertise in cybersecurity, cloud computing, artificial intelligence, and enterprise IT management. We take a mission-first approach to every engagement, delivering measurable results that make a difference.')); ?>

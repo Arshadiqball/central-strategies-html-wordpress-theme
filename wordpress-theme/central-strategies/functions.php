@@ -72,16 +72,9 @@ function cs_output_favicon_tags() {
 add_action('wp_head', 'cs_output_favicon_tags', 4);
 
 /* ──────────────────────────────────────────────────────
-   Custom Walker — Desktop nav (styled <a> tags, supports dropdowns)
+   Custom Walker — Desktop nav (styled <a> tags)
    ────────────────────────────────────────────────────── */
 class CS_Desktop_Nav_Walker extends Walker_Nav_Menu {
-<<<<<<< HEAD
-    public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output) {
-        if (!empty($element)) {
-            $element->cs_has_children = !empty($children_elements[$element->ID]);
-        }
-        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
-=======
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
         if ($depth > 0) {
             return;
@@ -92,100 +85,15 @@ class CS_Desktop_Nav_Walker extends Walker_Nav_Menu {
         $output  .= '<a href="' . esc_url($item->url) . '" class="relative px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors">';
         $output  .= esc_html($item->title);
         $output  .= '</a>';
->>>>>>> 2731a16 (implement)
     }
-
-    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-        $classes      = empty($item->classes) ? array() : (array) $item->classes;
-        $active       = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true) || in_array('current-menu-parent', $classes, true) || in_array('current-menu-ancestor', $classes, true);
-        $color        = $active ? 'text-cs-600' : 'text-slate-500 hover:text-slate-900';
-        $has_children = !empty($item->cs_has_children);
-
-        if ($depth === 0 && $has_children) {
-            $output .= '<div class="cs-nav-group group relative">';
-            $output .= '<button type="button" class="cs-nav-trigger relative inline-flex items-center gap-1 px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors" aria-haspopup="true" aria-expanded="false">';
-            $output .= esc_html($item->title);
-            $output .= '<svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>';
-            $output .= '</button>';
-        } elseif ($depth === 0) {
-            $output .= '<a href="' . esc_url($item->url) . '" class="relative px-2.5 xl:px-3 py-2 text-[12px] xl:text-[13px] font-semibold ' . esc_attr($color) . ' uppercase tracking-wider transition-colors">';
-            $output .= esc_html($item->title);
-            $output .= '</a>';
-        } else {
-            $child_active = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
-            $output .= '<a href="' . esc_url($item->url) . '" class="block px-4 py-2.5 text-[12px] font-semibold ' . esc_attr($child_active) . ' uppercase tracking-wider transition-colors">';
-            $output .= esc_html($item->title);
-            $output .= '</a>';
-        }
-    }
-
-    public function end_el(&$output, $item, $depth = 0, $args = null) {
-        if ($depth === 0 && !empty($item->cs_has_children)) {
-            $output .= '</div>';
-        }
-    }
-
-    public function start_lvl(&$output, $depth = 0, $args = null) {
-        if ($depth === 0) {
-            $output .= '<div class="cs-nav-submenu absolute left-0 top-full pt-2 min-w-[220px] opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-200 z-50">';
-            $output .= '<div class="overflow-hidden rounded-md bg-white border border-slate-100 shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5 py-1.5">';
-        }
-    }
-
-    public function end_lvl(&$output, $depth = 0, $args = null) {
-        if ($depth === 0) {
-            $output .= '</div></div>';
-        }
-    }
-}
-
-/* ──────────────────────────────────────────────────────
-   Custom Walker — Mobile nav (styled <a> tags, indents children)
-   ────────────────────────────────────────────────────── */
-class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
-    public function display_element($element, &$children_elements, $max_depth, $depth, $args, &$output) {
-        if (!empty($element)) {
-            $element->cs_has_children = !empty($children_elements[$element->ID]);
-        }
-        parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
-    }
-
-    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-        $classes      = empty($item->classes) ? array() : (array) $item->classes;
-        $active       = in_array('current-menu-item', $classes, true) || in_array('current_page_item', $classes, true);
-        $color        = $active ? 'text-cs-600 bg-cs-50' : 'text-slate-600 hover:text-cs-600 hover:bg-cs-50';
-        $has_children = !empty($item->cs_has_children);
-
-        if ($depth === 0 && $has_children) {
-            $output .= '<div class="px-4 pt-3 pb-1 text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">';
-            $output .= esc_html($item->title);
-            $output .= '</div>';
-        } elseif ($depth === 0) {
-            $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
-            $output .= esc_html($item->title);
-            $output .= '</a>';
-        } else {
-            $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-2.5 ml-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
-            $output .= esc_html($item->title);
-            $output .= '</a>';
-        }
-    }
-
     public function end_el(&$output, $item, $depth = 0, $args = null) {}
     public function start_lvl(&$output, $depth = 0, $args = null) {}
     public function end_lvl(&$output, $depth = 0, $args = null) {}
 }
 
 /* ──────────────────────────────────────────────────────
-   Inject "Company Profile" + "Careers" as children of "About"
-   in the primary / mobile nav menus. Also makes "About" a
-   non-link parent (dropdown trigger only).
+   Custom Walker — Mobile nav (styled <a> tags)
    ────────────────────────────────────────────────────── */
-<<<<<<< HEAD
-function cs_inject_about_submenu($items, $menu, $args) {
-    if (empty($items) || !is_array($items)) {
-        return $items;
-=======
 class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
         if ($depth > 0) {
@@ -197,67 +105,11 @@ class CS_Mobile_Nav_Walker extends Walker_Nav_Menu {
         $output .= '<a href="' . esc_url($item->url) . '" class="mobile-link px-4 py-3 text-sm font-semibold ' . esc_attr($color) . ' rounded transition-colors">';
         $output .= esc_html($item->title);
         $output .= '</a>';
->>>>>>> 2731a16 (implement)
     }
-
-    $about_item = null;
-    foreach ($items as $item) {
-        $title_match = isset($item->title) && strcasecmp(trim($item->title), 'About') === 0;
-        $url_match   = isset($item->url) && preg_match('#/about/?(\?|$|#)#i', (string) $item->url);
-        if ($title_match || $url_match) {
-            $about_item = $item;
-            break;
-        }
-    }
-
-    if (!$about_item) {
-        return $items;
-    }
-
-    // Make About behave as a non-link dropdown trigger.
-    $about_item->url = '#';
-
-    // Don't duplicate children if the menu already has some under About.
-    foreach ($items as $item) {
-        if ((int) $item->menu_item_parent === (int) $about_item->ID) {
-            return $items;
-        }
-    }
-
-    $about_page   = get_page_by_path('about');
-    $careers_page = get_page_by_path('careers');
-    $about_url    = $about_page ? get_permalink($about_page) : home_url('/about/');
-    $careers_url  = $careers_page ? get_permalink($careers_page) : home_url('/careers/');
-
-    $make_child = function($id, $title, $url, $order) use ($about_item) {
-        $child = new stdClass();
-        $child->ID               = $id;
-        $child->db_id            = $id;
-        $child->title            = $title;
-        $child->url              = $url;
-        $child->menu_item_parent = (string) $about_item->ID;
-        $child->object_id        = $id;
-        $child->object           = 'custom';
-        $child->type             = 'custom';
-        $child->type_label       = 'Custom Link';
-        $child->classes          = array();
-        $child->target           = '';
-        $child->attr_title       = '';
-        $child->description      = '';
-        $child->xfn              = '';
-        $child->menu_order       = (int) $about_item->menu_order * 10 + $order;
-        $child->current          = false;
-        $child->post_parent      = 0;
-        $child->post_title       = $title;
-        return $child;
-    };
-
-    $items[] = $make_child(900001, 'Company Profile', $about_url, 1);
-    $items[] = $make_child(900002, 'Careers',         $careers_url, 2);
-
-    return $items;
+    public function end_el(&$output, $item, $depth = 0, $args = null) {}
+    public function start_lvl(&$output, $depth = 0, $args = null) {}
+    public function end_lvl(&$output, $depth = 0, $args = null) {}
 }
-add_filter('wp_get_nav_menu_items', 'cs_inject_about_submenu', 20, 3);
 
 /* ──────────────────────────────────────────────────────
    Custom Walker — Footer columns (styled <li><a>)
@@ -307,13 +159,13 @@ function cs_is_company_profile_menu_item($item) {
 }
 
 /* ──────────────────────────────────────────────────────
-   Fallback: header nav (Home → About → Solutions → Careers)
+   Fallback: header nav (Home → Solutions → About → Careers)
    ────────────────────────────────────────────────────── */
 function cs_primary_nav_fallback() {
     $links = array(
         ''         => __('Home', 'central-strategies'),
-        'about'    => __('About', 'central-strategies'),
         'services' => __('Solutions', 'central-strategies'),
+        'about'    => __('About', 'central-strategies'),
         'careers'  => __('Careers', 'central-strategies'),
     );
     foreach ($links as $slug => $label) {
@@ -328,8 +180,8 @@ function cs_primary_nav_fallback() {
 function cs_mobile_nav_fallback() {
     $links = array(
         ''         => __('Home', 'central-strategies'),
-        'about'    => __('About', 'central-strategies'),
         'services' => __('Solutions', 'central-strategies'),
+        'about'    => __('About', 'central-strategies'),
         'careers'  => __('Careers', 'central-strategies'),
     );
     foreach ($links as $slug => $label) {
@@ -342,7 +194,7 @@ function cs_mobile_nav_fallback() {
 }
 
 /**
- * Flatten About sub-menus: promote Careers to top level after Solutions.
+ * Flatten About sub-menus: promote Careers to top level.
  */
 function cs_flatten_header_nav_menu($menu_id) {
     $items = wp_get_nav_menu_items($menu_id);
@@ -440,6 +292,89 @@ function cs_fix_header_nav_menus() {
 add_action('init', 'cs_fix_header_nav_menus', 20);
 
 /**
+ * Classify a top-level nav item for menu reordering.
+ */
+function cs_nav_item_order_key($item) {
+    $title = strtolower(trim($item->title));
+    $url   = strtolower((string) $item->url);
+
+    if ($title === 'home' || $url === strtolower(home_url('/'))) {
+        return 'home';
+    }
+    if (strpos($title, 'solution') !== false || strpos($title, 'service') !== false) {
+        return 'solutions';
+    }
+    if (strpos($title, 'about') !== false) {
+        return 'about';
+    }
+    if (strpos($title, 'career') !== false) {
+        return 'careers';
+    }
+    return null;
+}
+
+/**
+ * Reorder header menus: Home → Solutions → About → Careers.
+ */
+function cs_reorder_header_nav_menu($menu_id) {
+    $items = wp_get_nav_menu_items($menu_id);
+    if (!$items) {
+        return;
+    }
+
+    $positions = array(
+        'home'       => 1,
+        'solutions'  => 2,
+        'about'      => 3,
+        'careers'    => 4,
+    );
+
+    foreach ($items as $item) {
+        if ((int) $item->menu_item_parent !== 0) {
+            continue;
+        }
+
+        $key = cs_nav_item_order_key($item);
+        if (!$key || !isset($positions[$key])) {
+            continue;
+        }
+
+        wp_update_nav_menu_item($menu_id, $item->ID, array(
+            'menu-item-title'       => $item->title,
+            'menu-item-url'         => $item->url,
+            'menu-item-status'      => 'publish',
+            'menu-item-type'        => $item->type,
+            'menu-item-object'      => $item->object,
+            'menu-item-object-id'   => $item->object_id,
+            'menu-item-parent-id'   => 0,
+            'menu-item-position'    => $positions[$key],
+        ));
+    }
+}
+
+function cs_reorder_header_nav_menus() {
+    if (get_option('cs_nav_reordered_solutions_before_about_v1') === '1') {
+        return;
+    }
+
+    $locations = get_nav_menu_locations();
+    $menu_ids  = array();
+
+    foreach (array('primary', 'mobile') as $location) {
+        if (!empty($locations[$location])) {
+            $menu_ids[(int) $locations[$location]] = true;
+        }
+    }
+
+    foreach (array_keys($menu_ids) as $menu_id) {
+        cs_reorder_header_nav_menu($menu_id);
+    }
+
+    update_option('cs_nav_reordered_solutions_before_about_v1', '1');
+}
+add_action('init', 'cs_reorder_header_nav_menus', 21);
+
+/**
  * Remove "Company Profile" from the Footer — Company menu.
  */
 function cs_remove_footer_company_profile() {
@@ -490,23 +425,25 @@ function cs_maybe_update_hero_subheading() {
 add_action('init', 'cs_maybe_update_hero_subheading', 22);
 
 /**
- * Update About paragraph: remove "outstanding", use "technologies".
+ * Update About paragraph to the current Who We Are copy.
  */
 function cs_maybe_update_about_para1() {
-    if (get_option('cs_about_para1_updated_v1') === '1') {
+    if (get_option('cs_about_para1_updated_v2') === '1') {
         return;
     }
 
+    $new_text = 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on hiring and developing top talents, Central Strategies is committed to deliver superior services and results to the public sector and the private sector.';
+    $old_texts = array(
+        'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through technologies and teams.',
+        'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on IT solutions for federal industries, Central Strategies is committed to delivering superior services through outstanding technology and teams.',
+    );
+
     $current = get_theme_mod('cs_about_para1', '');
-    if ($current !== '') {
-        $updated = str_ireplace('outstanding ', '', $current);
-        $updated = preg_replace('/\btechnology\b/i', 'technologies', $updated);
-        if ($updated !== $current) {
-            set_theme_mod('cs_about_para1', $updated);
-        }
+    if ($current === '' || in_array($current, $old_texts, true)) {
+        set_theme_mod('cs_about_para1', $new_text);
     }
 
-    update_option('cs_about_para1_updated_v1', '1');
+    update_option('cs_about_para1_updated_v2', '1');
 }
 add_action('init', 'cs_maybe_update_about_para1', 22);
 
@@ -530,14 +467,31 @@ function cs_maybe_fix_drive_innovation_copy() {
 }
 add_action('init', 'cs_maybe_fix_drive_innovation_copy', 22);
 
+/**
+ * Ensure footer LinkedIn URL is set when customizer saved an empty value.
+ */
+function cs_maybe_restore_footer_linkedin_url() {
+    if (get_option('cs_footer_linkedin_restored_v1') === '1') {
+        return;
+    }
+
+    $default = 'https://www.linkedin.com/company/centralstrategiesllc';
+    if (trim((string) get_theme_mod('cs_linkedin_url', '')) === '') {
+        set_theme_mod('cs_linkedin_url', $default);
+    }
+
+    update_option('cs_footer_linkedin_restored_v1', '1');
+}
+add_action('init', 'cs_maybe_restore_footer_linkedin_url', 22);
+
 /* ──────────────────────────────────────────────────────
    Fallback: footer Company column (when no menu is set)
    ────────────────────────────────────────────────────── */
 function cs_footer_company_fallback() {
     $links = array(
         ''         => __('Home', 'central-strategies'),
-        'about'    => __('About', 'central-strategies'),
         'services' => __('Solutions', 'central-strategies'),
+        'about'    => __('About', 'central-strategies'),
         'careers'  => __('Careers', 'central-strategies'),
     );
     echo '<ul class="space-y-3">';
@@ -1233,11 +1187,7 @@ function cs_customize_register($wp_customize) {
         'title' => __('Hero Section', 'central-strategies'), 'panel' => 'cs_homepage', 'priority' => 10,
     ));
     $reg('cs_hero_heading',     'Headline',      'cs_hero', 'Mission-Driven Intelligence & Government Advisory');
-<<<<<<< HEAD
-    $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Central Strategies provides mission-aligned IT solutions that enable our clients to improve performance, strengthen operational resilience, and address complex technical challenges.', 'textarea');
-=======
     $reg('cs_hero_subheading',  'Sub-headline',  'cs_hero', 'Our experts deliver tailored solutions to help organizations solve the most difficult challenges', 'textarea');
->>>>>>> 2731a16 (implement)
 
     // ── About ───────────────────────────────────────────
     $wp_customize->add_section('cs_about', array(
@@ -1245,11 +1195,7 @@ function cs_customize_register($wp_customize) {
     ));
     $reg('cs_about_hero_title',       'About page — hero title',       'cs_about', 'Our Story');
     $reg('cs_about_hero_subheading',  'About page — hero intro',       'cs_about', 'The mission of Central Strategies is to protect our nation and its people through technology, talent, and trusted partnerships.', 'textarea');
-<<<<<<< HEAD
-    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through outstanding technology and teams.', 'textarea');
-=======
-    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. Central Strategies is committed to delivering superior services through technologies and teams.', 'textarea');
->>>>>>> 2731a16 (implement)
+    $reg('cs_about_para1',         'About Text',      'cs_about', 'Central Strategies was founded by Nicolas Schellman, a retired United States Coast Guard Officer. After 20 years of honorable service, Nick wanted to continue to protect our nation and its people. With an emphasis on hiring and developing top talents, Central Strategies is committed to deliver superior services and results to the public sector and the private sector.', 'textarea');
     $reg('cs_about_pillar1_title', 'Capability 1',    'cs_about', 'Strategic advisory');
     $reg('cs_about_pillar2_title', 'Capability 2',    'cs_about', 'Program support');
     $reg('cs_about_pillar3_title', 'Capability 3',    'cs_about', 'Research & analysis');
@@ -1290,5 +1236,6 @@ function cs_customize_register($wp_customize) {
     $reg('cs_gsa_schedule',  'GSA Schedule',  'cs_company_info', 'GSA MAS');
     $reg('cs_footer_tagline', 'Footer — tagline', 'cs_company_info', 'A service-disabled veteran-owned technology company specializing in advanced IT solutions that drives innovation, enhance efficiency, and solve complex challenges.', 'textarea');
     $reg('cs_footer_legal_name', 'Footer — copyright legal name', 'cs_company_info', 'Central Strategies, LLC');
+    $reg('cs_linkedin_url',      'LinkedIn URL',               'cs_company_info', 'https://www.linkedin.com/company/centralstrategiesllc');
 }
 add_action('customize_register', 'cs_customize_register');
