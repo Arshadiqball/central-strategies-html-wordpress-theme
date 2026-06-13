@@ -132,7 +132,7 @@ get_header();
     </section>
 
     <!-- CTA -->
-    <section class="relative pt-12 lg:pt-16 pb-16 lg:pb-20 overflow-hidden bg-white">
+    <section class="relative pt-12 lg:pt-16 pb-24 lg:pb-32 overflow-hidden bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8 text-center">
         <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-6" data-animate="fade-up">
           <span class="w-8 h-px bg-cs-600"></span>

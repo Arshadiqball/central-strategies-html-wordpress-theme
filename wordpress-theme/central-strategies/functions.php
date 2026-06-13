@@ -524,7 +524,7 @@ function cs_logo($variant = 'header') {
         if (has_custom_logo()) {
             $logo_id  = get_theme_mod('custom_logo');
             $logo_url = wp_get_attachment_image_url($logo_id, 'full');
-            echo '<a href="' . $home . '" class="shrink-0 flex items-center" aria-label="' . esc_attr(get_bloginfo('name')) . ' Home"><span class="inline-flex h-14 sm:h-16 lg:h-[5.5rem] max-w-[min(480px,88vw)] items-center"><img src="' . esc_url($logo_url) . '" alt="" width="1080" height="1080" decoding="async" class="block h-full w-auto object-contain object-left origin-left" /></span></a>';
+            echo '<a href="' . $home . '" class="shrink-0 flex items-center" aria-label="' . esc_attr(get_bloginfo('name')) . ' Home"><span class="inline-flex overflow-hidden h-16 max-w-[min(360px,88vw)] items-center"><img src="' . esc_url($logo_url) . '" alt="" width="1080" height="1080" decoding="async" class="block h-[8.5rem] w-auto object-contain object-left origin-left -my-8" /></span></a>';
         } else {
             echo '<a href="' . $home . '" class="text-xl font-bold text-slate-900">' . esc_html(get_bloginfo('name')) . '</a>';
         }

@@ -76,7 +76,7 @@ if ($cs_linkedin === '') {
                 href="<?php echo esc_url($cs_linkedin); ?>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center text-white hover:text-cs-400 transition-colors"
+                class="inline-flex items-center justify-center text-white hover:text-[#0A66C2] transition-colors"
                 aria-label="<?php esc_attr_e('LinkedIn — Central Strategies', 'central-strategies'); ?>"
               >
                 <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
