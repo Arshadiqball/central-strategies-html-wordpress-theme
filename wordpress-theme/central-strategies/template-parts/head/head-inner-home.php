@@ -162,25 +162,20 @@
       .card-lift:hover { transform: none; }
     }
 
-    /* ── Logo marquee (infinite horizontal scroll) ── */
-    @keyframes cs-logo-marquee {
-      from { transform: translate3d(0, 0, 0); }
-      to   { transform: translate3d(-50%, 0, 0); }
-    }
-    .cs-logo-marquee {
-      position: relative;
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
-              mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
-    }
-    .cs-logo-marquee__track {
+    /* ── Partner seals (static DOS / DHS row) ── */
+    .cs-partner-seals {
       display: flex;
-      width: max-content;
-      gap: 1.25rem;
-      animation: cs-logo-marquee 45s linear infinite;
-      will-change: transform;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
     }
-    .cs-logo-marquee:hover .cs-logo-marquee__track { animation-play-state: paused; }
+    @media (min-width: 1024px) {
+      .cs-partner-seals {
+        justify-content: flex-end;
+        gap: 3.5rem;
+        padding-right: 2rem;
+      }
+    }
     .cs-logo-card {
       flex: 0 0 auto;
       width: 180px;
@@ -201,14 +196,28 @@
       object-fit: contain;
       display: block;
     }
+    .cs-logo-card--seal {
+      width: 132px;
+      height: 132px;
+      background: transparent;
+      border-radius: 50%;
+      box-shadow: none;
+      padding: 0;
+    }
+    .cs-logo-card--seal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
     @media (min-width: 640px) {
       .cs-logo-card { width: 200px; height: 104px; }
+      .cs-logo-card--seal { width: 148px; height: 148px; }
     }
     @media (min-width: 1024px) {
       .cs-logo-card { width: 220px; height: 112px; }
-      .cs-logo-marquee__track { gap: 1.5rem; }
+      .cs-logo-card--seal { width: 164px; height: 164px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .cs-logo-marquee__track { animation: none !important; }
+      .cs-partner-seals { scroll-behavior: auto; }
     }
   </style>

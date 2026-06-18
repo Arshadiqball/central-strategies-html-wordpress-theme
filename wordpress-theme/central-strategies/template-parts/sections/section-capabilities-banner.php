@@ -26,51 +26,29 @@
       </div>
 
       <?php
-      /* Logo marquee — disabled for now; restore when ready to show partner logos again.
       $cs_logo_base = get_template_directory_uri() . '/assets/images/clients/';
       $cs_client_logos = array(
-          array('file' => 'caci.png',       'alt' => 'CACI'),
-          array('file' => 'uscg.png',       'alt' => 'United States Coast Guard'),
-          array('file' => 'leidos.png',     'alt' => 'Leidos'),
-          array('file' => 'gdit.png',       'alt' => 'General Dynamics Information Technology'),
-          array('file' => 'epa.png',        'alt' => 'U.S. Environmental Protection Agency'),
-          array('file' => 'saic.png',       'alt' => 'SAIC'),
-          array('file' => 'databricks.png', 'alt' => 'Databricks'),
-          array('file' => 'dod.png',        'alt' => 'U.S. Department of Defense'),
-          array('file' => 'dos.png',        'alt' => 'U.S. Department of State'),
-          array('file' => 'dhs.png',        'alt' => 'U.S. Department of Homeland Security'),
-          array('file' => 'dia.png',        'alt' => 'Defense Intelligence Agency'),
-          array('file' => 'gunnison.png',   'alt' => 'Gunnison'),
+          array('file' => 'dos-seal.svg', 'alt' => 'U.S. Department of State', 'seal' => true),
+          array('file' => 'dhs-seal.svg', 'alt' => 'U.S. Department of Homeland Security', 'seal' => true),
       );
       ?>
-      <div class="relative overflow-hidden py-10 lg:py-12">
+      <div class="relative overflow-hidden flex items-center py-[5px]">
         <div class="absolute inset-0 bg-gradient-to-r from-cs-700 via-cs-600 to-cs-700" aria-hidden="true"></div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.24) 1px, transparent 0); background-size: 34px 34px;" aria-hidden="true"></div>
 
-        <div class="relative" role="region" aria-label="<?php esc_attr_e('Clients and partners', 'central-strategies'); ?>">
-          <div class="cs-logo-marquee">
-            <div class="cs-logo-marquee__track">
-              <?php
-              for ($cs_loop = 0; $cs_loop < 2; $cs_loop++) :
-                  foreach ($cs_client_logos as $cs_logo) :
-                      $cs_aria_hidden = $cs_loop === 0 ? 'false' : 'true';
-              ?>
-              <div class="cs-logo-card" aria-hidden="<?php echo esc_attr($cs_aria_hidden); ?>">
-                <img
-                  src="<?php echo esc_url($cs_logo_base . $cs_logo['file']); ?>"
-                  alt="<?php echo $cs_loop === 0 ? esc_attr($cs_logo['alt']) : ''; ?>"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <?php
-                  endforeach;
-              endfor;
-              ?>
+        <div class="relative w-full max-w-site mx-auto px-5 lg:px-8" role="region" aria-label="<?php esc_attr_e('Clients and partners', 'central-strategies'); ?>">
+          <div class="cs-partner-seals">
+            <?php foreach ($cs_client_logos as $cs_logo) : ?>
+            <div class="cs-logo-card cs-logo-card--seal">
+              <img
+                src="<?php echo esc_url($cs_logo_base . $cs_logo['file']); ?>"
+                alt="<?php echo esc_attr($cs_logo['alt']); ?>"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
+            <?php endforeach; ?>
           </div>
         </div>
       </div>
-      */
-      ?>
     </section>

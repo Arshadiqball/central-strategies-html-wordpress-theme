@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="U.S. Department of State">
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#111827" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="84" fill="none" stroke="#111827" stroke-width="1.5"/>
+  <defs>
+    <path id="dos-top" d="M 32 100 A 68 68 0 0 1 168 100" fill="none"/>
+    <path id="dos-bottom" d="M 168 100 A 68 68 0 0 1 32 100" fill="none"/>
+  </defs>
+  <text font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" fill="#111827" letter-spacing="2.8">
+    <textPath href="#dos-top" startOffset="50%" text-anchor="middle">DEPARTMENT OF STATE</textPath>
+  </text>
+  <text font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif" font-size="9.5" font-weight="700" fill="#111827" letter-spacing="2.2">
+    <textPath href="#dos-bottom" startOffset="50%" text-anchor="middle">UNITED STATES OF AMERICA</textPath>
+  </text>
+  <text x="100" y="115" font-family="'Plus Jakarta Sans', Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#111827" text-anchor="middle" dominant-baseline="middle">DOS</text>
+</svg>
