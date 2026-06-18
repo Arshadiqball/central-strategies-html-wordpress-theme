@@ -14,8 +14,6 @@ if ($cs_linkedin === '') {
 }
 ?>
   <footer class="bg-[#080910] text-slate-400">
-    <div class="h-2 w-full bg-cs-600" aria-hidden="true"></div>
-
     <div class="max-w-site mx-auto px-5 lg:px-8 pt-14 pb-10">
       <div class="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-10 xl:gap-16">
 

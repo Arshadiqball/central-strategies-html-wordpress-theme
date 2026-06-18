@@ -171,9 +171,8 @@
     }
     @media (min-width: 1024px) {
       .cs-partner-seals {
-        justify-content: flex-end;
-        gap: 3.5rem;
-        padding-right: 2rem;
+        justify-content: center;
+        gap: 4.5rem;
       }
     }
     .cs-logo-card {

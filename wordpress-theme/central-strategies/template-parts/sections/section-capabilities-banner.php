@@ -28,11 +28,13 @@
       <?php
       $cs_logo_base = get_template_directory_uri() . '/assets/images/clients/';
       $cs_client_logos = array(
-          array('file' => 'dos-seal.svg', 'alt' => 'U.S. Department of State', 'seal' => true),
-          array('file' => 'dhs-seal.svg', 'alt' => 'U.S. Department of Homeland Security', 'seal' => true),
+          array('file' => 'dos-seal.png',  'alt' => 'U.S. Department of State', 'seal' => true),
+          array('file' => 'dhs-seal.png',  'alt' => 'U.S. Department of Homeland Security', 'seal' => true),
+          array('file' => 'dia-seal.png',  'alt' => 'Defense Intelligence Agency', 'seal' => true),
+          array('file' => 'uscg-seal.png', 'alt' => 'United States Coast Guard', 'seal' => true),
       );
       ?>
-      <div class="relative overflow-hidden flex items-center py-[5px]">
+      <div class="relative overflow-hidden flex items-center" style="padding-top:5px;padding-bottom:5px;">
         <div class="absolute inset-0 bg-gradient-to-r from-cs-700 via-cs-600 to-cs-700" aria-hidden="true"></div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.24) 1px, transparent 0); background-size: 34px 34px;" aria-hidden="true"></div>
 
