@@ -32,6 +32,8 @@
           array('file' => 'dhs-seal.png',  'alt' => 'U.S. Department of Homeland Security', 'seal' => true),
           array('file' => 'dia-seal.png',  'alt' => 'Defense Intelligence Agency', 'seal' => true),
           array('file' => 'uscg-seal.png', 'alt' => 'United States Coast Guard', 'seal' => true),
+          array('file' => 'epa-seal.jpeg',  'alt' => 'U.S. Environmental Protection Agency', 'seal' => true),
+          array('file' => 'nga-seal.jpeg',  'alt' => 'National Geospatial-Intelligence Agency', 'seal' => true),
       );
       ?>
       <div class="relative overflow-hidden flex items-center" style="padding-top:5px;padding-bottom:5px;">
