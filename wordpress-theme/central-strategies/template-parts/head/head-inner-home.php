@@ -162,17 +162,43 @@
       .card-lift:hover { transform: none; }
     }
 
-    /* ── Partner seals (static DOS / DHS row) ── */
+    /* ── Partner seals (auto-scrolling marquee on mobile) ── */
     .cs-partner-seals {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
+      width: max-content;
+      animation: cs-seal-marquee 28s linear infinite;
+    }
+    .cs-partner-seals:hover,
+    .cs-partner-seals:focus-within {
+      animation-play-state: paused;
+    }
+    .cs-partner-seals__group {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding-inline: 0.625rem;
+      flex: 0 0 auto;
+    }
+    @keyframes cs-seal-marquee {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
     }
     @media (min-width: 1024px) {
       .cs-partner-seals {
+        width: 100%;
+        max-width: 80rem;
+        margin-inline: auto;
         justify-content: center;
+        animation: none;
+        padding-inline: 2rem;
+      }
+      .cs-partner-seals__group {
         gap: 4.5rem;
+        padding-inline: 0;
+      }
+      .cs-partner-seals__group[aria-hidden="true"] {
+        display: none;
       }
     }
     .cs-logo-card {
@@ -194,6 +220,7 @@
       height: auto;
       object-fit: contain;
       display: block;
+      pointer-events: none;
     }
     .cs-logo-card--seal {
       width: 132px;
@@ -211,12 +238,22 @@
     @media (min-width: 640px) {
       .cs-logo-card { width: 200px; height: 104px; }
       .cs-logo-card--seal { width: 148px; height: 148px; }
+      .cs-partner-seals__group { gap: 2rem; }
+      .cs-partner-seals { animation-duration: 32s; }
     }
     @media (min-width: 1024px) {
       .cs-logo-card { width: 220px; height: 112px; }
       .cs-logo-card--seal { width: 164px; height: 164px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .cs-partner-seals { scroll-behavior: auto; }
+      .cs-partner-seals {
+        animation: none;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .cs-partner-seals::-webkit-scrollbar { display: none; }
+      .cs-partner-seals__group[aria-hidden="true"] { display: none; }
     }
   </style>

@@ -40,7 +40,7 @@ if (isset($_POST['cs_contact_submit']) && wp_verify_nonce($_POST['_cs_nonce'], $
         }
 
         // Also send email notification
-        $cs_to      = get_theme_mod('cs_email', get_option('admin_email'));
+        $cs_to      = 'nschellman@centralstrategies.com';
         $cs_subject = sprintf(__('[Central Strategies] New contact from %s', 'central-strategies'), $cs_name);
         $cs_body    = sprintf(
             "Name: %s\nEmail: %s\nPhone: %s\n\nMessage:\n%s\n\nView in admin: %s",

@@ -36,22 +36,27 @@
           array('file' => 'nga-seal.jpeg',  'alt' => 'National Geospatial-Intelligence Agency', 'seal' => true),
       );
       ?>
-      <div class="relative overflow-hidden flex items-center" style="padding-top:5px;padding-bottom:5px;">
+      <div class="relative overflow-hidden flex items-center" style="padding-top:20px;padding-bottom:20px;">
         <div class="absolute inset-0 bg-gradient-to-r from-cs-700 via-cs-600 to-cs-700" aria-hidden="true"></div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.24) 1px, transparent 0); background-size: 34px 34px;" aria-hidden="true"></div>
 
-        <div class="relative w-full max-w-site mx-auto px-5 lg:px-8" role="region" aria-label="<?php esc_attr_e('Clients and partners', 'central-strategies'); ?>">
+        <div class="relative w-full overflow-hidden" role="region" aria-label="<?php esc_attr_e('Clients and partners', 'central-strategies'); ?>">
           <div class="cs-partner-seals">
-            <?php foreach ($cs_client_logos as $cs_logo) : ?>
-            <div class="cs-logo-card cs-logo-card--seal">
-              <img
-                src="<?php echo esc_url($cs_logo_base . $cs_logo['file']); ?>"
-                alt="<?php echo esc_attr($cs_logo['alt']); ?>"
-                loading="lazy"
-                decoding="async"
-              />
+            <?php for ($cs_seal_pass = 0; $cs_seal_pass < 2; $cs_seal_pass++) : ?>
+            <div class="cs-partner-seals__group"<?php echo $cs_seal_pass === 1 ? ' aria-hidden="true"' : ''; ?>>
+              <?php foreach ($cs_client_logos as $cs_logo) : ?>
+              <div class="cs-logo-card cs-logo-card--seal">
+                <img
+                  src="<?php echo esc_url($cs_logo_base . $cs_logo['file']); ?>"
+                  alt="<?php echo $cs_seal_pass === 0 ? esc_attr($cs_logo['alt']) : ''; ?>"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+              <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
+            <?php endfor; ?>
           </div>
         </div>
       </div>

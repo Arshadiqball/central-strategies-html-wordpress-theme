@@ -1229,7 +1229,7 @@ function cs_customize_register($wp_customize) {
         'title' => __('Contact &amp; Identity', 'central-strategies'), 'panel' => 'cs_company', 'priority' => 10,
     ));
     $reg('cs_phone',      'Phone Number', 'cs_company_info', '(703) 873-7049');
-    $reg('cs_email',      'Email Address','cs_company_info', 'info@centralstrategies.com');
+    $reg('cs_email',      'Email Address','cs_company_info', 'nschellman@centralstrategies.com');
     $reg('cs_address',    'Address',      'cs_company_info', "Washington DC\nUnited States", 'textarea');
     $reg('cs_cage_code',     'CAGE Code',     'cs_company_info', '9L4U3');
     $reg('cs_uei_number',    'UEI Number',    'cs_company_info', 'RVF8RK4SJRG8');

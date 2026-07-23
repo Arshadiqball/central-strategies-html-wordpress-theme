@@ -21,14 +21,14 @@ get_header();
         : (get_template_directory_uri() . '/assets/images/about-hero-bg.jpg');
     ?>
 
-    <!-- Hero — photo only (full width, natural aspect — avoids bg-cover crop/zoom) -->
+    <!-- Hero — photo only (height-capped so it doesn’t dominate the scroll) -->
     <section class="relative pt-20 overflow-hidden bg-slate-950" aria-label="<?php esc_attr_e('About', 'central-strategies'); ?>">
       <img
         src="<?php echo esc_url($cs_hero_bg_url); ?>"
         alt="<?php esc_attr_e('Central Strategies', 'central-strategies'); ?>"
         width="1024"
         height="512"
-        class="block w-full h-auto"
+        class="block w-full h-[28vh] min-h-[180px] max-h-[220px] sm:h-[34vh] sm:max-h-[280px] lg:h-[40vh] lg:max-h-[360px] object-cover object-center"
         loading="eager"
         decoding="async"
         fetchpriority="high"
