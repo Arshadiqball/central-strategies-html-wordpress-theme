@@ -14,31 +14,24 @@ get_header();
 
 <main id="primary" class="site-main">
     <?php
-    $cs_about_id    = get_queried_object_id();
-    $cs_hero_thumb  = get_the_post_thumbnail_url($cs_about_id, 'full');
-    $cs_hero_bg_url = $cs_hero_thumb
-        ? $cs_hero_thumb
-        : (get_template_directory_uri() . '/assets/images/about-hero-bg.jpg');
+    $cs_about_image_url = get_template_directory_uri() . '/assets/images/about-hero-bg.jpg';
     ?>
 
-    <!-- Hero — photo only (height-capped so it doesn’t dominate the scroll) -->
-    <section class="relative pt-20 overflow-hidden bg-slate-950" aria-label="<?php esc_attr_e('About', 'central-strategies'); ?>">
-      <img
-        src="<?php echo esc_url($cs_hero_bg_url); ?>"
-        alt="<?php esc_attr_e('Central Strategies', 'central-strategies'); ?>"
-        width="1024"
-        height="512"
-        class="block w-full h-[28vh] min-h-[180px] max-h-[220px] sm:h-[34vh] sm:max-h-[280px] lg:h-[40vh] lg:max-h-[360px] object-cover object-center"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-      />
-      <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cs-600/40 to-transparent" aria-hidden="true"></div>
-    </section>
-
     <!-- Who We Are -->
-    <section id="who-we-are" class="pt-16 lg:pt-20 pb-0 bg-white">
+    <section id="who-we-are" class="pt-20 lg:pt-24 pb-0 bg-white">
       <div class="max-w-site mx-auto px-5 lg:px-8">
+        <div class="overflow-hidden border border-slate-200 bg-slate-950 mb-12 lg:mb-16">
+          <img
+            src="<?php echo esc_url($cs_about_image_url); ?>"
+            alt="<?php esc_attr_e('U.S. Coast Guard response boat underway', 'central-strategies'); ?>"
+            width="1024"
+            height="270"
+            class="block w-full h-auto"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
         <div class="max-w-3xl mx-auto text-center mb-8" data-animate="fade-up">
           <div class="inline-flex items-center gap-2 text-cs-600 text-xs font-bold uppercase tracking-[0.2em] mb-4">
             <span class="w-8 h-px bg-cs-600"></span>

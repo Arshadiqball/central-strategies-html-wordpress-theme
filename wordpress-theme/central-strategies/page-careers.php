@@ -19,10 +19,7 @@ $cs_jobs_query = new WP_Query(array(
     ),
 ));
 
-$cs_hero_image_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'large') : '';
-if (empty($cs_hero_image_url)) {
-    $cs_hero_image_url = get_template_directory_uri() . '/assets/images/careers-team.png';
-}
+$cs_hero_image_url = get_template_directory_uri() . '/assets/images/careers-hero.jpg';
 $cs_open_positions_url = trim((string) get_theme_mod('cs_careers_cta_url', ''));
 if ($cs_open_positions_url === '' || $cs_open_positions_url === '#') {
     $cs_open_positions_url = '#openings';
@@ -36,8 +33,14 @@ get_header();
     <div class="max-w-site mx-auto px-5 lg:px-8">
       <div class="overflow-hidden border border-slate-200 bg-white">
         <div class="grid lg:grid-cols-2">
-          <div class="min-h-[240px] lg:min-h-[380px]">
-            <img src="<?php echo esc_url($cs_hero_image_url); ?>" alt="<?php esc_attr_e('Central Strategies team collaborating in the office', 'central-strategies'); ?>" width="1024" height="593" class="block w-full h-full min-h-[240px] lg:min-h-[380px] object-cover object-center" />
+          <div class="bg-slate-950">
+            <img
+              src="<?php echo esc_url($cs_hero_image_url); ?>"
+              alt="<?php esc_attr_e('Cybersecurity shield on a digital circuit interface', 'central-strategies'); ?>"
+              width="1024"
+              height="682"
+              class="block w-full h-auto"
+            />
           </div>
           <div class="bg-slate-100 min-h-[240px] flex flex-col justify-center items-center text-center p-8 lg:p-12">
             <h1 class="text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
