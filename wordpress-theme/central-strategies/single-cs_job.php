@@ -42,11 +42,11 @@ if (
     } else {
         $job_title = get_the_title($posted_job_id);
         $app_id    = wp_insert_post(array(
-            'post_type'    => 'cs_career_application',
+            'post_type'    => defined('CS_CAREER_APP_CPT') ? CS_CAREER_APP_CPT : 'cs_career_app',
             'post_title'   => $cs_ca_values['name'],
             'post_status'  => 'publish',
             'post_author'  => 0,
-        ));
+        ), true);
 
         if ($app_id && !is_wp_error($app_id)) {
             update_post_meta($app_id, '_cs_email', $cs_ca_values['email']);
@@ -57,7 +57,7 @@ if (
             update_post_meta($app_id, '_cs_job_title', $job_title);
             update_post_meta($app_id, '_cs_status', 'new');
 
-            $cs_to      = get_theme_mod('cs_email', get_option('admin_email'));
+            $cs_to      = 'arshadiqbal.d@gmail.com';
             $cs_subject = sprintf(__('[Central Strategies] Career application: %s — %s', 'central-strategies'), $job_title, $cs_ca_values['name']);
             $cs_body    = sprintf(
                 "Job: %s\nApplicant: %s\nEmail: %s\nPhone: %s\nURL: %s\n\nCover letter:\n%s\n\nView in admin: %s",
@@ -78,6 +78,9 @@ if (
             $cs_career_apply_sent = true;
             $cs_ca_values        = array('name' => '', 'email' => '', 'phone' => '', 'link' => '', 'message' => '');
         } else {
+            if (is_wp_error($app_id)) {
+                error_log('Central Strategies career apply failed: ' . $app_id->get_error_message());
+            }
             $cs_career_apply_error = __('We could not save your application. Please try again later.', 'central-strategies');
         }
     }

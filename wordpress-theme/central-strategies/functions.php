@@ -801,9 +801,14 @@ add_action('admin_menu', 'cs_inquiry_admin_menu_badge');
 
 /* ──────────────────────────────────────────────────────
    Custom Post Type: Career Applications (job apply form submissions)
+   Post type key must be ≤ 20 chars (wp_posts.post_type is varchar(20)).
    ────────────────────────────────────────────────────── */
+if (!defined('CS_CAREER_APP_CPT')) {
+    define('CS_CAREER_APP_CPT', 'cs_career_app');
+}
+
 function cs_register_career_application_cpt() {
-    register_post_type('cs_career_application', array(
+    register_post_type(CS_CAREER_APP_CPT, array(
         'labels' => array(
             'name'               => __('Career Applications', 'central-strategies'),
             'singular_name'      => __('Career Application', 'central-strategies'),
@@ -827,6 +832,23 @@ function cs_register_career_application_cpt() {
 }
 add_action('init', 'cs_register_career_application_cpt');
 
+function cs_maybe_rename_career_application_cpt() {
+    if (get_option('cs_career_app_cpt_renamed_v1') === '1') {
+        return;
+    }
+    global $wpdb;
+    $wpdb->query(
+        $wpdb->prepare(
+            "UPDATE {$wpdb->posts} SET post_type = %s WHERE post_type IN (%s, %s)",
+            CS_CAREER_APP_CPT,
+            'cs_career_application',
+            'cs_career_applicati'
+        )
+    );
+    update_option('cs_career_app_cpt_renamed_v1', '1');
+}
+add_action('init', 'cs_maybe_rename_career_application_cpt', 11);
+
 function cs_career_application_columns($columns) {
     return array(
         'cb'           => $columns['cb'],
@@ -839,7 +861,7 @@ function cs_career_application_columns($columns) {
         'date'         => __('Date', 'central-strategies'),
     );
 }
-add_filter('manage_cs_career_application_posts_columns', 'cs_career_application_columns');
+add_filter('manage_' . CS_CAREER_APP_CPT . '_posts_columns', 'cs_career_application_columns');
 
 function cs_career_application_column_content($column, $post_id) {
     switch ($column) {
@@ -870,17 +892,17 @@ function cs_career_application_column_content($column, $post_id) {
             break;
     }
 }
-add_action('manage_cs_career_application_posts_custom_column', 'cs_career_application_column_content', 10, 2);
+add_action('manage_' . CS_CAREER_APP_CPT . '_posts_custom_column', 'cs_career_application_column_content', 10, 2);
 
 function cs_career_application_sortable_columns($columns) {
     $columns['cs_status'] = 'cs_status';
     return $columns;
 }
-add_filter('manage_edit-cs_career_application_sortable_columns', 'cs_career_application_sortable_columns');
+add_filter('manage_edit-' . CS_CAREER_APP_CPT . '_sortable_columns', 'cs_career_application_sortable_columns');
 
 function cs_career_application_detail_meta_box() {
-    add_meta_box('cs_career_application_detail', __('Application Details', 'central-strategies'), 'cs_career_application_detail_cb', 'cs_career_application', 'normal', 'high');
-    add_meta_box('cs_career_application_status', __('Status', 'central-strategies'), 'cs_career_application_status_cb', 'cs_career_application', 'side', 'high');
+    add_meta_box('cs_career_application_detail', __('Application Details', 'central-strategies'), 'cs_career_application_detail_cb', CS_CAREER_APP_CPT, 'normal', 'high');
+    add_meta_box('cs_career_application_status', __('Status', 'central-strategies'), 'cs_career_application_status_cb', CS_CAREER_APP_CPT, 'side', 'high');
 }
 add_action('add_meta_boxes', 'cs_career_application_detail_meta_box');
 
@@ -948,11 +970,11 @@ function cs_save_career_application_status($post_id) {
         }
     }
 }
-add_action('save_post_cs_career_application', 'cs_save_career_application_status');
+add_action('save_post_' . CS_CAREER_APP_CPT, 'cs_save_career_application_status');
 
 function cs_career_application_admin_menu_badge() {
     $new_unread = (int) (new WP_Query(array(
-        'post_type'      => 'cs_career_application',
+        'post_type'      => CS_CAREER_APP_CPT,
         'post_status'    => 'publish',
         'posts_per_page' => -1,
         'meta_query'     => array(array('key' => '_cs_status', 'value' => 'new', 'compare' => '=')),
@@ -961,7 +983,7 @@ function cs_career_application_admin_menu_badge() {
     if ($new_unread > 0) {
         global $menu;
         foreach ($menu as &$item) {
-            if (isset($item[5]) && $item[5] === 'menu-posts-cs_career_application') {
+            if (isset($item[5]) && $item[5] === 'menu-posts-' . CS_CAREER_APP_CPT) {
                 $item[0] .= ' <span class="awaiting-mod">' . $new_unread . '</span>';
                 break;
             }
